@@ -1,5 +1,7 @@
 package gui.panel;
 
-public class LoginPanel {
+import javax.swing.JPanel;
+
+public class LoginPanel extends JPanel{
 
 }

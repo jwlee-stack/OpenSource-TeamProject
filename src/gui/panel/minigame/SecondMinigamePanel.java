@@ -1,5 +1,7 @@
 package gui.panel.minigame;
 
-public class SecondMinigamePanel {
+import javax.swing.JPanel;
+
+public class SecondMinigamePanel extends JPanel{
 
 }
