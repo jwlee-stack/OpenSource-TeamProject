@@ -1,27 +1,18 @@
 package gui.panel;
 
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.JPanel;
 import java.awt.SystemColor;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.awt.Font;
 
-import gui.frame.GameFrame;
+public class MakeMenuPanel extends JPanel {
 
-/**
- * 메뉴 Panel. 해당 화면에서 랭크 확인 및 게임 시작을 할 수 있음
- * @author phdljr
- *
- */
-public class MenuPanel extends JPanel{
-	private static final long serialVersionUID = 1L;
-	
-	private GameFrame gf;
-
-	public MenuPanel(GameFrame gf) {
+	/**
+	 * Create the panel.
+	 */
+	public MakeMenuPanel() {
 		setBackground(SystemColor.info);
 		setLayout(null);
 		
@@ -42,5 +33,6 @@ public class MenuPanel extends JPanel{
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitle.setBounds(157, 36, 485, 60);
 		add(lbTitle);
+
 	}
 }

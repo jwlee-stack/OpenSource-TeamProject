@@ -1,10 +1,14 @@
 package gui.panel;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import client.Client;
 import gui.frame.GameFrame;
@@ -19,14 +23,30 @@ public class LoginPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public LoginPanel(GameFrame gf) {
+		setBackground(SystemColor.activeCaption);
+		setLayout(null);
+		setSize(800, 600);
 		
-		setBackground(Color.CYAN);
-		add(new JLabel("로그인 화면"));
+		JLabel lbTitle = new JLabel("꾸러미 동산");
+		lbTitle.setFont(new Font("한컴 윤체 B", Font.PLAIN, 44));
+		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lbTitle.setBounds(157, 36, 485, 60);
+		add(lbTitle);
 		
-		JButton btn = new JButton("간편 로그인");
-		btn.addActionListener((e)->{
-			gf.changePanel("menu");
+		JButton btnKakaoLogin = new JButton("카카오 간편 로그인");
+		btnKakaoLogin.setBounds(238, 291, 332, 106);
+		add(btnKakaoLogin);
+		
+		btnKakaoLogin.addActionListener((e)->{
+			boolean state = gf.getClient().connectToServer("127.0.0.1", 9999);
+			
+			if(state == true) {
+				gf.changePanel("menu");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "서버 접속에 실패했습니다.", "접속 실패", JOptionPane.ERROR_MESSAGE);
+			}
 		});
-		add(btn);
+		add(btnKakaoLogin);
 	}
 }

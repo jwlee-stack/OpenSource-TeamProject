@@ -3,7 +3,6 @@ package data;
 public class Player {
 	private String uuid;
 	private String nickname;
-	private Friend[] friendList;
 	private int[] score;
 	private boolean isPlaying;
 	private boolean isSearching;
@@ -19,12 +18,6 @@ public class Player {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-	}
-	public Friend[] getFriendList() {
-		return friendList;
-	}
-	public void setFriendList(Friend[] friendList) {
-		this.friendList = friendList;
 	}
 	public int[] getScore() {
 		return score;

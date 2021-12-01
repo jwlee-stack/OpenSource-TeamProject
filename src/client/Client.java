@@ -25,8 +25,7 @@ public class Client {
 
 	public Client() {
 		this.player = new Player();
-		connectToServer("127.0.0.1", 9999);
-		runThreadToGetMessage();
+		//connectToServer("127.0.0.1", 9999);
 	}
 
 	public boolean connectToServer(String ip, int port) {
@@ -41,9 +40,16 @@ public class Client {
 			System.out.println(ip + ":" + port + "주소로 연결 완료");
 
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("서버 접속 실패");
+			return false;
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("서버 접속 실패");
+			return false;
+		}
+		
+		if(socket != null) {
+			runThreadToGetMessage();
 		}
 		
 		return (socket != null);
