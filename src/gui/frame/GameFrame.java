@@ -40,6 +40,7 @@ public class GameFrame extends JFrame{
 		this.cl = new CardLayout();
 		
 		setTitle(title);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(width, height);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -49,6 +50,12 @@ public class GameFrame extends JFrame{
 		add(ph.getPanel(0), "login");
 		add(ph.getPanel(1), "menu");
 		add(ph.getPanel(2), "game");
+		add(ph.getPanel(3), "waitroom");
+//		add("login", ph.getPanel(0));
+//		add("menu", ph.getPanel(1));
+//		add("game", ph.getPanel(2));
+//		add("waitroom", ph.getPanel(3));
+		//add(ph.getPanel(4), "test");
 	}
 	
 	/**
@@ -60,18 +67,23 @@ public class GameFrame extends JFrame{
 			case "game1":
 				remove(ph.getPanel(2));
 				ph.makeGamePanel(1);
-				add(ph.getPanel(2));
+				add(ph.getPanel(2), "game1");
 				break;
 			case "game2":
 				remove(ph.getPanel(2));
 				ph.makeGamePanel(2);
-				add(ph.getPanel(2));
+				add(ph.getPanel(2), "game2");
 				break;
 			case "game3":
 				remove(ph.getPanel(2));
 				ph.makeGamePanel(3);
-				add(ph.getPanel(2));
+				add(ph.getPanel(2), "game3");
 				break;
+//			case "waitroom":
+//				remove(ph.getPanel(3));
+//				ph.makeGamePanel(3);
+//				add(ph.getPanel(2));
+//				break;
 			default:
 				break;
 		}

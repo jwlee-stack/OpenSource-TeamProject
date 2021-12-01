@@ -18,7 +18,13 @@ import java.util.Vector;
  */
 public class Server {
 	private ServerSocket serverSocket;
+	
 	private Vector<ClientInfo> clientVector;
+	private Vector<RoomInfo> roomVector;
+	
+	private Vector<ClientInfo> waitRoom1 = new Vector<ClientInfo>();
+	private Vector<ClientInfo> waitRoom2 = new Vector<ClientInfo>();
+	private Vector<ClientInfo> waitRoom3 = new Vector<ClientInfo>();
 	
 	/**
 	 * port 번호를 사용해 서버를 만들고 실행시킨다.
@@ -27,6 +33,7 @@ public class Server {
 	 */
 	public Server(int port) {
 		this.clientVector = new Vector<ClientInfo>();
+		this.roomVector = new Vector<>();
 		
 		openServer(port);
 		acceptClient();
@@ -95,6 +102,8 @@ public class Server {
 	private class ClientInfo{
 		
 		private Socket socket;
+		private String nickname = "";
+		
 		private InputStream is;
 		private DataInputStream dis;
 		private OutputStream os;
@@ -162,12 +171,88 @@ public class Server {
 			
 			String protocol = st.nextToken();
 			String data = st.nextToken();
+			
+			if(protocol.equals("Login")) {
+				this.nickname = data;
+			}
+			else if(protocol.equals("JoinWaitRoom1")) {
+				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
+				waitRoom1.add(this);
+				if(waitRoom1.size() == 2) {
+					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
+					ClientInfo c1 = clientVector.elementAt(0);
+					ClientInfo c2 = clientVector.elementAt(1);
+					RoomInfo room = new RoomInfo(1, c1, c2);
+					waitRoom1.remove(c1);
+					waitRoom1.remove(c2);
+					
+					room.broadcast("ShowGame1/ ");
+				}
+			}
+			else if(protocol.equals("ExitWaitRoom1")) {
+				waitRoom1.remove(this);
+			}
+			else if(protocol.equals("JoinWaitRoom2")) {
+				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
+				waitRoom2.add(this);
+				if(waitRoom2.size() == 2) {
+					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
+					ClientInfo c1 = clientVector.elementAt(0);
+					ClientInfo c2 = clientVector.elementAt(1);
+					RoomInfo room = new RoomInfo(2, c1, c2);
+					waitRoom2.remove(c1);
+					waitRoom2.remove(c2);
+					
+					room.broadcast("ShowGame2/ ");
+				}
+			}
+			else if(protocol.equals("ExitWaitRoom2")) {
+				waitRoom2.remove(this);
+			}
+			else if(protocol.equals("JoinWaitRoom3")) {
+				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
+				waitRoom3.add(this);
+				if(waitRoom3.size() == 2) {
+					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
+					ClientInfo c1 = clientVector.elementAt(0);
+					ClientInfo c2 = clientVector.elementAt(1);
+					RoomInfo room = new RoomInfo(3, c1, c2);
+					waitRoom3.remove(c1);
+					waitRoom3.remove(c2);
+					
+					room.broadcast("ShowGame3/ ");
+				}
+			}
+			else if(protocol.equals("ExitWaitRoom3")) {
+				waitRoom1.remove(this);
+			}
 		}
 		
 		public void broadcast(String msg) {
 			for(ClientInfo ui : clientVector) {
 				ui.sendMessageToClient(msg);
 			}
+		}
+		
+		public String getNickname() {
+			return this.nickname;
+		}
+	}
+	
+	private class RoomInfo{
+		private int gameType; // 1:같은그림찾기, 2:오목, 3:두더지잡기
+		private ClientInfo c1;
+		private ClientInfo c2;
+		
+		public RoomInfo(int gameType, ClientInfo c1, ClientInfo c2) {
+			this.gameType = gameType;
+			this.c1 = c1;
+			this.c2 = c2;
+		}
+		
+		public void broadcast(String msg) {
+			c1.sendMessageToClient(msg);
+			c2.sendMessageToClient(msg);
 		}
 	}
 	

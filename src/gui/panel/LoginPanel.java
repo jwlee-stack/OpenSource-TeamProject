@@ -3,6 +3,7 @@ package gui.panel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -38,7 +39,12 @@ public class LoginPanel extends JPanel{
 		add(btnKakaoLogin);
 		
 		btnKakaoLogin.addActionListener((e)->{
-			boolean state = gf.getClient().connectToServer("127.0.0.1", 9999);
+			Client client = gf.getClient();
+			boolean state = client.connectToServer("127.0.0.1", 9999);
+			
+			//TODO
+			client.getPlayer().setNickname("user"+new Random().nextInt(10000));//테스트용
+			client.sendMessageToServer("Login/" + client.getPlayer().getNickname());
 			
 			if(state == true) {
 				gf.changePanel("menu");

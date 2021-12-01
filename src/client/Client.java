@@ -13,6 +13,7 @@ import data.Player;
 
 public class Client {
 	private Player player;
+	
 	private boolean isConnected;
 
 	private Socket socket;
@@ -91,6 +92,10 @@ public class Client {
 		
 		String protocol = st.nextToken();
 		String data = st.nextToken();
+		
+		if(protocol.equals("ShowGame1")) {
+			player.setPlayGameNum(1);
+		}
 	}
 	
 	public void sendMessageToServer(String msg) {
