@@ -15,13 +15,29 @@ import gui.panel.minigame.ThirdMinigamePanel;
  */
 public class PanelHandler {
 	private JPanel[] panel = new JPanel[5];
+	private GameFrame gf;
 	
 	public PanelHandler(GameFrame gf) {
+		this.gf = gf;
 		this.panel[0] = new LoginPanel(gf);
 		this.panel[1] = new MenuPanel(gf);
-		this.panel[2] = new FirstMinigamePanel(gf);
-		this.panel[3] = new SecondMinigamePanel(gf);
-		this.panel[4] = new ThirdMinigamePanel(gf);
+		this.panel[2] = new JPanel(); //dummy panel, 미니게임 패널이 들어갈 공간
+	}
+	
+	public void makeGamePanel(int type) {
+		switch(type) {
+		case 1: 
+			panel[2] = new FirstMinigamePanel(gf);
+			break;
+		case 2: 
+			panel[2] = new SecondMinigamePanel(gf);
+			break;
+		case 3: 
+			panel[2] = new ThirdMinigamePanel(gf);
+			break;
+		default:
+			System.out.println("존재하지 않는 미니게임 패널");
+		}
 	}
 	
 	/**

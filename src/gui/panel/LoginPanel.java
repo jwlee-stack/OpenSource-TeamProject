@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import client.Client;
 import gui.frame.GameFrame;
 
 /**
@@ -18,6 +19,7 @@ public class LoginPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public LoginPanel(GameFrame gf) {
+		
 		setBackground(Color.CYAN);
 		add(new JLabel("로그인 화면"));
 		

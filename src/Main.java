@@ -1,3 +1,5 @@
+import client.Client;
+import data.Player;
 import gui.frame.GameFrame;
 
 public class Main {
