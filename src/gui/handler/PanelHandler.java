@@ -24,7 +24,7 @@ public class PanelHandler {
 		this.panel[0] = new LoginPanel(gf);
 		this.panel[1] = new MenuPanel(gf);
 		this.panel[2] = new JPanel(); //dummy panel, 미니게임 패널이 들어갈 공간
-		this.panel[3] = new WaitRoomPanel(gf);
+		this.panel[3] = new JPanel(); //dummy panel, 웨이팅 패널이 들어갈 공간
 //		this.panel[4] = new JPanel(); //테스트
 //		this.panel[4].add(new JLabel("테스트"));//테스트
 	}
@@ -43,6 +43,11 @@ public class PanelHandler {
 		default:
 			System.out.println("존재하지 않는 미니게임 패널");
 		}
+	}
+	
+	public void makeWaitRoomPanel() {
+		System.out.println("웨이팅 룸 패널 생성");
+		this.panel[3] = new WaitRoomPanel(gf);
 	}
 	
 	/**

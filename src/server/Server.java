@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -176,54 +177,24 @@ public class Server {
 				this.nickname = data;
 			}
 			else if(protocol.equals("JoinWaitRoom1")) {
-				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
 				waitRoom1.add(this);
 				if(waitRoom1.size() == 2) {
 					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
 					ClientInfo c1 = clientVector.elementAt(0);
 					ClientInfo c2 = clientVector.elementAt(1);
-					RoomInfo room = new RoomInfo(1, c1, c2);
+					
+					String roomName = makeRandString();
+					RoomInfo room = new RoomInfo(roomName, 1, c1, c2);
+					roomVector.add(room);
+					
 					waitRoom1.remove(c1);
 					waitRoom1.remove(c2);
 					
+					room.broadcast("SendRoomName/"+room.getRoomName());
 					room.broadcast("ShowGame1/ ");
 				}
 			}
 			else if(protocol.equals("ExitWaitRoom1")) {
-				waitRoom1.remove(this);
-			}
-			else if(protocol.equals("JoinWaitRoom2")) {
-				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
-				waitRoom2.add(this);
-				if(waitRoom2.size() == 2) {
-					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
-					ClientInfo c1 = clientVector.elementAt(0);
-					ClientInfo c2 = clientVector.elementAt(1);
-					RoomInfo room = new RoomInfo(2, c1, c2);
-					waitRoom2.remove(c1);
-					waitRoom2.remove(c2);
-					
-					room.broadcast("ShowGame2/ ");
-				}
-			}
-			else if(protocol.equals("ExitWaitRoom2")) {
-				waitRoom2.remove(this);
-			}
-			else if(protocol.equals("JoinWaitRoom3")) {
-				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
-				waitRoom3.add(this);
-				if(waitRoom3.size() == 2) {
-					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
-					ClientInfo c1 = clientVector.elementAt(0);
-					ClientInfo c2 = clientVector.elementAt(1);
-					RoomInfo room = new RoomInfo(3, c1, c2);
-					waitRoom3.remove(c1);
-					waitRoom3.remove(c2);
-					
-					room.broadcast("ShowGame3/ ");
-				}
-			}
-			else if(protocol.equals("ExitWaitRoom3")) {
 				waitRoom1.remove(this);
 			}
 		}
@@ -237,14 +208,33 @@ public class Server {
 		public String getNickname() {
 			return this.nickname;
 		}
+		
+		private String makeRandString()
+		{
+			int leftLimit = 48; // numeral '0'
+			int rightLimit = 122; // letter 'z'
+			int targetStringLength = 10;
+			Random random = new Random();
+
+			String generatedString = random.ints(leftLimit,rightLimit + 1)
+			  .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+			  .limit(targetStringLength)
+			  .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+			  .toString();
+
+			System.out.println("ID:	"+generatedString);
+			return generatedString;
+		}
 	}
 	
 	private class RoomInfo{
+		private String roomName;
 		private int gameType; // 1:같은그림찾기, 2:오목, 3:두더지잡기
 		private ClientInfo c1;
 		private ClientInfo c2;
 		
-		public RoomInfo(int gameType, ClientInfo c1, ClientInfo c2) {
+		public RoomInfo(String roomName, int gameType, ClientInfo c1, ClientInfo c2) {
+			this.roomName = roomName;
 			this.gameType = gameType;
 			this.c1 = c1;
 			this.c2 = c2;
@@ -253,6 +243,10 @@ public class Server {
 		public void broadcast(String msg) {
 			c1.sendMessageToClient(msg);
 			c2.sendMessageToClient(msg);
+		}
+		
+		public String getRoomName() {
+			return this.roomName;
 		}
 	}
 	

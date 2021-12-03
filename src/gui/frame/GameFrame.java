@@ -79,6 +79,11 @@ public class GameFrame extends JFrame{
 				ph.makeGamePanel(3);
 				add(ph.getPanel(2), "game3");
 				break;
+			case "waitroom":
+				remove(ph.getPanel(3));
+				ph.makeWaitRoomPanel();
+				add(ph.getPanel(3), "waitroom");
+				break;
 //			case "waitroom":
 //				remove(ph.getPanel(3));
 //				ph.makeGamePanel(3);

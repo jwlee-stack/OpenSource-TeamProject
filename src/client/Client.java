@@ -42,7 +42,7 @@ public class Client {
 
 		} catch (UnknownHostException e) {
 			//e.printStackTrace();
-			System.out.println("서버 접속 실패");
+			System.out.println("알 수 없는 주소");
 			return false;
 		} catch (IOException e) {
 			System.out.println("서버 접속 실패");
@@ -95,6 +95,9 @@ public class Client {
 		
 		if(protocol.equals("ShowGame1")) {
 			player.setPlayGameNum(1);
+		}
+		else if(protocol.equals("SendRoomName")) {
+			player.setRoomName(data);
 		}
 	}
 	
