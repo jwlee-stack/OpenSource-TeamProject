@@ -1,5 +1,13 @@
 package data;
 
+/**
+ * 플레이어의 상태를 저장해둔 클래스이다. 닉네임, 플레이어가 속한 방 이름, 각 미니게임의 점수,
+ * 현재 플레이중인 게임 종류, 어떠한 게임에서 상대방을 찾는지에 대한 정보가 담겨있다.<br/><br/>
+ * <strong>0: 메뉴화면(기본값), 1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기</strong>
+ * 
+ * @author Ted
+ *
+ */
 public class Player {
 	private String uuid;
 	private String nickname = "";

@@ -9,7 +9,10 @@ import data.Player;
 import gui.handler.PanelHandler;
 
 /**
- * 게임 창
+ * 게임 창 클래스이다. 해당 클래스를 통해 사용자의 화면(패널)을 전환시킬 수 있다.
+ * 그리고, 플레이어의 Client 객체 또한 가지고 있다. 모든 패널에 존재하는 Client 래퍼런스는
+ * 해당 클래스에 존재하는 Client 객체를 가리키고 있다.
+ * 
  * @author phdljr
  *
  */
@@ -52,7 +55,7 @@ public class GameFrame extends JFrame{
 	}
 	
 	/**
-	 * 현재 Panel을 바꿔줌. login, menu, game1, game2, game3이 존재
+	 * 현재 Panel을 바꿔줌. login, menu, game1, game2, game3, waitroom이 존재
 	 * @param panel
 	 */
 	public void changePanel(String panel) {
@@ -83,6 +86,10 @@ public class GameFrame extends JFrame{
 		cl.show(this.getContentPane(), panel);
 	}
 	
+	/**
+	 * 플레이어의 Client를 반환
+	 * @return
+	 */
 	public Client getClient() {
 		return this.client;
 	}

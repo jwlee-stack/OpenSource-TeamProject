@@ -11,15 +11,25 @@ import data.Player;
 
 import gui.frame.GameFrame;
 
+/**
+ * 상대방을 찾는 중일 때 보여줄 패널. 상대방을 찾게 되면 미니게임 화면으로 이동하게 된다.
+ * @author Ted
+ *
+ */
 public class WaitRoomPanel extends JPanel{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String loadText = "상대방을 찾는 중";
 	private GameFrame gf;
 	private JLabel lbLoading;
-	private boolean isSearch;
+	private boolean isSearch; //상대방을 찾는 중이라면 true
 	private Player player;
 	
-	private Thread threadRotatingText;
+	private Thread threadRotatingText; 
 	
 	public WaitRoomPanel(GameFrame gf) {
 		this.gf = gf;
@@ -30,6 +40,11 @@ public class WaitRoomPanel extends JPanel{
 		loadText();
 	}
 	
+	/**
+	 * 상대방을 찾을때까지 글자를 변환시켜주도록 하는 메소드.
+	 * 플레이어의 playGameNum이 바뀌게 되면(=상대방을 찾은 경우)
+	 * isSearch가 false로 바뀌며 스레드는 종료하게 된다.
+	 */
 	private void loadText() {
 		threadRotatingText = new Thread(()->{
 			int count = 0;
@@ -45,7 +60,6 @@ public class WaitRoomPanel extends JPanel{
 					
 					if(player.getPlayGameNum() != 0) {
 						isSearch = false;
-						//gf.changePanel("test");
 						gf.changePanel("game"+player.getPlayGameNum());
 						System.out.println("game"+player.getPlayGameNum());
 					}

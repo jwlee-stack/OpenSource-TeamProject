@@ -38,15 +38,15 @@ public class LoginPanel extends JPanel{
 		btnKakaoLogin.setBounds(238, 291, 332, 106);
 		add(btnKakaoLogin);
 		
+		//버튼 클릭 시, 실행 될 코드
 		btnKakaoLogin.addActionListener((e)->{
 			Client client = gf.getClient();
-			boolean state = client.connectToServer("127.0.0.1", 9999);
-			
-			//TODO
-			client.getPlayer().setNickname("user"+new Random().nextInt(10000));//테스트용
-			client.sendMessageToServer("Login/" + client.getPlayer().getNickname());
+			boolean state = client.connectToServer("127.0.0.1", 9999); //접속 성공 시, true값 반환
 			
 			if(state == true) {
+				//TODO 카카오 API를 적용해, 닉네임을 넣어 줄 부분
+				client.getPlayer().setNickname("user"+new Random().nextInt(10000));
+				client.sendMessageToServer("Login/" + client.getPlayer().getNickname());
 				gf.changePanel("menu");
 			}
 			else {
