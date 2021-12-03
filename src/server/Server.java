@@ -18,11 +18,16 @@ import java.util.Vector;
  *
  */
 public class Server {
+	//클라이언트와 연결되는 소캣을 만드는 역할
 	private ServerSocket serverSocket;
 	
+	//클라이언트와 연결된 소캣을 저장는 벡터
 	private Vector<ClientInfo> clientVector;
+	
+	//게임방을 저장하는 벡터
 	private Vector<RoomInfo> roomVector;
 	
+	//게임방에 들어가기 위한 대기룸. 1: 틀린그림찾기, 2: 오목, 3: 두더지잡기
 	private Vector<ClientInfo> waitRoom1 = new Vector<ClientInfo>();
 	private Vector<ClientInfo> waitRoom2 = new Vector<ClientInfo>();
 	private Vector<ClientInfo> waitRoom3 = new Vector<ClientInfo>();
@@ -82,6 +87,9 @@ public class Server {
 		}).start();
 	}
 	
+	/**
+	 * 서버를 받는 메소드.
+	 */
 	public void closeServer() {
 		try {
 			serverSocket.close();
@@ -102,22 +110,31 @@ public class Server {
 	 */
 	private class ClientInfo{
 		
+		//클라이언트의 소캣
 		private Socket socket;
 		private String nickname = "";
 		
 		private InputStream is;
-		private DataInputStream dis;
+		private DataInputStream dis; //클라이언트로 데이터를 받는 스트림
 		private OutputStream os;
-		private DataOutputStream dos;
+		private DataOutputStream dos; //클라이언트로 데이터를 보내는 스트림
 		
-		private Thread threadGettingMsg;
+		private Thread threadGettingMsg; //클라이언트로부터 메세지를 받는 역할을 행하는 스레드
 
+		/**
+		 * 클라이언트의 소캣을 받는다.
+		 * 
+		 * @param socket
+		 */
 		public ClientInfo(Socket socket) { 
 			this.socket = socket;
 			
 			connect();
 		}
 		
+		/**
+		 * 클라이언트의 소캣을 통해 스트림을 생성해 연결하는 과정이다.
+		 */
 		public void connect() {
 			try {
 				is = socket.getInputStream();
@@ -132,12 +149,15 @@ public class Server {
 			runThreadToGetMessage();
 		}
 		
+		/**
+		 * 클라이언트로부터 메세지를 받는 역할을 맡은 스레드를 실행시킨다.
+		 */
 		public void runThreadToGetMessage() {
 			threadGettingMsg = new Thread(() -> {
 				while (true) {
 					try {
-						String msg = dis.readUTF();
-						inMessageFromClient(msg);
+						String msg = dis.readUTF(); //클라이언트로부터 메세지를 받아들이는 부분
+						inMessageFromClient(msg); //받은 메세지를 분석하는 메소드
 					} catch (IOException e) { //클라이언트로 연결이 끊길 시
 						//e.printStackTrace();
 						try {
@@ -157,6 +177,12 @@ public class Server {
 			threadGettingMsg.start();
 		}
 		
+		/**
+		 * 클라이언트로 메세지를 보내는 메소드이다. 메세지의 형태는 String이다.
+		 * 메세지의 형태는 정해져 있으며, 규칙에 맞게 보내야만 한다.
+		 * 
+		 * @param msg
+		 */
 		public void sendMessageToClient(String msg) {
 			try {
 				dos.writeUTF(msg);
@@ -165,6 +191,18 @@ public class Server {
 			}
 		}
 		
+		/**
+		 * 클라이언트로부터 받은 메세지를 분해해서 의미를 파악하고 이에 대해 행하는 메소드이다.
+		 * 행하는 방식은 메세지의 형태 즉, 프로토콜마다 다르며 각각의 프로토콜마다 정해진 메세지 규칙이 존재한다.<br/>
+		 * 메세지의 형태는 <strong>'프로토콜/데이터'</strong>로 이루어져 있다.
+		 * @apiNote
+		 * - Login/nickname : 클라이언트가 서버로 접속했다는 메세지. 클라이언트의 닉네임을 받아온다. <br/>
+		 * - JoinWaitRoom1/ : 클라이언트가 대기방1로 이동했다는 메세지. waitRoom에 해당 클라이언트의 UserInfo객체를 추가한다.<br/>
+		 * - ExitWaitRoom1/ : 클라이언트가 대기방1에서 메뉴화면으로 이동했다는 메세지. waitRoom에 해당 클라이언트의 UserInfo객체를 삭제한다.<br/>
+		 * 계속 추가될 예정
+		 * 
+		 * @param msg - 메세지
+		 */
 		public void inMessageFromClient(String msg) {
 			System.out.println("클라이언트로부터 메세지 : "+msg);
 			
@@ -177,14 +215,14 @@ public class Server {
 				this.nickname = data;
 			}
 			else if(protocol.equals("JoinWaitRoom1")) {
+				//waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
 				waitRoom1.add(this);
 				if(waitRoom1.size() == 2) {
 					//waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
 					ClientInfo c1 = clientVector.elementAt(0);
 					ClientInfo c2 = clientVector.elementAt(1);
 					
-					String roomName = makeRandString();
-					RoomInfo room = new RoomInfo(roomName, 1, c1, c2);
+					RoomInfo room = new RoomInfo(1, c1, c2);
 					roomVector.add(room);
 					
 					waitRoom1.remove(c1);
@@ -199,16 +237,29 @@ public class Server {
 			}
 		}
 		
+		/**
+		 * 서버에 접속한 모든 클라이언트에게 메세지를 보낸다.
+		 * 
+		 * @param msg
+		 */
 		public void broadcast(String msg) {
 			for(ClientInfo ui : clientVector) {
 				ui.sendMessageToClient(msg);
 			}
 		}
 		
+		/**
+		 * 해당 클라이언트의 닉네임을 구한다.
+		 * @return
+		 */
 		public String getNickname() {
 			return this.nickname;
 		}
 		
+		/**
+		 * 게임방의 이름을 랜덤으로 생성해주는 메소드이다. 10자리이다. 
+		 * @return
+		 */
 		private String makeRandString()
 		{
 			int leftLimit = 48; // numeral '0'
@@ -227,14 +278,19 @@ public class Server {
 		}
 	}
 	
+	/**
+	 * 게임이 진행될 때, 두 상대방의 ClientInfo 객체를 저장시키는 클래스이다. 하나의 미니게임방이라 생각하면 된다.
+	 * 해당 게임방에 존재하는 소켓들끼리만 데이터 통신을 
+	 * @author Ted
+	 *
+	 */
 	private class RoomInfo{
 		private String roomName;
 		private int gameType; // 1:같은그림찾기, 2:오목, 3:두더지잡기
 		private ClientInfo c1;
 		private ClientInfo c2;
 		
-		public RoomInfo(String roomName, int gameType, ClientInfo c1, ClientInfo c2) {
-			this.roomName = roomName;
+		public RoomInfo(int gameType, ClientInfo c1, ClientInfo c2) {
 			this.gameType = gameType;
 			this.c1 = c1;
 			this.c2 = c2;

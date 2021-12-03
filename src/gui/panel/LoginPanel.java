@@ -40,7 +40,6 @@ public class LoginPanel extends JPanel{
 		
 		btnKakaoLogin.addActionListener((e)->{
 			Client client = gf.getClient();
-			//boolean state = client.connectToServer("54.180.155.202", 56358);
 			boolean state = client.connectToServer("127.0.0.1", 9999);
 			
 			//TODO

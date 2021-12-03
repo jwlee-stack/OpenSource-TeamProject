@@ -20,11 +20,9 @@ public class GameFrame extends JFrame{
 	private CardLayout cl;
 	
 	private Client client;
-	private Player player;
 	
 	public GameFrame() {
-		this.client = new Client(); //서버 접속은 connectToserver()를 호출해야 접속함 
-		this.player = client.getPlayer();
+		this.client = new Client(); //서버 접속은 connectToserver()를 호출해야 접속함
 		
 		setMyFrame("꾸러미 동산", 800, 600);
 	}
@@ -51,11 +49,6 @@ public class GameFrame extends JFrame{
 		add(ph.getPanel(1), "menu");
 		add(ph.getPanel(2), "game");
 		add(ph.getPanel(3), "waitroom");
-//		add("login", ph.getPanel(0));
-//		add("menu", ph.getPanel(1));
-//		add("game", ph.getPanel(2));
-//		add("waitroom", ph.getPanel(3));
-		//add(ph.getPanel(4), "test");
 	}
 	
 	/**
@@ -84,11 +77,6 @@ public class GameFrame extends JFrame{
 				ph.makeWaitRoomPanel();
 				add(ph.getPanel(3), "waitroom");
 				break;
-//			case "waitroom":
-//				remove(ph.getPanel(3));
-//				ph.makeGamePanel(3);
-//				add(ph.getPanel(2));
-//				break;
 			default:
 				break;
 		}

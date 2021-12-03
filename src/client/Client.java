@@ -42,7 +42,7 @@ public class Client {
 
 		} catch (UnknownHostException e) {
 			//e.printStackTrace();
-			System.out.println("알 수 없는 주소");
+			System.out.println("서버 접속 실패");
 			return false;
 		} catch (IOException e) {
 			System.out.println("서버 접속 실패");
