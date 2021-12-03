@@ -26,8 +26,10 @@ public class GameFrame extends JFrame{
 	
 	public GameFrame() {
 		this.client = new Client(); //서버 접속은 connectToserver()를 호출해야 접속함
+		this.ph = new PanelHandler(this);
+		this.cl = new CardLayout();
 		
-		setMyFrame("꾸러미 동산", 800, 600);
+		initGUI("꾸러미 동산", 800, 600);
 	}
 	
 	/**
@@ -36,10 +38,7 @@ public class GameFrame extends JFrame{
 	 * @param width
 	 * @param height
 	 */
-	private void setMyFrame(String title, int width, int height) {
-		this.ph = new PanelHandler(this);
-		this.cl = new CardLayout();
-		
+	private void initGUI(String title, int width, int height) {
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(width, height);

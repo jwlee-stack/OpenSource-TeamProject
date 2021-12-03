@@ -36,7 +36,7 @@ public class WaitRoomPanel extends JPanel{
 		this.isSearch = true;
 		this.player = gf.getClient().getPlayer();
 		
-		setMyPanel();
+		initGUI();
 		loadText();
 	}
 	
@@ -72,7 +72,7 @@ public class WaitRoomPanel extends JPanel{
 		threadRotatingText.start();
 	}
 	
-	private void setMyPanel() {
+	private void initGUI() {
 		setBackground(SystemColor.info);
 		setLayout(null);
 		setSize(800, 600);
