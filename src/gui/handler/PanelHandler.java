@@ -3,6 +3,7 @@ package gui.handler;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import client.Client;
 import gui.frame.GameFrame;
 import gui.panel.LoginPanel;
 import gui.panel.MenuPanel;
@@ -15,10 +16,11 @@ import gui.panel.minigame.ThirdMinigamePanel;
  * GameFrame에 사용될 모든 Panel을 관리해주는 클래스.
  * PanelHandler는 GameFrame에 사용되는 모든 Panel을 가지고 있고, 이를 관리해주는 역할을 맡고 있다.
  */
+
 public class PanelHandler {
 	private JPanel[] panel = new JPanel[5];
 	private GameFrame gf;
-	
+	private Client client1;
 	public PanelHandler(GameFrame gf) {
 		this.gf = gf;
 		this.panel[0] = new LoginPanel(gf);
@@ -27,12 +29,16 @@ public class PanelHandler {
 		this.panel[3] = new JPanel(); //dummy panel, 웨이팅 패널이 들어갈 공간
 //		this.panel[4] = new JPanel(); //테스트
 //		this.panel[4].add(new JLabel("테스트"));//테스트
+		this.client1=gf.getClient();
 	}
 	
 	public void makeGamePanel(int type) {
 		switch(type) {
 		case 1: 
 			panel[2] = new FirstMinigamePanel(gf);
+			((FirstMinigamePanel)panel[2]).getClient().setPanel((FirstMinigamePanel)panel[2]);
+			System.out.println("패널 생성됨");
+			((FirstMinigamePanel) panel[2]).addLayout();
 			break;
 		case 2: 
 			panel[2] = new SecondMinigamePanel(gf);
@@ -44,7 +50,7 @@ public class PanelHandler {
 			System.out.println("존재하지 않는 미니게임 패널");
 		}
 	}
-	
+
 	public void makeWaitRoomPanel() {
 		System.out.println("웨이팅 룸 패널 생성");
 		this.panel[3] = new WaitRoomPanel(gf);

@@ -11,6 +11,11 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
+
+
+
+
 /**
  * 클라이언트와 소켓 통신을 하기 위한 클래스이다.
  * 
@@ -26,6 +31,23 @@ public class Server {
 	private Vector<ClientInfo> waitRoom1 = new Vector<ClientInfo>();
 	private Vector<ClientInfo> waitRoom2 = new Vector<ClientInfo>();
 	private Vector<ClientInfo> waitRoom3 = new Vector<ClientInfo>();
+	private Vector<Result> resultVector = new Vector<Result>();
+	
+	class Result
+	{
+		String name;
+		String score;
+		Result()
+		{
+			name=null;
+			score=null;
+		}
+	}
+	
+	private static int answer[][];
+	int getsu;
+	
+
 	
 	/**
 	 * port 번호를 사용해 서버를 만들고 실행시킨다.
@@ -104,6 +126,7 @@ public class Server {
 		
 		private Socket socket;
 		private String nickname = "";
+		private RoomInfo myroom;
 		
 		private InputStream is;
 		private DataInputStream dis;
@@ -111,7 +134,10 @@ public class Server {
 		private DataOutputStream dos;
 		
 		private Thread threadGettingMsg;
+		
+		
 
+		
 		public ClientInfo(Socket socket) { 
 			this.socket = socket;
 			
@@ -156,6 +182,10 @@ public class Server {
 			
 			threadGettingMsg.start();
 		}
+		public void setRoomInfo(RoomInfo room)
+		{
+			myroom=room;
+		}
 		
 		public void sendMessageToClient(String msg) {
 			try {
@@ -186,16 +216,116 @@ public class Server {
 					String roomName = makeRandString();
 					RoomInfo room = new RoomInfo(roomName, 1, c1, c2);
 					roomVector.add(room);
+					c1.setRoomInfo(room);
+					c2.setRoomInfo(room);
 					
 					waitRoom1.remove(c1);
 					waitRoom1.remove(c2);
 					
 					room.broadcast("SendRoomName/"+room.getRoomName());
-					room.broadcast("ShowGame1/ ");
+					//room.broadcast("ShowGame1/ ");
+					c1.sendMessageToClient("ShowGame1/CreateGame");///"+c1.getNickname());
+					c2.sendMessageToClient("ShowGame1/GetGame");//+c1.getNickname());
 				}
 			}
 			else if(protocol.equals("ExitWaitRoom1")) {
 				waitRoom1.remove(this);
+			}
+			else if(protocol.equals("CreateGame")) {
+				ClientInfo c1 = clientVector.elementAt(0);
+				c1.sendMessageToClient("CreateGame/null");
+			}
+			else if(protocol.equals("makeArray"))
+			{
+				getsu=Integer.parseInt(data);
+				answer = new int[getsu][getsu];
+			}
+			else if(protocol.equals("MakeGame")) {
+				int row=Integer.parseInt(st.nextToken());
+				int col=Integer.parseInt(st.nextToken());
+				int alpha=Integer.parseInt(st.nextToken());
+				answer[row][col]=alpha;
+				
+			}
+			else if(protocol.equals("SetGame"))
+			{
+				int num=0;
+				
+				for(int i=0;i<getsu;i++)
+				{
+					for(int j=0;j<getsu;j++)
+					{
+						broadcast("SetGame/"+Integer.toString(i)+"/"+Integer.toString(j)+"/"+Integer.toString(answer[i][j]));
+						
+					}
+					num++;
+				}
+			}
+			else if(protocol.equals("StartGame"))
+			{
+				broadcast("StartGame/null");
+			}
+			else if(protocol.equals("ButtonClicked"))
+			{
+				String clicked=st.nextToken();
+				System.out.println("눌린 버튼:"+clicked);
+				for(int i=0;i<roomVector.size();i++) {
+					RoomInfo r = (RoomInfo)roomVector.elementAt(i);
+					
+					if(r.roomName.equals(data)) {
+						r.broadcast("Chatting/"+nickname+"/"+clicked);
+					}
+				}
+			}
+			else if(protocol.equals("ChangePlayer"))
+			{
+				for(int i=0;i<roomVector.size();i++) {
+					RoomInfo r=(RoomInfo)roomVector.elementAt(i);
+					if(this.myroom==r) 
+					{
+						for (int k = 0; k < clientVector.size(); k++) {
+							ClientInfo u = clientVector.elementAt(k);
+							u.sendMessageToClient("ChangePlayer/null");
+						}
+					}						
+				}
+			}
+			else if(protocol.equals("GameOver"))
+			{	
+				Result r=new Result();
+				r.name=data;
+				r.score=st.nextToken();
+				resultVector.add(r);
+				String winner;
+				System.out.println(resultVector.size());
+				if(resultVector.size()==2) //두 플레이어의 값 다 받음
+				{
+					if(Integer.parseInt(resultVector.get(0).score)>Integer.parseInt(resultVector.get(1).score))			
+					{
+						
+						winner=resultVector.get(0).name;
+						System.out.println(winner+"가 이김1");
+						for(int i=0;i<roomVector.size();i++) {
+							RoomInfo ri = (RoomInfo)roomVector.elementAt(i);
+							
+							if(ri.roomName.equals(data)) {
+								ri.broadcast("gameover/"+winner+"/"+resultVector.get(0).score+"/"+resultVector.get(1).score);
+							}
+
+						resultVector.clear();						
+						}
+					}
+					else
+					{
+						winner=resultVector.get(1).name;
+						System.out.println(winner+"가 이김2");
+						for(int i=0;i<roomVector.size();i++) {
+						RoomInfo ri = (RoomInfo)roomVector.elementAt(i);
+						ri.broadcast("gameover/"+winner+"/"+resultVector.get(0).score+"/"+resultVector.get(1).score);
+						resultVector.clear();						
+						}
+					}
+				}
 			}
 		}
 		
@@ -248,6 +378,7 @@ public class Server {
 		public String getRoomName() {
 			return this.roomName;
 		}
+		
 	}
 	
 	//테스트용

@@ -46,13 +46,13 @@ public class WaitRoomPanel extends JPanel{
 					if(player.getPlayGameNum() != 0) {
 						isSearch = false;
 						//gf.changePanel("test");
-						gf.changePanel("game"+player.getPlayGameNum());
-						System.out.println("game"+player.getPlayGameNum());
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
+			gf.changePanel("game"+player.getPlayGameNum()); //게임1 화면으로 이동
+			System.out.println("game"+player.getPlayGameNum());
 		});
 		
 		threadRotatingText.start();
