@@ -1,5 +1,62 @@
 package data.handler;
 
-public class DataHandler {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+public class DataHandler {
+	
+	private static DataHandler dh;
+	private String ip = "13.124.202.117";
+	private String port = "58873";
+	private String db = "userdb";
+	private String id = "root";
+	private String pw = "mysql1234";
+	
+	private static Connection con;
+	
+	private DataHandler() {
+    	try {
+    		//Class.forName("con.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://"+ip+":"+port+"/"+db, id, pw);
+			System.out.println("데이터베이스 연결 성공");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static DataHandler getInstance() {
+		if(dh == null) {
+			dh = new DataHandler();
+		}
+		return dh;
+	}
+	
+	public static String getScore() {
+		String result = "";
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("select * from user");
+			
+			while(rs.next()) {
+				result += rs.getString("id") + 
+						rs.getString("user_id") + 
+						rs.getString("user_pw") + 
+						rs.getString("user_score_1") + 
+						rs.getString("user_score_2") +
+						rs.getString("user_score_3");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public static void main(String[] args) {
+		DataHandler dh = DataHandler.getInstance();
+		System.out.println(dh.getScore());
+	}
 }

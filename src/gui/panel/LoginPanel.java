@@ -44,7 +44,16 @@ public class LoginPanel extends JPanel{
 			boolean state = client.connectToServer("127.0.0.1", 9999); //접속 성공 시, true값 반환
 			
 			if(state == true) {
+				boolean isLogin = false;
 				//TODO 카카오 API를 적용해, 닉네임을 넣어 줄 부분
+				
+//				////////////
+//				login();
+//				while(!isLogin) { //로그인을 할 때 까지 반복
+//					sendQuery("select * from user where nickname = 123");
+//				}
+//				////////////
+				
 				client.getPlayer().setNickname("user"+new Random().nextInt(10000));
 				client.sendMessageToServer("Login/" + client.getPlayer().getNickname());
 				gf.changePanel("menu");
