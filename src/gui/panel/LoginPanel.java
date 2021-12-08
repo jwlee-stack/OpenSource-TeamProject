@@ -63,6 +63,8 @@ public class LoginPanel extends JPanel {
 			if(login(id, pw)) {
 				connectToServer();
 				gf.changePanel("menu");
+				//TODO 테스트
+				System.out.println(gf.getClient().getPlayer());
 			}
 			else {
 				JOptionPane.showMessageDialog(getParent(), "사용자 정보가 일치하지 않습니다.", "로그인 실패", JOptionPane.ERROR_MESSAGE);
