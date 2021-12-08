@@ -51,6 +51,8 @@ public class GameFrame extends JFrame{
 		add(ph.getPanel(1), "menu");
 		add(ph.getPanel(2), "game");
 		add(ph.getPanel(3), "waitroom");
+		add(ph.getPanel(4), "signup");
+		add(ph.getPanel(5), "rematching");
 	}
 	
 	/**

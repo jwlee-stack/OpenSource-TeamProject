@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import gui.frame.GameFrame;
 import gui.panel.LoginPanel;
 import gui.panel.MenuPanel;
+import gui.panel.RematchingPanel;
+import gui.panel.SignupPanel;
 import gui.panel.WaitRoomPanel;
 import gui.panel.minigame.FirstMinigamePanel;
 import gui.panel.minigame.SecondMinigamePanel;
@@ -16,7 +18,7 @@ import gui.panel.minigame.ThirdMinigamePanel;
  * PanelHandler는 GameFrame에 사용되는 모든 Panel을 가지고 있고, 이를 관리해주는 역할을 맡고 있다.
  */
 public class PanelHandler {
-	private JPanel[] panel = new JPanel[5]; //모든 패널을 담고 있는 배열
+	private JPanel[] panel = new JPanel[6]; //모든 패널을 담고 있는 배열
 	private GameFrame gf;
 	
 	public PanelHandler(GameFrame gf) {
@@ -25,6 +27,8 @@ public class PanelHandler {
 		this.panel[1] = new MenuPanel(gf);
 		this.panel[2] = new JPanel(); //dummy panel, 미니게임 패널이 들어갈 공간
 		this.panel[3] = new JPanel(); //dummy panel, 웨이팅 패널이 들어갈 공간
+		this.panel[4] = new SignupPanel(gf);
+		this.panel[5] = new RematchingPanel(gf);
 	}
 	
 	/**
@@ -68,7 +72,7 @@ public class PanelHandler {
 	
 	/**
 	 * index에 해당되는 Panel을 반환한다.<br/><br/>
-	 * <strong>0:로그인 패널, 1: 메뉴 패널, 2: 미니게임 패널, 3: 웨이팅 룸 패널</strong>
+	 * <strong>0:로그인 패널, 1: 메뉴 패널, 2: 미니게임 패널, 3: 웨이팅 룸 패널, 4: 회원 가입 패널, 5: 리매칭 패널</strong>
 	 * @param index
 	 * @return Panel
 	 */

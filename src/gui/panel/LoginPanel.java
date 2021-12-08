@@ -17,61 +17,68 @@ import client.Client;
 import gui.frame.GameFrame;
 
 /**
- * 로그인 화면을 나타낼 Panel
- * 카카오 API와 연결하여 간편 로그인 및 회원가입을 성공한다면 MenuPanel로 이동함
+ * 로그인 화면을 나타낼 Panel 카카오 API와 연결하여 간편 로그인 및 회원가입을 성공한다면 MenuPanel로 이동함
+ * 
  * @author phdljr
  *
  */
-public class LoginPanel extends JPanel{
+public class LoginPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+
+	private JButton btnLogin;
+	private JButton btnSignUp;
 
 	public LoginPanel(GameFrame gf) {
 		setBackground(SystemColor.activeCaption);
 		setLayout(null);
 		setSize(800, 600);
-		
+
 		JLabel lbTitle = new JLabel("꾸러미 동산");
 		lbTitle.setFont(new Font("한컴 윤체 B", Font.PLAIN, 44));
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitle.setBounds(157, 36, 485, 60);
 		add(lbTitle);
-		
-		JTextField editorPane = new JTextField();
-		editorPane.setBounds(240, 312, 320, 30);
-		add(editorPane);
-		
+
+		JTextField idField = new JTextField();
+		idField.setBounds(240, 212, 320, 30);
+		add(idField);
+
 		JPasswordField passwordField = new JPasswordField();
-		passwordField.setBounds(240, 360, 320, 30);
+		passwordField.setBounds(240, 260, 320, 30);
 		add(passwordField);
-		
-		JButton btnKakaoLogin = new JButton("카카오 간편 로그인");
-		btnKakaoLogin.setBounds(238, 291, 332, 106);
-		add(btnKakaoLogin);
-		
-		//버튼 클릭 시, 실행 될 코드
-		btnKakaoLogin.addActionListener((e)->{
+
+		btnLogin = new JButton("로그인");
+		btnLogin.setBounds(240, 350, 320, 40);
+		btnLogin.addActionListener((e) -> {
 			Client client = gf.getClient();
-			boolean state = client.connectToServer("127.0.0.1", 9999); //접속 성공 시, true값 반환
-			
-			if(state == true) {
+			boolean state = client.connectToServer("127.0.0.1", 9999); // 접속 성공 시, true값 반환
+
+			if (state == true) {
 				boolean isLogin = false;
-				//TODO 카카오 API를 적용해, 닉네임을 넣어 줄 부분
-				
-//				////////////
-//				login();
-//				while(!isLogin) { //로그인을 할 때 까지 반복
-//					sendQuery("select * from user where nickname = 123");
-//				}
-//				////////////
-				
-				client.getPlayer().setNickname("user"+new Random().nextInt(10000));
+				// TODO 카카오 API를 적용해, 닉네임을 넣어 줄 부분
+
+//						////////////
+//						login();
+//						while(!isLogin) { //로그인을 할 때 까지 반복
+//							sendQuery("select * from user where nickname = 123");
+//						}
+//						////////////
+
+				client.getPlayer().setNickname("user" + new Random().nextInt(10000));
 				client.sendMessageToServer("Login/" + client.getPlayer().getNickname());
 				gf.changePanel("menu");
-			}
-			else {
+			} else {
 				JOptionPane.showMessageDialog(null, "서버 접속에 실패했습니다.", "접속 실패", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		add(btnKakaoLogin);
+		add(btnLogin);
+
+		btnSignUp = new JButton("회원 가입");
+		btnSignUp.setBounds(240, 400, 320, 40);
+		btnSignUp.addActionListener((e)->{
+			gf.changePanel("signup");
+		});
+		add(btnSignUp);
+
 	}
 }

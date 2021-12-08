@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataHandler {
+public class Database {
 	
-	private static DataHandler dh;
+	private static Database dh;
 	private String ip = "13.124.82.133"; //계속 바뀜
 	private String port = "54830"; //계속 바뀜
 	private String db = "userdb";
@@ -18,7 +18,7 @@ public class DataHandler {
 	
 	private static Connection con;
 	
-	private DataHandler() {
+	private Database() {
     	try {
     		//Class.forName("con.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://"+ip+":"+port+"/"+db, id, pw);
@@ -28,9 +28,9 @@ public class DataHandler {
 		}
 	}
 	
-	public static DataHandler getInstance() {
+	public static Database getInstance() {
 		if(dh == null) {
-			dh = new DataHandler();
+			dh = new Database();
 		}
 		return dh;
 	}
@@ -76,7 +76,7 @@ public class DataHandler {
 
 	//테스트
 	public static void main(String[] args) {
-		DataHandler dh = DataHandler.getInstance();
+		Database dh = Database.getInstance();
 		//System.out.println(dh.getScore("admin", "admin"));
 		//System.out.println(dh.getScore("test", "test123"));
 	}
