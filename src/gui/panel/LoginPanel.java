@@ -45,10 +45,20 @@ public class LoginPanel extends JPanel {
 		lbTitle.setBounds(157, 36, 485, 60);
 		add(lbTitle);
 		
+		JLabel lbID = new JLabel("ID");
+		lbID.setFont(new Font("한컴 윤체 B", Font.PLAIN, 30));
+		lbID.setBounds(170, 212, 50, 30);
+		add(lbID);
+		
 		JTextField idField = new JTextField();
 		idField.setBounds(240, 212, 320, 30);
 		add(idField);
 
+		JLabel lbPW = new JLabel("PW");
+		lbPW.setFont(new Font("한컴 윤체 B", Font.PLAIN, 30));
+		lbPW.setBounds(170, 260, 50, 30);
+		add(lbPW);
+		
 		JPasswordField passwordField = new JPasswordField();
 		passwordField.setBounds(240, 260, 320, 30);
 		add(passwordField);
