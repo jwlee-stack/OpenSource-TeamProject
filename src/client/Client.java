@@ -157,10 +157,4 @@ public class Client {
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-	
-	//테스트용
-	public static void main(String[] args) {
-		new Client();
-	}
 }

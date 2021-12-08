@@ -9,31 +9,34 @@ package data;
  *
  */
 public class Player {
-	private String uuid;
+	private String id = "";
 	private String nickname = "";
 	private String roomName = ""; //방에 없으면 빈 문자열을 가짐. 방 이름은 랜덤 문자열은 10자리를 가짐
-	private Friend[] friendList;
 	private int[] score;
 	private int playGameNum; //1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 	private int searchingGameNum; //1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 	
-	public String getUuid() {
-		return uuid;
+	public Player() {
+		
 	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	
+	public Player(String id, String nickname, int[] score) {
+		this.id = id;
+		this.nickname = nickname;
+		this.score = score;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-	}
-	public Friend[] getFriendList() {
-		return friendList;
-	}
-	public void setFriendList(Friend[] friendList) {
-		this.friendList = friendList;
 	}
 	public int[] getScore() {
 		return score;
