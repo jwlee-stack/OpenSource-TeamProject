@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import client.Client;
@@ -33,6 +35,14 @@ public class LoginPanel extends JPanel{
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitle.setBounds(157, 36, 485, 60);
 		add(lbTitle);
+		
+		JTextField editorPane = new JTextField();
+		editorPane.setBounds(240, 312, 320, 30);
+		add(editorPane);
+		
+		JPasswordField passwordField = new JPasswordField();
+		passwordField.setBounds(240, 360, 320, 30);
+		add(passwordField);
 		
 		JButton btnKakaoLogin = new JButton("카카오 간편 로그인");
 		btnKakaoLogin.setBounds(238, 291, 332, 106);
