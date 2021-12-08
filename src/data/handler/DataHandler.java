@@ -2,6 +2,7 @@ package data.handler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,8 +10,8 @@ import java.sql.Statement;
 public class DataHandler {
 	
 	private static DataHandler dh;
-	private String ip = "13.124.202.117";
-	private String port = "58873";
+	private String ip = "13.124.82.133";
+	private String port = "54830";
 	private String db = "userdb";
 	private String id = "root";
 	private String pw = "mysql1234";
@@ -34,12 +35,11 @@ public class DataHandler {
 		return dh;
 	}
 	
-	public static String getScore() {
-		String result = "";
+	public static String getScore(String id, String pw) {
+		String result = "asd";
 		try {
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select * from user");
-			
+			ResultSet rs = st.executeQuery("select * from user where user_id = '"+id+"' and user_pw = '"+pw+"'");
 			while(rs.next()) {
 				result += rs.getString("id") + 
 						rs.getString("user_id") + 
@@ -51,12 +51,12 @@ public class DataHandler {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
 
 	public static void main(String[] args) {
 		DataHandler dh = DataHandler.getInstance();
-		System.out.println(dh.getScore());
+		System.out.println(dh.getScore("admin", "admin"));
+		System.out.println(dh.getScore("test", "test123"));
 	}
 }
