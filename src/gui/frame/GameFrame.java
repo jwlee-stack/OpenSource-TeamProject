@@ -56,7 +56,8 @@ public class GameFrame extends JFrame{
 	}
 	
 	/**
-	 * 현재 Panel을 바꿔줌. login, menu, game1, game2, game3, waitroom이 존재
+	 * 현재 Panel을 바꿔줌.<br/>
+	 * login, menu, game1, game2, game3, waitroom, signup, rematching
 	 * @param panel
 	 */
 	public void changePanel(String panel) {

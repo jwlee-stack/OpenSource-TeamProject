@@ -14,6 +14,11 @@ import javax.swing.SwingConstants;
 import data.Player;
 import gui.frame.GameFrame;
 
+/**
+ * 게임이 끝나고 보여질 화면
+ * @author Ted
+ *
+ */
 public class RematchingPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
@@ -22,7 +27,6 @@ public class RematchingPanel extends JPanel{
 		setLayout(null);
 		
 		Player player = gf.getClient().getPlayer();
-		
 		
 		JLabel finishlabel = new JLabel("게임종료");
 		finishlabel.setBounds(325, 80, 150, 80);

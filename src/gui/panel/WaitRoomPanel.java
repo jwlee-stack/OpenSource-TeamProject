@@ -17,10 +17,6 @@ import gui.frame.GameFrame;
  *
  */
 public class WaitRoomPanel extends JPanel{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String loadText = "상대방을 찾는 중";
