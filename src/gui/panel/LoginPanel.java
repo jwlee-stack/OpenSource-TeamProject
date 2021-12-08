@@ -93,7 +93,6 @@ public class LoginPanel extends JPanel {
 		return result;
 	}
 
-	//TODO Player 정보를 DB에서 가져와서 저장하는 곳
 	/**
 	 * DB에서 유저의 정보를 가져와서 설정해주는 메소드이다.<br/>
 	 * 매개변수로 입력받은 id와 password를 기반으로 데이터베이스에서 데이터를 가져온다.<br/>
