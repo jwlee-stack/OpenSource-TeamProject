@@ -44,7 +44,7 @@ public class LoginPanel extends JPanel {
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitle.setBounds(157, 36, 485, 60);
 		add(lbTitle);
-
+		
 		JTextField idField = new JTextField();
 		idField.setBounds(240, 212, 320, 30);
 		add(idField);

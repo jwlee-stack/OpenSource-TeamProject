@@ -119,32 +119,44 @@ public class SignupPanel extends JPanel{
 			//System.out.println(checkDupID());
 			//System.out.println(checkEqualPW());
 			if(checkDupID() && checkDupNickname() && checkEqualPW()) {
-				signup();
-				JOptionPane.showMessageDialog(getParent(), "회원 가입이 정상적으로 등록되었습니다.", "회원 가입 성공", JOptionPane.INFORMATION_MESSAGE);
-				gf.changePanel("login");
-				clearText();
+				//회원가입이 정상적으로 이루어진다면
+				if(signup()) {
+					JOptionPane.showMessageDialog(getParent(), "회원 가입이 정상적으로 등록되었습니다.", "회원 가입 성공", JOptionPane.INFORMATION_MESSAGE);
+					gf.changePanel("login");
+					clearText();
+				}
 			}
 		});
 	}
 	
 	/**
-	 * nickname 중복을 체크한다. 중복이 아니라면 true를 반환한다.
+	 * nickname 중복과 길이를 체크한다. 중복이 아니라면 true를 반환한다.
 	 * @return
 	 */
 	private boolean checkDupNickname() {
 		String nickname = NicknameField.getText();
+		if(nickname.length() < 3 || nickname.length() >= 10) {
+			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 10자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
 		boolean result = db.isThereID(nickname);
 		
 		return !result;
 	}
 	
 	/**
-	 * id 중복을 체크한다. 중복이 아니라면 true를 반환한다.
+	 * id 중복과 최소 길이를 체크한다. 중복이 아니라면 true를 반환한다.
 	 * @return
 	 */
 	private boolean checkDupID() {
 		String id = IDField.getText();
 		boolean result = db.isThereID(id);
+		
+		if(id.length() < 5 || id.length() >= 20) {
+			JOptionPane.showMessageDialog(getParent(), "ID의 길이는 5자 이상, 20자 미만으로만 설정할 수 있습니다.", "ID 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		
 		return !result;
 	}
@@ -160,18 +172,41 @@ public class SignupPanel extends JPanel{
 	}
 	
 	/**
-	 * 입력한 아이디, 비밀번호, 닉네임을 기반으로 데이터 베이스에 값을 추가한다.
+	 * 입력한 아이디, 비밀번호, 닉네임을 기반으로 데이터 베이스에 값을 추가한다. 단, 밑의 조건을 만족해야만 한다.<br/><br/>
+	 * - id 최소 5자 이상, 20자 미만<br/>
+	 * - nickname 최소 3자 이상, 10자 미만<br/>
+	 * - password 최소 8자 이상, 30자 미만<br/><br/>
+	 * 위의 조건을 다 만족한다면 true를 반환한다.
 	 */
-	private void signup() {
+	private boolean signup() {
 		String id = IDField.getText();
+		//id 최소 5자 이상, 20자 미만
+		if(id.length() < 5 || id.length() >= 20) {
+			JOptionPane.showMessageDialog(getParent(), "ID의 길이는 5자 이상, 20자 미만으로만 설정할 수 있습니다.", "ID 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
 		String nickname = NicknameField.getText();
+		//nickname 최소 3자 이상, 10자 미만
+		if(nickname.length() < 3 || nickname.length() >= 10) {
+			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 10자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
 		String pw = new String(PasswordField.getPassword());
+		//password 최소 8자 이상, 30자 미만
+		if(pw.length() < 8 || pw.length() >= 30) {
+			JOptionPane.showMessageDialog(getParent(), "비밀번호의 길이는 8자 이상, 30자 미만으로만 설정할 수 있습니다.", "비밀번호 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		
 		db.signup(id, nickname, pw);
+		return true;
 	}
 	
 	/**
 	 * 텍스트 필드를 다 비운다.
+	 * 화면이 이동되어도 입력칸에 적힌 데이터들은 그대로 존재하기 때문에 비워줘야 한다.
 	 */
 	private void clearText() {
 		IDField.setText("");
