@@ -36,9 +36,6 @@ public class PanelHandler {
 		switch(type) {
 		case 1: 
 			panel[2] = new FirstMinigamePanel(gf);
-			((FirstMinigamePanel)panel[2]).getClient().setPanel((FirstMinigamePanel)panel[2]);
-			System.out.println("패널 생성됨");
-			((FirstMinigamePanel) panel[2]).addLayout();
 			break;
 		case 2: 
 			panel[2] = new SecondMinigamePanel(gf);

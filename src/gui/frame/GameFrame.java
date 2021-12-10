@@ -25,7 +25,7 @@ public class GameFrame extends JFrame{
 	public GameFrame() {
 		this.client = new Client(); //서버 접속은 connectToserver()를 호출해야 접속함 
 		this.player = client.getPlayer();
-		
+		this.client.setgameframe(this);
 		setMyFrame("꾸러미 동산", 800, 600);
 	}
 	

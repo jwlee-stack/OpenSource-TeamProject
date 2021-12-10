@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import client.Client;
-import data.GameInfo;
 import data.Player;
 import gui.frame.GameFrame;
 
@@ -26,7 +25,7 @@ public class FirstMinigamePanel extends JPanel{
 	
 	private Client client;
 	private Player player;
-	private GameInfo gameinfo;
+
 	
 	int getsu =4; 
 	JButton [][] btn = new JButton [getsu][getsu];
@@ -45,8 +44,10 @@ public class FirstMinigamePanel extends JPanel{
 		
 		this.setClient(gf.getClient());
 		this.player = gf.getClient().getPlayer();
-		this.gameinfo = gf.getClient().getGameInfo();
 		my_room=player.getRoomName();
+		
+		this.getClient().setPanel(this);
+		
 		
 		setSize(800, 600);
 		//add(new JLabel("미니게임1 - 같은 그림 찾기"));
@@ -57,7 +58,7 @@ public class FirstMinigamePanel extends JPanel{
 			}
 		}
 
-
+		this.addLayout();
 	}
 	
 	public void addLayout() {
@@ -83,9 +84,6 @@ public class FirstMinigamePanel extends JPanel{
 		if(player.getStatus()==true) //최초 접속자
 		{
 			initChar(); //여기서 makegame
-			//getClient().sendMessageToServer("SetGame/null");
-			//System.out.println("바보");
-			//getClient().sendMessageToServer("StartGame/null");
 		}
 		else if(player.getStatus()==false) //두 번째 접속자
 		{ 
@@ -186,7 +184,7 @@ public class FirstMinigamePanel extends JPanel{
 					if(checkEnd==8)
 					{
 						JOptionPane.showMessageDialog(null, "게임종료", "알림", JOptionPane.INFORMATION_MESSAGE);
-						getClient().sendMessageToServer("GameOver/"+player.getNickname()+"/"+Integer.toString(score));
+						getClient().sendMessageToServer("GameOver/"+player.getRoomName()+"/"+player.getNickname()+"/"+Integer.toString(score));
 					}
 				}
 				
@@ -239,7 +237,6 @@ public class FirstMinigamePanel extends JPanel{
 		// 그림을 버튼에 지정하기 
 		for(int i=0 ; i<getsu;i++) {
 			for(int j=0;j<getsu;j++) {
-				//System.out.println("row?"+i+"	col?"+j+"	answer?"+answer[i][j]);
 				btn[i][j].setIcon(new ImageIcon ("src\\data\\img\\b"+answer[i][j]+".PNG"));
 				
 			}

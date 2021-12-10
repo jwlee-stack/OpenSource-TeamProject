@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import data.GameInfo;
+
 import data.Player;
 import gui.frame.GameFrame;
 import gui.panel.minigame.FirstMinigamePanel;
@@ -20,8 +20,8 @@ import gui.panel.minigame.FirstMinigamePanel;
 
 public class Client{
 	private Player player;
-	private GameInfo gameinfo;
 	private FirstMinigamePanel fp;
+	private GameFrame gf;
 	
 	private boolean isConnected;
 
@@ -35,8 +35,8 @@ public class Client{
 
 	public Client() {
 		this.player = new Player();
-		this.gameinfo=new GameInfo();
 		this.fp=null;
+		this.gf=null;
 		//connectToServer("127.0.0.1", 9999);
 		
 	}
@@ -116,11 +116,23 @@ public class Client{
 			if(data.equals("CreateGame")) //최초 접속자->게임 만듦
 			{
 				player.setStatus(true); //초기값이 true면 게임 생성도 하고 먼저 게임을 시작함
-				//sendMessageToServer("CreateGame/null");
+				//fp.initChar(); //여기서 makegame
 			}
 			if(data.equals("GetGame")) //두 번째 접속자->서버에서 게임 받아옴
 			{
 				player.setStatus(false);
+				/*try {
+
+					Thread.sleep(500); //0.5초 대기
+
+				} catch (InterruptedException e) {
+
+					e.printStackTrace();
+
+				}
+
+				sendMessageToServer("SetGame/null");
+				sendMessageToServer("StartGame/null");*/
 			}
 					
 		}
@@ -134,9 +146,6 @@ public class Client{
 			fp.modifyAnswer(row,col,value);
 			System.out.println("row:"+row+"col:"+col+"value:"+value);
 			
-		}
-		else if(protocol.equals("CreateGame")) {
-			//fp.addLayout();
 		}
 		else if(protocol.equals("StartGame")) {
 			fp.showAnswer();
@@ -183,6 +192,8 @@ public class Client{
 				highscore=scoreB;
 				lowscore=scoreA;
 				JOptionPane.showMessageDialog(null, "내 점수: "+highscore+"\n상대방 점수"+lowscore, "Draw("+player.getNickname()+")", JOptionPane.INFORMATION_MESSAGE);
+				player.setPlayGameNum(0);
+				gf.changePanel("menu");
 				return;
 			}
 			if(player.getNickname().equals(winner))
@@ -193,6 +204,8 @@ public class Client{
 			{
 				JOptionPane.showMessageDialog(null, "내 점수: "+lowscore+"\n상대방 점수"+highscore, "you lose("+player.getNickname()+")", JOptionPane.INFORMATION_MESSAGE);
 			}
+			player.setPlayGameNum(0);
+			gf.changePanel("menu");
 		}
 	}
 	
@@ -207,16 +220,12 @@ public class Client{
 	public Player getPlayer() {
 		return this.player;
 	}
-	public GameInfo getGameInfo() {
-		return this.gameinfo;
+	public void setgameframe(GameFrame GF)
+	{
+		this.gf=GF;
 	}
 
 	
-	
-	//테스트용
-	public static void main(String[] args) {
-		new Client();
-	}
 }
 
 
