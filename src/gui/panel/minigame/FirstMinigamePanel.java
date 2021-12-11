@@ -34,7 +34,6 @@ public class FirstMinigamePanel extends JPanel{
 	
 	JButton firstClick = null;
 	int firstRow=0, firstCol=0;
-	//private int status=0;
 	private int score=0;
 	private int checkEnd=0;
 	private String my_room;
@@ -184,7 +183,7 @@ public class FirstMinigamePanel extends JPanel{
 					if(checkEnd==8)
 					{
 						JOptionPane.showMessageDialog(null, "게임종료", "알림", JOptionPane.INFORMATION_MESSAGE);
-						getClient().sendMessageToServer("GameOver/"+player.getRoomName()+"/"+player.getNickname()+"/"+Integer.toString(score));
+						getClient().sendMessageToServer("GameOver/"+player.getNickname()+"/"+Integer.toString(score));
 					}
 				}
 				

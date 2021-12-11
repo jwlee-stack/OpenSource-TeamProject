@@ -66,7 +66,7 @@ public class GameFrame extends JFrame{
 		switch(panel) {
 			case "game1":
 				remove(ph.getPanel(2));
-				ph.makeGamePanel(1);
+				ph.makeGamePanel(1); //panelhandler.java->firstminigamepanel 생성
 				add(ph.getPanel(2), "game1");
 				break;
 			case "game2":
@@ -81,18 +81,14 @@ public class GameFrame extends JFrame{
 				break;
 			case "waitroom":
 				remove(ph.getPanel(3));
-				ph.makeWaitRoomPanel();
+				ph.makeWaitRoomPanel(); //panelhandler.java->웨이팅룸 패널 생성
 				add(ph.getPanel(3), "waitroom");
 				break;
-//			case "waitroom":
-//				remove(ph.getPanel(3));
-//				ph.makeGamePanel(3);
-//				add(ph.getPanel(2));
-//				break;
+
 			default:
 				break;
 		}
-		cl.show(this.getContentPane(), panel);
+		cl.show(this.getContentPane(), panel); //패널 내용 화면에 보여줌
 	}
 	
 	public Client getClient() {

@@ -26,11 +26,12 @@ public class WaitRoomPanel extends JPanel{
 		this.isSearch = true;
 		this.player = gf.getClient().getPlayer();
 		
-		setMyPanel();
+		setMyPanel(); //패널 UI
 		loadText();
 	}
 	
 	private void loadText() {
+		//새 스레드 생성
 		threadRotatingText = new Thread(()->{
 			int count = 0;
 			while(isSearch) {
@@ -43,15 +44,14 @@ public class WaitRoomPanel extends JPanel{
 					}
 					lbLoading.setText(lbLoading.getText() + ".");
 					
-					if(player.getPlayGameNum() != 0) {
+					if(player.getPlayGameNum() != 0) { //플레이어가 게임을 가짐(서버의 joinwaitroom1 프로토콜에서 waitroom1.size()==2일 때, player.playgamenum 설정)
 						isSearch = false;
-						//gf.changePanel("test");
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			gf.changePanel("game"+player.getPlayGameNum()); //게임1 화면으로 이동
+			gf.changePanel("game"+player.getPlayGameNum()); //게임1 화면으로 이동 (firstminigamepanel의 생성자 실행)
 			System.out.println("game"+player.getPlayGameNum());
 		});
 		

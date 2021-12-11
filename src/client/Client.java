@@ -110,31 +110,26 @@ public class Client{
 		String protocol = st.nextToken();
 		String data = st.nextToken();
 		
-		if(protocol.equals("ShowGame1")) {
+		if(protocol.equals("ShowGame1")) { //server의 joinwaitroom 프로토콜에서 보냄
 			player.setPlayGameNum(1);
 			
 			if(data.equals("CreateGame")) //최초 접속자->게임 만듦
 			{
 				player.setStatus(true); //초기값이 true면 게임 생성도 하고 먼저 게임을 시작함
-				//fp.initChar(); //여기서 makegame
+
 			}
 			if(data.equals("GetGame")) //두 번째 접속자->서버에서 게임 받아옴
 			{
 				player.setStatus(false);
-				/*try {
 
-					Thread.sleep(500); //0.5초 대기
-
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-
-				}
-
-				sendMessageToServer("SetGame/null");
-				sendMessageToServer("StartGame/null");*/
 			}
-					
+			//-menupanel.java->sendMessageToServer("JoinWaitRoom1")줄 실행완료		
+		}
+		else if(protocol.equals("GameOut")) 
+		{
+			JOptionPane.showMessageDialog(null, "상대방이 게임을 나갔습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+			player.setPlayGameNum(0);
+			gf.changePanel("menu");
 		}
 		else if(protocol.equals("SendRoomName")) {
 			player.setRoomName(data);

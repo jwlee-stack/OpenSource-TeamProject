@@ -35,7 +35,7 @@ public class PanelHandler {
 	public void makeGamePanel(int type) {
 		switch(type) {
 		case 1: 
-			panel[2] = new FirstMinigamePanel(gf);
+			panel[2] = new FirstMinigamePanel(gf); //첫 번째 미니게임 패널 생성
 			break;
 		case 2: 
 			panel[2] = new SecondMinigamePanel(gf);
@@ -50,7 +50,7 @@ public class PanelHandler {
 
 	public void makeWaitRoomPanel() {
 		System.out.println("웨이팅 룸 패널 생성");
-		this.panel[3] = new WaitRoomPanel(gf);
+		this.panel[3] = new WaitRoomPanel(gf); //waitroompanel.java의 생성자로 이동
 	}
 	
 	/**
