@@ -54,13 +54,13 @@ public class WaitRoomPanel extends JPanel{
 					}
 					lbLoading.setText(lbLoading.getText() + ".");
 					
-					if(player.getPlayGameNum() != 0) {
+					if(player.getPlayGameNum() != 0) { //플레이어가 게임을 가짐(서버의 joinwaitroom1 프로토콜에서 waitroom1.size()==2일 때, player.playgamenum 설정)
 						isSearch = false;
-						gf.changePanel("game"+player.getPlayGameNum());
+						gf.changePanel("game"+player.getPlayGameNum()); //게임1 화면으로 이동 (firstminigamepanel의 생성자 실행)
 						System.out.println("game"+player.getPlayGameNum());
 					}
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		});

@@ -2,8 +2,11 @@ package gui.panel;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.SystemColor;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,16 +29,32 @@ public class MenuPanel extends JPanel{
 		
 		Player player = gf.getClient().getPlayer();
 		
-		JButton btnGame1 = new JButton("같은 그림 찾기");
+		URL url=getClass().getClassLoader().getResource("sameimggame.PNG");
+		ImageIcon image=new ImageIcon(url);
+		
+		Image img=image.getImage();
+		Image changeimg=img.getScaledInstance(137,137,Image.SCALE_SMOOTH);
+		ImageIcon changeIcon=new ImageIcon(changeimg);
+		JButton btnGame1 =new JButton(changeIcon);
+		JLabel lbGame1=new JLabel("<같은 그림 찾기>");
+		lbGame1.setFont(new Font("한컴 윤체 B", Font.PLAIN, 15));
+		lbGame1.setBounds(151, 292, 200, 60);
+		add(lbGame1);
 		btnGame1.setBounds(141, 176, 137, 137);
 		btnGame1.addActionListener((e)->{
 			gf.getClient().getPlayer().setSearchingGameNum(1);
-			gf.getClient().sendMessageToServer("JoinWaitRoom1/"+player.getNickname());
-			gf.changePanel("waitroom");
+			gf.getClient().sendMessageToServer("JoinWaitRoom1/"+player.getNickname()); //클라이언트의 상태 설정 (c1=true, c2=false), playgamenum 1로 설정
+			gf.changePanel("waitroom"); //waitroom 패널 실행
+										//waitroompanel.java의 loadtext()계속 실행됨
+										//(경로:gameframe.java의 changepanel->panelhandler.java의 makewaitroompanel->waitroom.java의 생성자->loadtext())
 		});
 		add(btnGame1);
 		
-		JButton btnGame2 = new JButton("오목");
+		JButton btnGame2 = new JButton("미구현");
+		JLabel lbGame2=new JLabel("<오목>");
+		lbGame2.setFont(new Font("한컴 윤체 B", Font.PLAIN, 15));
+		lbGame2.setBounds(102, 451, 200, 60);
+		add(lbGame2);
 		btnGame2.setBounds(59, 335, 137, 137);
 		btnGame2.addActionListener((e)->{
 			gf.getClient().getPlayer().setSearchingGameNum(2);
@@ -44,7 +63,11 @@ public class MenuPanel extends JPanel{
 		});
 		add(btnGame2);
 		
-		JButton btnGame3 = new JButton("두더지잡기");
+		JButton btnGame3 = new JButton("미구현");
+		JLabel lbGame3=new JLabel("<두더지 잡기>");
+		lbGame3.setFont(new Font("한컴 윤체 B", Font.PLAIN, 15));
+		lbGame3.setBounds(251, 451, 200, 60);
+		add(lbGame3);
 		btnGame3.setBounds(227, 335, 137, 137);
 		btnGame3.addActionListener((e)->{
 			gf.getClient().getPlayer().setSearchingGameNum(3);

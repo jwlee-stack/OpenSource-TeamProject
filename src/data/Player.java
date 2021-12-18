@@ -1,5 +1,7 @@
 package data;
 
+import java.util.Arrays;
+
 /**
  * 플레이어의 상태를 저장해둔 클래스이다. 닉네임, 플레이어가 속한 방 이름, 각 미니게임의 점수,
  * 현재 플레이중인 게임 종류, 어떠한 게임에서 상대방을 찾는지에 대한 정보가 담겨있다.<br/><br/>
@@ -13,17 +15,19 @@ public class Player {
 	private String nickname = "";
 	private String roomName = ""; //방에 없으면 빈 문자열을 가짐. 방 이름은 랜덤 문자열은 10자리를 가짐
 	private int[] score;
+	private Boolean status; //내 차례? 상대 차례?
 	private int playGameNum; //1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 	private int searchingGameNum; //1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 	
 	public Player() {
-		
+		this.status=null;
 	}
 	
 	public Player(String id, String nickname, int[] score) {
 		this.id = id;
 		this.nickname = nickname;
 		this.score = score;
+		this.status=null;
 	}
 	
 	public String getId() {
@@ -61,5 +65,16 @@ public class Player {
 	}
 	public void setRoomName(String roomName) {
 		this.roomName = roomName;
+	}
+	public Boolean getStatus() {
+		return status;
+	}
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [id=" + id + ", nickname=" + nickname + ", score=" + Arrays.toString(score) + "]";
 	}
 }

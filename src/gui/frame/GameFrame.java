@@ -53,6 +53,8 @@ public class GameFrame extends JFrame{
 		add(ph.getPanel(3), "waitroom");
 		add(ph.getPanel(4), "signup");
 		add(ph.getPanel(5), "rematching");
+		
+		cl.show(this.getContentPane(), "login"); //패널 내용 화면에 보여줌
 	}
 	
 	/**

@@ -1,5 +1,10 @@
 package gui.handler;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,7 +28,16 @@ public class PanelHandler {
 	
 	public PanelHandler(GameFrame gf) {
 		this.gf = gf;
-		this.panel[0] = new LoginPanel(gf);
+		this.panel[0] = new LoginPanel(gf){
+			public void paintComponent(Graphics g)
+			{
+				Dimension d=getSize();
+				
+				URL url=getClass().getClassLoader().getResource("rainbow.png");
+				ImageIcon image=new ImageIcon(url);
+				g.drawImage(image.getImage(),0,0,d.width,d.height,null);
+			}
+		};
 		this.panel[1] = new MenuPanel(gf);
 		this.panel[2] = new JPanel(); //dummy panel, 미니게임 패널이 들어갈 공간
 		this.panel[3] = new JPanel(); //dummy panel, 웨이팅 패널이 들어갈 공간
