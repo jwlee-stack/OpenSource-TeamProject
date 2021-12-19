@@ -111,7 +111,11 @@ public class MenuPanel extends JPanel {
 		updateRank(1);
 	}
 	
-	//로그인을 하고 나서 실행되도록 해야됨
+	/**
+	 * 내 닉네임과 점수를 점수판에 출력시킨다.
+	 * type:1,2,3 미니게임 / 4 총합
+	 * @param type
+	 */
 	public void updateMyScore(int type) {
 		Player player = gf.getClient().getPlayer();
 		int score = 0;
@@ -129,11 +133,22 @@ public class MenuPanel extends JPanel {
 		text_Score[0].setText(Integer.toString(score));
 	}
 
+	/**
+	 * 유저의 닉네임과 type유형에 해당하는 점수를 PlayerScore 클래스를 사용해 가져온다.
+	 * PlayerScore 클래스는 nickname과 score를 담고 있다.
+	 * type:1,2,3 미니게임 / 4 총합
+	 * @param type
+	 */
 	public void updateUsersInfo(int type) {
 		 Database db = Database.getInstance();
 		 ps = db.getUsersScoreTop8(type);
 	}
 	
+	/**
+	 * 점수판을 업데이트 시킨다.
+	 * type:1,2,3 미니게임 / 4 총합
+	 * @param type
+	 */
 	public void updateRank(int type) {
 		updateUsersInfo(type);
 		for(int i=1;i<9;i++) {
@@ -148,7 +163,7 @@ public class MenuPanel extends JPanel {
 	/**
 	 * 점수판 관련 패널, 버튼, 레이블, 텍스트 초기화
 	 */
-	public void init() {
+	private void init() {
 		for (int i = 0; i < 2; i++) {
 			panel[i] = new JPanel();
 			add(panel[i]);
@@ -174,7 +189,7 @@ public class MenuPanel extends JPanel {
 	/**
 	 * 점수판 컨트롤러(버튼을 누르면 해당 게임만의 랭킹스코어를 볼수있다)
 	 */
-	public void score() {
+	private void score() {
 		panel[0].setBounds(410, 170, 370, 90);
 		panel[0].add(label[9]);
 
@@ -195,7 +210,6 @@ public class MenuPanel extends JPanel {
 		btn[3].setBounds(277, 53, 90, 33);
 		for (int i = 0; i <= 3; i++) {
 			btn[i].setFont(new Font("굴림", Font.PLAIN, 14));
-
 		}
 		btn[0].addActionListener((e) -> {
 			label[9].setText(btntext[0]);
@@ -204,9 +218,13 @@ public class MenuPanel extends JPanel {
 		});
 		btn[1].addActionListener((e) -> {
 			label[9].setText(btntext[1]);
+			updateMyScore(2);
+			updateRank(2);
 		});
 		btn[2].addActionListener((e) -> {
 			label[9].setText(btntext[2]);
+			updateMyScore(3);
+			updateRank(3);
 		});
 		btn[3].addActionListener((e) -> {
 			label[9].setText(btntext[3]);

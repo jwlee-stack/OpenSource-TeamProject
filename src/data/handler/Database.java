@@ -170,20 +170,20 @@ public class Database {
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next())  {
 				nickname = rs.getString("user_nickname");
-				System.out.println(nickname);
+				//System.out.println(nickname);
 				if(type == 4) {
 					score = rs.getInt("total");
 				}
 				else {
 					score = rs.getInt("user_score_"+type);
-					System.out.println(score);
+					//System.out.println(score);
 				}
 				ps[i++] = new PlayerScore(nickname, score);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("ps 생성 및 반환");
+		//System.out.println("ps 생성 및 반환");
 		return ps;
 	}
 	
