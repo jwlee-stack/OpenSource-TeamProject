@@ -58,5 +58,6 @@ public class MenuPanel extends JPanel{
 		lbTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lbTitle.setBounds(157, 36, 485, 60);
 		add(lbTitle);
+		//
 	}
 }
