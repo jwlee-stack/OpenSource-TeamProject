@@ -131,14 +131,14 @@ public class MenuPanel extends JPanel{
 		}
 		
 
-		label[9].setBounds(190, 0, 180, 90);
+		label[9].setBounds(0, 0, 370, 50);
 		label[9].setFont(new Font("굴림", Font.PLAIN, 24));
 		label[9].setHorizontalAlignment(SwingConstants.CENTER);
 		
-		btn[0].setBounds(10, 10, 80, 35);
-		btn[1].setBounds(100, 10, 80, 35);
-		btn[2].setBounds(10, 45, 80, 35);
-		btn[3].setBounds(100, 45, 80, 35);
+		btn[0].setBounds(3, 53, 86, 33);
+		btn[1].setBounds(93, 53, 90, 33);
+		btn[2].setBounds(185, 53, 89, 33);
+		btn[3].setBounds(277, 53, 90, 33);
 		for(int i=0; i<=3; i++) {
 			btn[i].setFont(new Font("Franklin Gothic Book", Font.PLAIN, 14));
 			
@@ -164,14 +164,14 @@ public class MenuPanel extends JPanel{
 		for(int i=0; i<=8; i++) {
 			label[i].setBounds(0,30*i,110,30);
 		}
-		for(int i=1; i<=8; i++) {
+		for(int i=0; i<=8; i++) {
 			label[i].setFont(new Font("Dialog", Font.PLAIN, 16));
 			label[i].setHorizontalAlignment(SwingConstants.CENTER);
 			if(i!=0) {
 			label[i].setText(Integer.toString(i)+"등");
 			}
-			else {//label[0](나의 닉네임)일때 
-				
+			else { 
+				label[i].setText("내 점수");
 			}
 		}
 		
