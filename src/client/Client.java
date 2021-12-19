@@ -47,9 +47,9 @@ public class Client {
 		// connectToServer("127.0.0.1", 9999);
 	}
 
-	public void setPanel(FirstMinigamePanel Fp) {
-		this.fp = Fp;
-		System.out.println(fp);
+	public void setPanel(FirstMinigamePanel fp) {
+		this.fp = fp;
+		//System.out.println(fp);
 	}
 
 	/**
@@ -99,6 +99,7 @@ public class Client {
 					inMessageFromServer(msg);
 				} catch (IOException e) {
 					disconnect();
+					System.exit(0);
 					break;
 				}
 			}
@@ -116,7 +117,7 @@ public class Client {
 			dos.close();
 			socket.close();
 
-			System.out.println("서버와의 연결 끊김");
+			JOptionPane.showMessageDialog(null, "서버와의 연결이 끊겼습니다.", "연결 끊김", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

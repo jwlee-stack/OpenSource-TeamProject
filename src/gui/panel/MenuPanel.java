@@ -203,6 +203,7 @@ public class MenuPanel extends JPanel {
 		label[9].setBounds(0, 0, 370, 50);
 		label[9].setFont(new Font("굴림", Font.PLAIN, 24));
 		label[9].setHorizontalAlignment(SwingConstants.CENTER);
+		label[9].setText(btntext[0]);
 
 		btn[0].setBounds(3, 53, 86, 33);
 		btn[1].setBounds(93, 53, 90, 33);

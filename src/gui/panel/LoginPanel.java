@@ -73,8 +73,9 @@ public class LoginPanel extends JPanel {
 			
 			//로그인 성공 시, 서버에 연결한 후 메뉴로 이동한다.
 			if(login(id, pw)) {
-				connectToServer();
-				gf.changePanel("menu");
+				if(connectToServer()) {
+					gf.changePanel("menu");
+				}
 				//TODO 테스트
 				System.out.println(gf.getClient().getPlayer());
 			}
@@ -129,7 +130,7 @@ public class LoginPanel extends JPanel {
 	 * 서버에 연결한다.
 	 * @param gf
 	 */
-	private void connectToServer() {
+	private boolean connectToServer() {
 		Client client = gf.getClient();
 		boolean state = client.connectToServer(serverIP, serverPort); // 접속 성공 시, true값 반환
 
@@ -139,5 +140,7 @@ public class LoginPanel extends JPanel {
 		} else {
 			JOptionPane.showMessageDialog(null, "서버 접속에 실패했습니다.", "접속 실패", JOptionPane.ERROR_MESSAGE);
 		}
+		
+		return state;
 	}
 }
