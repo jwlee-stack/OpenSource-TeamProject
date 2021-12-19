@@ -25,7 +25,7 @@ public class GameFrame extends JFrame{
 	private Client client;
 	
 	public GameFrame() {
-		this.client = new Client(); //서버 접속은 connectToserver()를 호출해야 접속함
+		this.client = new Client(this); //서버 접속은 connectToserver()를 호출해야 접속함
 		this.ph = new PanelHandler(this);
 		this.cl = new CardLayout();
 		

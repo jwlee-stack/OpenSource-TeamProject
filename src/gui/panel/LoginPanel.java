@@ -96,6 +96,10 @@ public class LoginPanel extends JPanel {
 	 * @return
 	 */
 	private boolean login(String id, String pw) {
+		if(id.isEmpty() || pw.isEmpty()) {
+			return false;
+		}
+		
 		boolean result = Database.getInstance().login(id, pw);
 		
 		if(result == true){

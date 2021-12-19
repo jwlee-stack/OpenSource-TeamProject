@@ -36,14 +36,16 @@ public class RematchingPanel extends JPanel{
 		JButton btn_rematch = new JButton("재매칭");
 		btn_rematch.setBounds(200, 400, 100, 100);
 		btn_rematch.addActionListener((e)->{
-			
+			gf.getClient().getPlayer().setSearchingGameNum(1);
+			gf.getClient().sendMessageToServer("JoinWaitRoom1/"+player.getNickname());
+			gf.changePanel("waitroom");
 		});
 		add(btn_rematch);
 		
 		JButton btn_exit = new JButton("나가기");
 		btn_exit.setBounds(500, 400, 100, 100);
 		btn_exit.addActionListener((e)->{
-			
+			gf.changePanel("menu");
 		});
 		add(btn_exit);
 		
