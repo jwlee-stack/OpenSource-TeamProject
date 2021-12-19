@@ -26,7 +26,9 @@ import gui.frame.GameFrame;
  */
 public class LoginPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-
+	
+	private String serverIP = "13.124.194.183";
+	private int serverPort = 59647;
 	private JButton btnLogin;
 	private JButton btnSignUp;
 	
@@ -129,7 +131,7 @@ public class LoginPanel extends JPanel {
 	 */
 	private void connectToServer() {
 		Client client = gf.getClient();
-		boolean state = client.connectToServer("127.0.0.1", 9999); // 접속 성공 시, true값 반환
+		boolean state = client.connectToServer(serverIP, serverPort); // 접속 성공 시, true값 반환
 
 		if (state == true) {
 			client.getPlayer().setNickname(client.getPlayer().getNickname());
