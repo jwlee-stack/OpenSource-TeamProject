@@ -51,25 +51,25 @@ public class Database {
 		return dh;
 	}
 	
-	//TODO 테스트
-	public String getScore() {
-		String result = "asd";
-		try {
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select * from user where user_id = '"+id+"' and user_pw = '"+pw+"'");
-			while(rs.next()) {
-				result += rs.getString("id") + 
-						rs.getString("user_id") + 
-						rs.getString("user_pw") + 
-						rs.getString("user_score_1") + 
-						rs.getString("user_score_2") +
-						rs.getString("user_score_3");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+//	//TODO 테스트
+//	public String getScore() {
+//		String result = "asd";
+//		try {
+//			Statement st = con.createStatement();
+//			ResultSet rs = st.executeQuery("select * from user where user_id = '"+id+"' and user_pw = '"+pw+"'");
+//			while(rs.next()) {
+//				result += rs.getString("id") + 
+//						rs.getString("user_id") + 
+//						rs.getString("user_pw") + 
+//						rs.getString("user_score_1") + 
+//						rs.getString("user_score_2") +
+//						rs.getString("user_score_3");
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//	}
 	
 	/**
 	 * 주어진 id와 password로 로그인을 시도한다.
@@ -131,6 +131,60 @@ public class Database {
 		}
 		
 		return new Player(user_id, user_nickname, user_score);
+	}
+	
+	
+	public class PlayerScore{
+		public String nickname;
+		public int score;
+		
+		PlayerScore(String nickname, int score) {
+			this.nickname = nickname;
+			this.score = score;
+		}
+	}
+	
+	/**
+	 * 유저의 닉네임과 점수를 불러온다.
+	 * type에 따라 가져올 점수가 결정된다.
+	 * 1: 같은그림찾기, 4: 총합
+	 * @param type
+	 * @return
+	 */
+	public PlayerScore[] getUsersScoreTop8(int type) {
+		PlayerScore[] ps = new PlayerScore[8];
+		String nickname = "";
+		int score = 0;
+		
+		String query = "";
+		if(type != 4){
+			query = "select * from user order by user_score_"+type+" desc limit 8";
+		}
+		else {
+			query = "select user_nickname, user_score_1+user_score_2+user_score_3 as total from user order by total desc limit 8";
+		}
+		
+		int i = 0;
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next())  {
+				nickname = rs.getString("user_nickname");
+				System.out.println(nickname);
+				if(type == 4) {
+					score = rs.getInt("total");
+				}
+				else {
+					score = rs.getInt("user_score_"+type);
+					System.out.println(score);
+				}
+				ps[i++] = new PlayerScore(nickname, score);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("ps 생성 및 반환");
+		return ps;
 	}
 	
 	/**

@@ -32,6 +32,7 @@ public class RematchingPanel extends JPanel{
 		finishlabel.setBounds(325, 80, 150, 80);
 		finishlabel.setHorizontalAlignment(SwingConstants.CENTER);
 		finishlabel.setFont(new Font("굴림", Font.PLAIN, 28));
+		add(finishlabel);
 		
 		JButton btn_rematch = new JButton("재매칭");
 		btn_rematch.setBounds(200, 400, 100, 100);
@@ -52,14 +53,11 @@ public class RematchingPanel extends JPanel{
 		JLabel label = new JLabel("승패");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(300, 170, 200, 80);
+		add(label);
 		
 		JLabel score_label = new JLabel("점수");
 		score_label.setHorizontalAlignment(SwingConstants.CENTER);
 		score_label.setBounds(300, 270, 200, 80);
-		
+		add(score_label);
 	}
-	
-	
-	
-
 }
