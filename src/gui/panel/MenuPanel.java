@@ -79,8 +79,9 @@ public class MenuPanel extends JPanel{
 		My_Info.setLayout(null);
 		
 		JLabel Info_label = new JLabel("");
-		Info_label.setHorizontalAlignment(SwingConstants.RIGHT);
-		Info_label.setBounds(190, 30, 80, 30);
+		Info_label.setFont(new Font("굴림", Font.PLAIN, 24));
+		Info_label.setHorizontalAlignment(SwingConstants.CENTER);
+		Info_label.setBounds(190, 0, 180, 90);
 		My_Info.add(Info_label);
 		
 		JButton btnNewButton = new JButton("Score1");
@@ -114,12 +115,6 @@ public class MenuPanel extends JPanel{
 			Info_label.setText("Total :");
 		});
 		My_Info.add(btnNewButton_3);
-		
-		Score = new JTextField();
-		Score.setEditable(false);
-		Score.setBounds(283, 0, 87, 90);
-		My_Info.add(Score);
-		Score.setColumns(10);
 		
 		
 		
