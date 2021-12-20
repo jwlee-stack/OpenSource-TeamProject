@@ -262,6 +262,13 @@ public class Database {
 		return !result.isEmpty();
 	}
 	
+	/**
+	 * 현재 플레이어의 점수를 업데이트 시킨다. 데이터베이스로 바로 업데이트 된다.
+	 * 
+	 * @param player 아이디 가져오는 용도
+	 * @param type 1,2,3
+	 * @param score 기존의 점수에 수정될 양
+	 */
 	public void updateScore(Player player, int type, int score) {
 		String id = player.getId();
 		int updateScore = score + player.getScore()[type-1];
