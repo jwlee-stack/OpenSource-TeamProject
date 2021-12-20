@@ -42,7 +42,7 @@ public class MenuPanel extends JPanel {
 	private JTextField[] text_Score = new JTextField[9];
 	private RoundedButton[] btn = new RoundedButton[4];
 	private JLabel control= new JLabel();
-	private String[] btntext = { "Score1", "Score2", "Score3", "총합" };
+	private String[] btntext = { "같은 그림 찾기", "오목", "두더지 잡기", "총합" };
 	
 	private PlayerScore[] ps;
 
@@ -220,7 +220,7 @@ public class MenuPanel extends JPanel {
 		btn[2].setBounds(185, 53, 89, 33);
 		btn[3].setBounds(277, 53, 90, 33);
 		for (int i = 0; i <= 3; i++) {
-			btn[i].setFont(new Font("굴림", Font.PLAIN, 14));
+			btn[i].setFont(new Font("굴림", Font.PLAIN, 12));
 		}
 		btn[0].addActionListener((e) -> {
 			control.setText(btntext[0]);

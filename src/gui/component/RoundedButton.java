@@ -70,7 +70,7 @@ public class RoundedButton extends JButton {
 		int textX = (width - stringBounds.width) / 2;
 		int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent();
 		graphics.setColor(b);
-		graphics.drawRoundRect(1, 0, width - 1, height - 1, 20, 20);
+		graphics.drawRoundRect(1, 0, width - 2, height - 1, 20, 20);
 		graphics.setColor(o);
 		graphics.setFont(getFont());
 		graphics.drawString(getText(), textX, textY);
