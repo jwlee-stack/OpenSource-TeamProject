@@ -196,7 +196,6 @@ public class Client {
 				System.out.println("나는 게임중이 아님!");
 			}
 		} else if (protocol.equals("gameover")) {
-			gf.setTitle("꾸러미 동산");
 			String winner = data;
 			String scoreA = st.nextToken();
 			String scoreB = st.nextToken();

@@ -93,6 +93,15 @@ public class GameFrame extends JFrame{
 			default:
 				break;
 		}
+		
+		//오목 게임의 크기가 다르므로 따로 설정
+		if(panel.equals("game2")) {
+			setSize(490, 510);
+		}
+		else {
+			setSize(800, 600);
+		}
+		
 		cl.show(this.getContentPane(), panel);
 	}
 	

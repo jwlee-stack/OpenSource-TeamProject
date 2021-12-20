@@ -306,7 +306,6 @@ public class Server {
 				p.score = st.nextToken();
 				resultVector.add(p);
 				String winner;
-				RoomInfo ri;
 
 				if (resultVector.size() == 2) // 두 플레이어의 값 다 받음
 				{
@@ -320,23 +319,23 @@ public class Server {
 						System.out.println(winner + "가 이김2");
 
 					}
-					for (int i = 0; i < roomVector.size(); i++) {
-						ri = (RoomInfo) roomVector.elementAt(i);
-
-						if (ri == myroom) {
+//					for (int i = 0; i < roomVector.size(); i++) {
+//						ri = (RoomInfo) roomVector.elementAt(i);
+//
+//						if (ri == myroom) {
 							myroom.broadcast("gameover/" + winner + "/" + resultVector.get(0).score + "/"
 									+ resultVector.get(1).score);
 
 							answer = null;
 							AnotherClient().answer = null;
-							roomVector.remove(i);
+							roomVector.remove(myroom);
 							AnotherClient().myroom = null;
 							myroom = null;
 							resultVector.clear();
 
-							break;
-						}
-					}
+//							break;
+//						}
+//					}
 				}
 			}
 			////////////////////////////////////////////////////////////////// 게임 2

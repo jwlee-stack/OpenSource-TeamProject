@@ -122,7 +122,7 @@ public class SecondMinigamePanel extends JPanel{
 		
 		public void mouseClicked(MouseEvent e) {
 			if(e.isMetaDown()) { //우클릭시
-				gf.changePanel("menu");
+				//gf.changePanel("menu");
 			}
 			else {
 				try {
