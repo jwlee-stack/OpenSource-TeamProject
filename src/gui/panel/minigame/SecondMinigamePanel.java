@@ -41,12 +41,10 @@ public class SecondMinigamePanel extends JPanel{
 	private Vector<Stone> white_stone = new Vector<Stone>(); //흰 돌 벡터
 	private Vector<Stone> black_stone = new Vector<Stone>(); //검은 돌 벡터
 	
-	private GameFrame gf; //패널 전환을 위해 부모 컨테이너를 가져옴
 	private Client client;
 	private Player player;
 	
 	public SecondMinigamePanel(GameFrame gf) {
-		this.gf = gf;
 		this.client = gf.getClient();
 		this.player = gf.getClient().getPlayer();
 		this.client.setPanel(this);
@@ -127,8 +125,8 @@ public class SecondMinigamePanel extends JPanel{
 					count_white = 0;
 				}
 				if(count_white == 5 || count_black == 5) {
-					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
-					client.sendMessageToServer("GameOver2/"+endStr);
+					String endStr = (count_white == 5) ? "흰 돌 승리" : "검은 돌 승리";
+					client.sendMessageToServer("GameOver2/"+endStr+"/"+player.getNickname());
 					//JOptionPane.showMessageDialog(null, endStr, "게임 끝", JOptionPane.PLAIN_MESSAGE);
 					//gf.changePanel("menu");
 					return;
@@ -154,7 +152,7 @@ public class SecondMinigamePanel extends JPanel{
 				}
 				if(count_white == 5 || count_black == 5) {
 					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
-					client.sendMessageToServer("GameOver2/"+endStr);
+					client.sendMessageToServer("GameOver2/"+endStr+"/"+player.getNickname());
 					//JOptionPane.showMessageDialog(null, endStr, "게임 끝", JOptionPane.PLAIN_MESSAGE);
 					//gf.changePanel("menu");
 					return;
@@ -195,7 +193,7 @@ public class SecondMinigamePanel extends JPanel{
 				num=0;
 				if(count_white == 5 || count_black == 5) {
 					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
-					client.sendMessageToServer("GameOver2/"+endStr);
+					client.sendMessageToServer("GameOver2/"+endStr+"/"+player.getNickname());
 					return;
 				}
 			}
@@ -234,14 +232,14 @@ public class SecondMinigamePanel extends JPanel{
 				num=0;
 				if(count_white == 5 || count_black == 5) {
 					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
-					client.sendMessageToServer("GameOver2/"+endStr);
+					client.sendMessageToServer("GameOver2/"+endStr+"/"+player.getNickname());
 					return;
 				}
 			}
 		}
-		
 	}
-	public void Rival_PaintStone(String row1,String col1)
+	
+	public void Rival_PaintStone(String row1, String col1)
 	{
 		int row=StrToInt(row1);
 		int col=StrToInt(col1);
@@ -268,43 +266,39 @@ public class SecondMinigamePanel extends JPanel{
 		
 		public void mouseClicked(MouseEvent e) {
 			if(player.getStatus()==Boolean.TRUE) {
-			if(e.isMetaDown()) { //우클릭시
-				//gf.changePanel("menu");
-			}
-			else {
-				try {
-					if(map[e.getY()/SIZE][e.getX()/SIZE] != 0) {
-						throw new AlreadyExist();
+				if(!e.isMetaDown()){ //좌클릭 시
+					try {
+						if(map[e.getY()/SIZE][e.getX()/SIZE] != 0) {
+							throw new AlreadyExist();
+						}
+						
+						int x = MIN_X + (int)(e.getX()/SIZE)*SIZE - SIZE/2;
+						int y = MIN_Y + (int)(e.getY()/SIZE)*SIZE - SIZE/2;
+						
+						Stone current_stone = new Stone(x, y);
+						
+						if(next_black == false) {
+							white_stone.add(current_stone);
+						}
+						else {
+							black_stone.add(current_stone);
+						}
+						
+						map[e.getY()/SIZE][e.getX()/SIZE] = (next_black == false) ? 1 : 2; //흰돌이면 1, 검은돌이면 2
+						String row=IntToStr(e.getY()/SIZE);	
+						String col=IntToStr(e.getX()/SIZE);	
+						//next_black = !next_black;
+						
+						repaint();
+						client.sendMessageToServer("LetStone/"+row+"/"+col);
+						client.sendMessageToServer("ChangePlayer/null");
+						checkEndGame();
 					}
-					
-					int x = MIN_X + (int)(e.getX()/SIZE)*SIZE - SIZE/2;
-					int y = MIN_Y + (int)(e.getY()/SIZE)*SIZE - SIZE/2;
-					
-					Stone current_stone = new Stone(x, y);
-					
-					if(next_black == false) {
-						white_stone.add(current_stone);
+					catch(AlreadyExist e1) {
+						//e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "이미 돌이 존재합니다.", "오류", JOptionPane.ERROR_MESSAGE);
 					}
-					else {
-						black_stone.add(current_stone);
-					}
-					
-					map[e.getY()/SIZE][e.getX()/SIZE] = (next_black == false) ? 1 : 2; //흰돌이면 1, 검은돌이면 2
-					String row=IntToStr(e.getY()/SIZE);	
-					String col=IntToStr(e.getX()/SIZE);	
-					//next_black = !next_black;
-					
-					repaint();
-					client.sendMessageToServer("LetStone/"+row+"/"+col);
-					client.sendMessageToServer("ChangePlayer/null");
-					checkEndGame();
-					
 				}
-				catch(AlreadyExist e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "이미 돌이 존재합니다.", "오류", JOptionPane.ERROR_MESSAGE);
-				}
-			}
 			}
 		}
 		
@@ -315,10 +309,12 @@ public class SecondMinigamePanel extends JPanel{
 			ghost_y = tempy;
 			repaint();
 		}
-		public String IntToStr(int num) {
-			return Integer.toString(num);
-		}
 	}
+	
+	public String IntToStr(int num) {
+		return Integer.toString(num);
+	}
+	
 	public int StrToInt(String str) {
 		return Integer.parseInt(str);
 	}

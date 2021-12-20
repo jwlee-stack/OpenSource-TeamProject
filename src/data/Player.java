@@ -16,7 +16,6 @@ import data.handler.Database;
 public class Player {
 	private String id = "";
 	private String nickname = "";
-	//private String roomName = ""; // 방에 없으면 빈 문자열을 가짐. 방 이름은 랜덤 문자열은 10자리를 가짐
 	private int[] score = new int[3];
 	private Boolean status; // 내 차례? 상대 차례?
 	private int playGameNum; // 1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)

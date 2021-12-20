@@ -213,7 +213,7 @@ public class Client {
 			} else if (Integer.parseInt(scoreA) < Integer.parseInt(scoreB)) {
 				highscore = scoreB;
 				lowscore = scoreA;
-			} else // 동점
+			} else // 동점. 동점은 점수 변동 없음
 			{
 				highscore = scoreB;
 				lowscore = scoreA;
@@ -233,13 +233,13 @@ public class Client {
 				JOptionPane.showMessageDialog(null, "내 점수: " + highscore + "\n상대방 점수" + lowscore, "you win",
 						JOptionPane.INFORMATION_MESSAGE);
 			} else { //지면 점수가 20점 까임
-				player.setTempScore(Integer.parseInt(lowscore));
+				player.setTempScore(-20);
 				player.setTempResult("패배");
 				player.updateScore(1, -20);
 				JOptionPane.showMessageDialog(null, "내 점수: " + lowscore + "\n상대방 점수" + highscore, "you lose",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-			player.setPlayGameNum(0);
+			//player.setPlayGameNum(0);
 			player.setStatus(null);
 			gf.changePanel("rematching");
 		}
@@ -258,7 +258,6 @@ public class Client {
 			}
 			
 			player.setPlayGameNum(2);
-			// -menupanel.java->sendMessageToServer("JoinWaitRoom1")줄 실행완료
 		}
 		else if (protocol.equals("LetStone")) {
 			String row=data;
@@ -267,8 +266,19 @@ public class Client {
 		}
 		else if (protocol.equals("GameOver2")) {
 			String winner=data;
+			String winnerNickname = st.nextToken();
+			if(player.getNickname().equals(winnerNickname)) { //내가 이겼을 때 +100점
+				player.setTempScore(100);
+				player.setTempResult("승리");
+				player.updateScore(2, 100);
+			}
+			else { //내가 졌을 때 -30점
+				player.setTempScore(-30);
+				player.setTempResult("패배");
+				player.updateScore(2, -30);
+			}
 			JOptionPane.showMessageDialog(null, winner, "게임 끝", JOptionPane.PLAIN_MESSAGE);
-			player.setPlayGameNum(0);
+			//player.setPlayGameNum(0);
 			player.setStatus(null);
 			gf.changePanel("rematching");
 		}

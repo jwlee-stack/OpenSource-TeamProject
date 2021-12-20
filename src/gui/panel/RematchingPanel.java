@@ -40,8 +40,10 @@ public class RematchingPanel extends JPanel{
 		JButton btn_rematch = new JButton("재매칭");
 		btn_rematch.setBounds(200, 400, 100, 100);
 		btn_rematch.addActionListener((e)->{
-			gf.getClient().getPlayer().setSearchingGameNum(1);
-			gf.getClient().sendMessageToServer("JoinWaitRoom1/"+player.getNickname());
+			int type = player.getPlayGameNum(); //현재 게임의 유형을 가져옴
+			player.setPlayGameNum(0);
+			player.setSearchingGameNum(type);
+			gf.getClient().sendMessageToServer("JoinWaitRoom"+type+"/"+player.getNickname());
 			gf.changePanel("waitroom");
 		});
 		add(btn_rematch);
@@ -49,6 +51,7 @@ public class RematchingPanel extends JPanel{
 		JButton btn_exit = new JButton("나가기");
 		btn_exit.setBounds(500, 400, 100, 100);
 		btn_exit.addActionListener((e)->{
+			player.setPlayGameNum(0);
 			gf.changePanel("menu");
 		});
 		add(btn_exit);

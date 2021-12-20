@@ -319,26 +319,23 @@ public class Server {
 						System.out.println(winner + "가 이김2");
 
 					}
-//					for (int i = 0; i < roomVector.size(); i++) {
-//						ri = (RoomInfo) roomVector.elementAt(i);
-//
-//						if (ri == myroom) {
-							myroom.broadcast("gameover/" + winner + "/" + resultVector.get(0).score + "/"
-									+ resultVector.get(1).score);
+					myroom.broadcast(
+							"gameover/" + winner + "/" + resultVector.get(0).score + "/" + resultVector.get(1).score);
 
-							answer = null;
-							AnotherClient().answer = null;
-							roomVector.remove(myroom);
-							AnotherClient().myroom = null;
-							myroom = null;
-							resultVector.clear();
+					answer = null;
+					AnotherClient().answer = null;
+					roomVector.remove(myroom);
+					AnotherClient().myroom = null;
+					myroom = null;
+					resultVector.clear();
 
-//							break;
-//						}
-//					}
 				}
 			}
+			
 			////////////////////////////////////////////////////////////////// 게임 2
+			////////////////////////////////////////////////////////////////// 게임 2
+			////////////////////////////////////////////////////////////////// 게임 2
+			
 			else if (protocol.equals("JoinWaitRoom2")) {
 				waitRoom2.add(this);
 				if (waitRoom2.size() == 2) {
@@ -358,19 +355,17 @@ public class Server {
 				}
 			} else if (protocol.equals("ExitWaitRoom2")) {
 				waitRoom2.remove(this);
-			}
-			else if (protocol.equals("LetStone")) {
-				String row=data;
-				String col=st.nextToken();
-				AnotherClient().sendMessageToClient("LetStone/"+row+"/"+col);
-			}
-			else if (protocol.equals("GameOver2")) {
-				String winner=data;
-				myroom.broadcast("GameOver2/"+winner);
+			} else if (protocol.equals("LetStone")) {
+				String row = data;
+				String col = st.nextToken();
+				AnotherClient().sendMessageToClient("LetStone/" + row + "/" + col);
+			} else if (protocol.equals("GameOver2")) {
+				String winner = data;
+				String nickname = st.nextToken();
+				myroom.broadcast("GameOver2/" + winner + "/" + nickname);
 				roomVector.remove(myroom);
 				AnotherClient().myroom = null;
 				myroom = null;
-				
 			}
 		}
 
@@ -422,7 +417,7 @@ public class Server {
 			c2.sendMessageToClient(msg);
 		}
 	}
-	
+
 	// 테스트용
 	public static void main(String[] args) {
 		new Server(9999);

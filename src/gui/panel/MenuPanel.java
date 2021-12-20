@@ -62,7 +62,7 @@ public class MenuPanel extends JPanel {
 		add(lbGame1);
 		btnGame1.setBounds(141, 176, 137, 137);
 		btnGame1.addActionListener((e) -> {
-			gf.getClient().getPlayer().setSearchingGameNum(1);
+			player.setSearchingGameNum(1);
 			gf.getClient().sendMessageToServer("JoinWaitRoom1/" + player.getNickname()); // 클라이언트의 상태 설정 (c1=true,
 																							// c2=false), playgamenum 1로
 																							// 설정
@@ -107,7 +107,7 @@ public class MenuPanel extends JPanel {
 
 		init();
 		score();
-		updateRank(1);
+		updateRank(1); // 메뉴 화면에 들어오면 맨 처음에 보여질 점수판
 	}
 	
 	/**

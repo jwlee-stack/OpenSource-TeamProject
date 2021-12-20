@@ -24,7 +24,6 @@ public class FirstMinigamePanel extends JPanel {
 
 	private Client client;
 	private Player player;
-	private GameFrame gf;
 
 	//private int getsu = new Random().nextInt(3)+3; //3*3 ~ 5*5
 	private int getsu = 4;
@@ -40,7 +39,6 @@ public class FirstMinigamePanel extends JPanel {
 	private Boolean check = false;
 
 	public FirstMinigamePanel(GameFrame gf) {
-		this.gf = gf;
 		this.client = gf.getClient();
 		this.player = gf.getClient().getPlayer();
 		this.client.setPanel(this);

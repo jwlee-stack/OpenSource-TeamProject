@@ -56,6 +56,7 @@ public class WaitRoomPanel extends JPanel{
 					
 					if(player.getPlayGameNum() != 0) { //플레이어가 게임을 가짐(서버의 joinwaitroom1 프로토콜에서 waitroom1.size()==2일 때, player.playgamenum 설정)
 						isSearch = false;
+						player.setSearchingGameNum(0);
 						gf.changePanel("game"+player.getPlayGameNum()); //게임1 화면으로 이동 (firstminigamepanel의 생성자 실행)
 						System.out.println("game"+player.getPlayGameNum());
 					}
