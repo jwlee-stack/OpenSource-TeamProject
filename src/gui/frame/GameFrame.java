@@ -8,6 +8,8 @@ import client.Client;
 import data.Player;
 import gui.handler.PanelHandler;
 import gui.panel.MenuPanel;
+import gui.panel.RematchingPanel;
+import gui.panel.minigame.FirstMinigamePanel;
 
 /**
  * 게임 창 클래스이다. 해당 클래스를 통해 사용자의 화면(패널)을 전환시킬 수 있다.
@@ -87,6 +89,10 @@ public class GameFrame extends JFrame{
 				ph.makeWaitRoomPanel();
 				add(ph.getPanel(3), "waitroom");
 				break;
+			case "rematching":
+				remove(ph.getPanel(5));
+				ph.makeRematchingPanel();
+				add(ph.getPanel(5), "rematching");
 			default:
 				break;
 		}

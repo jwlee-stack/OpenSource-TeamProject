@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import data.Player;
 import gui.frame.GameFrame;
+import gui.panel.RematchingPanel;
 import gui.panel.minigame.FirstMinigamePanel;
 
 /**
@@ -213,15 +214,21 @@ public class Client {
 				lowscore = scoreA;
 				JOptionPane.showMessageDialog(null, "내 점수: " + highscore + "\n상대방 점수" + lowscore, "Draw",
 						JOptionPane.INFORMATION_MESSAGE);
+				player.setTempScore(Integer.parseInt(highscore));
+				player.setTempResult("무승부");
 				player.setPlayGameNum(0);
 				player.setStatus(null);
 				gf.changePanel("rematching");
 				return;
 			}
 			if (player.getNickname().equals(winner)) {
+				player.setTempScore(Integer.parseInt(highscore));
+				player.setTempResult("승리");
 				JOptionPane.showMessageDialog(null, "내 점수: " + highscore + "\n상대방 점수" + lowscore, "you win",
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
+				player.setTempScore(Integer.parseInt(lowscore));
+				player.setTempResult("패배");
 				JOptionPane.showMessageDialog(null, "내 점수: " + lowscore + "\n상대방 점수" + highscore, "you lose",
 						JOptionPane.INFORMATION_MESSAGE);
 			}

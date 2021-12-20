@@ -260,17 +260,20 @@ public class FirstMinigamePanel extends JPanel {
 		answer[row][col] = value;
 	}
 
-	String IntToStr(int num) {
+	public String IntToStr(int num) {
 		return Integer.toString(num);
-
 	}
 
-	int StrToInt(String str) {
+	public int StrToInt(String str) {
 		return Integer.parseInt(str);
 	}
 
 	public Client getClient() {
 		return client;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 
 }

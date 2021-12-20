@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import data.Player;
 import gui.frame.GameFrame;
 import gui.panel.LoginPanel;
 import gui.panel.MenuPanel;
@@ -28,21 +29,12 @@ public class PanelHandler {
 	
 	public PanelHandler(GameFrame gf) {
 		this.gf = gf;
-		this.panel[0] = new LoginPanel(gf){
-			public void paintComponent(Graphics g)
-			{
-				Dimension d=getSize();
-				
-				URL url=getClass().getClassLoader().getResource("rainbow.png");
-				ImageIcon image=new ImageIcon(url);
-				g.drawImage(image.getImage(),0,0,d.width,d.height,null);
-			}
-		};
+		this.panel[0] = new LoginPanel(gf);
 		this.panel[1] = new MenuPanel(gf);
 		this.panel[2] = new JPanel(); //dummy panel, 미니게임 패널이 들어갈 공간
 		this.panel[3] = new JPanel(); //dummy panel, 웨이팅 패널이 들어갈 공간
 		this.panel[4] = new SignupPanel(gf);
-		this.panel[5] = new RematchingPanel(gf);
+		this.panel[5] = new JPanel(); //dummy panel, 리메칭 패널이 들어갈 공간
 	}
 	
 	/**
@@ -74,6 +66,12 @@ public class PanelHandler {
 	public void makeWaitRoomPanel() {
 		System.out.println("웨이팅 룸 패널 생성");
 		this.panel[3] = new WaitRoomPanel(gf);
+	}
+	
+	public void makeRematchingPanel() {
+		System.out.println("리메치 패널 생성");
+		Player player = gf.getClient().getPlayer();
+		this.panel[5] = new RematchingPanel(gf, player.getTempScore(), player.getTempResult());
 	}
 	
 	/**

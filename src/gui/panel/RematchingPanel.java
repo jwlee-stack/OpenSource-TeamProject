@@ -22,7 +22,8 @@ import gui.frame.GameFrame;
 public class RematchingPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
-	public RematchingPanel(GameFrame gf) {
+	//score : 점수 , result : 승패
+	public RematchingPanel(GameFrame gf, int score, String result) {
 		setBackground(SystemColor.info);
 		setLayout(null);
 		
@@ -50,14 +51,16 @@ public class RematchingPanel extends JPanel{
 		});
 		add(btn_exit);
 		
-		JLabel label = new JLabel("승패");
+		JLabel label = new JLabel();
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(300, 170, 200, 80);
+		label.setText(result);
 		add(label);
 		
-		JLabel score_label = new JLabel("점수");
+		JLabel score_label = new JLabel();
 		score_label.setHorizontalAlignment(SwingConstants.CENTER);
 		score_label.setBounds(300, 270, 200, 80);
+		score_label.setText("점수 : "+score+"점");
 		add(score_label);
 	}
 }

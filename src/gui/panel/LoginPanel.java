@@ -1,10 +1,14 @@
 package gui.panel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.SystemColor;
+import java.net.URL;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,8 +31,10 @@ import gui.frame.GameFrame;
 public class LoginPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private String serverIP = "13.124.194.183";
-	private int serverPort = 59647;
+//	private String serverIP = "13.124.194.183";
+//	private int serverPort = 59647;
+	private String serverIP = "127.0.0.1";
+	private int serverPort = 9999;
 	private JButton btnLogin;
 	private JButton btnSignUp;
 	
@@ -142,5 +148,14 @@ public class LoginPanel extends JPanel {
 		}
 		
 		return state;
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Dimension d=getSize();
+		
+		URL url=getClass().getClassLoader().getResource("rainbow.png");
+		ImageIcon image=new ImageIcon(url);
+		g.drawImage(image.getImage(),0,0,d.width,d.height,null);
 	}
 }
