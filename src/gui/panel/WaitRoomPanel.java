@@ -45,7 +45,7 @@ public class WaitRoomPanel extends JPanel{
 		threadRotatingText = new Thread(()->{
 			int count = 0;
 			while(isSearch) {
-				System.out.println("웨이팅룸");
+				//System.out.println("웨이팅룸");
 				try {
 					Thread.sleep(500);
 					if(++count > 2) {
@@ -64,7 +64,6 @@ public class WaitRoomPanel extends JPanel{
 				}
 			}
 		});
-		
 		threadRotatingText.start();
 	}
 	

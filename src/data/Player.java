@@ -76,14 +76,6 @@ public class Player {
 		this.searchingGameNum = searchingGameNum;
 	}
 
-//	public String getRoomName() {
-//		return roomName;
-//	}
-//
-//	public void setRoomName(String roomName) {
-//		this.roomName = roomName;
-//	}
-
 	public Boolean getStatus() {
 		return status;
 	}

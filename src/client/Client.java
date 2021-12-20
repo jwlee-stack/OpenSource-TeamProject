@@ -158,6 +158,7 @@ public class Client {
 			// -menupanel.java->sendMessageToServer("JoinWaitRoom1")줄 실행완료
 		} else if (protocol.equals("GameOut")) {
 			JOptionPane.showMessageDialog(null, "상대방이 게임을 나갔습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+			gf.setTitle("꾸러미 동산");
 			player.setPlayGameNum(0);
 			player.setStatus(null);
 			gf.changePanel("menu");
@@ -187,12 +188,15 @@ public class Client {
 		} else if (protocol.equals("ChangePlayer")) {
 			if (player.getStatus() == false) {
 				player.setStatus(true);
+				gf.setTitle("내 차례");
 				System.out.println("나는 게임중임!");
 			} else {
 				player.setStatus(false);
+				gf.setTitle("상대방 차례");
 				System.out.println("나는 게임중이 아님!");
 			}
 		} else if (protocol.equals("gameover")) {
+			gf.setTitle("꾸러미 동산");
 			String winner = data;
 			String scoreA = st.nextToken();
 			String scoreB = st.nextToken();

@@ -24,6 +24,7 @@ public class FirstMinigamePanel extends JPanel {
 
 	private Client client;
 	private Player player;
+	private GameFrame gf;
 
 	//private int getsu = new Random().nextInt(3)+3; //3*3 ~ 5*5
 	private int getsu = 4;
@@ -39,6 +40,7 @@ public class FirstMinigamePanel extends JPanel {
 	private Boolean check = false;
 
 	public FirstMinigamePanel(GameFrame gf) {
+		this.gf = gf;
 		this.client = gf.getClient();
 		this.player = gf.getClient().getPlayer();
 		this.getClient().setPanel(this);
@@ -52,6 +54,13 @@ public class FirstMinigamePanel extends JPanel {
 		}
 		
 		addLayout();
+		
+		if(player.getStatus() == true) {
+			gf.setTitle("내 차례");
+		}
+		else {
+			gf.setTitle("상대방 차례");
+		}
 	}
 
 	private void addLayout() {
@@ -65,8 +74,11 @@ public class FirstMinigamePanel extends JPanel {
 				btn[i][j].addActionListener((e) -> {
 					JButton b = (JButton) e.getSource();
 					System.out.println("status? " + player.getStatus());
-					if (player.getStatus() == true)
+					if (player.getStatus() == true) {
 						ClickingBtnSituation(b, e);
+					}
+					else {
+					}
 				});
 			}
 		}

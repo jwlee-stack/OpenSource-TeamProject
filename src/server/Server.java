@@ -241,7 +241,9 @@ public class Server {
 
 			if (protocol.equals("Login")) {
 				this.nickname = data;
-			} else if (protocol.equals("JoinWaitRoom1")) {
+			}
+			////////////////////////////////////////////////////////////////// 게임1
+			else if (protocol.equals("JoinWaitRoom1")) {
 				waitRoom1.add(this);
 				if (waitRoom1.size() == 2) {
 					ClientInfo c1 = waitRoom1.elementAt(0);
@@ -339,6 +341,7 @@ public class Server {
 					}
 				}
 			}
+			//////////////////////////////////////////////////////////////////
 		}
 
 		private ClientInfo AnotherClient() {
