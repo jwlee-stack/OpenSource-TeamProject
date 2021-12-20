@@ -7,7 +7,6 @@ import java.awt.SystemColor;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,6 +18,7 @@ import client.Client;
 import data.Player;
 import data.handler.Database;
 import gui.frame.GameFrame;
+import gui.component.RoundedButton;
 
 /**
  * 로그인 화면을 나타낼 Panel 카카오 API와 연결하여 간편 로그인 및 회원가입을 성공한다면 MenuPanel로 이동함
@@ -29,8 +29,8 @@ import gui.frame.GameFrame;
 public class LoginPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private JButton btnLogin;
-	private JButton btnSignUp;
+	private RoundedButton btnLogin;
+	private RoundedButton btnSignUp;
 	
 	private GameFrame gf;
 
@@ -65,7 +65,7 @@ public class LoginPanel extends JPanel {
 		passwordField.setBounds(240, 260, 320, 30);
 		add(passwordField);
 
-		btnLogin = new JButton("로그인");
+		btnLogin = new RoundedButton("로그인");
 		btnLogin.setBounds(240, 350, 320, 40);
 		btnLogin.addActionListener((e) -> {
 			String id = idField.getText();
@@ -86,7 +86,7 @@ public class LoginPanel extends JPanel {
 		});
 		add(btnLogin);
 
-		btnSignUp = new JButton("회원 가입");
+		btnSignUp = new RoundedButton("회원 가입");
 		btnSignUp.setBounds(240, 400, 320, 40);
 		btnSignUp.addActionListener((e)->{
 			gf.changePanel("signup");
