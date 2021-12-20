@@ -20,8 +20,8 @@ public class Player {
 	private int playGameNum; // 1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 	private int searchingGameNum; // 1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 
-	private int temp_score;
-	private String temp_result;
+	private int temp_score; // 현재 게임의 점수를 저장해둔 변수. Client의 gameover 프로토콜에서 결정됨
+	private String temp_result; // 현재 게임의 승패를 저장해둔 변수. Client의 gameover 프로토콜에서 결정됨
 
 	public Player() {
 		this.status = null;
