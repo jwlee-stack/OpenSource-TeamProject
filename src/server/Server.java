@@ -297,11 +297,9 @@ public class Server {
 				this.myroom.broadcast("StartGame/null");
 			} else if (protocol.equals("ButtonClicked")) {
 				System.out.println("눌린 버튼:" + data);
-				myroom.broadcast("Chatting/" + nickname + "/" + data);
+				myroom.broadcast("ClickButton/" + nickname + "/" + data);
 			} else if (protocol.equals("ChangePlayer")) {
-
 				myroom.broadcast("ChangePlayer/null");
-
 			} else if (protocol.equals("GameOver")) {
 				Result p = new Result();
 				p.name = data;
@@ -341,7 +339,27 @@ public class Server {
 					}
 				}
 			}
-			//////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////// 게임 2
+			else if (protocol.equals("JoinWaitRoom2")) {
+				waitRoom2.add(this);
+				if (waitRoom2.size() == 2) {
+					ClientInfo c1 = waitRoom2.elementAt(0);
+					ClientInfo c2 = waitRoom2.elementAt(1);
+
+					RoomInfo room = new RoomInfo(2, c1, c2);
+					roomVector.add(room);
+					c1.setRoomInfo(room);
+					c2.setRoomInfo(room);
+
+					waitRoom2.remove(c1);
+					waitRoom2.remove(c2);
+
+					c1.sendMessageToClient("ShowGame2/CreateGame"); // c1의 status=true 설정
+					c2.sendMessageToClient("ShowGame2/GetGame"); // c2의 status=false 설정
+				}
+			} else if (protocol.equals("ExitWaitRoom2")) {
+				waitRoom2.remove(this);
+			}
 		}
 
 		private ClientInfo AnotherClient() {

@@ -29,10 +29,10 @@ public class Client {
 	private FirstMinigamePanel fp;
 	private GameFrame gf;
 	
-//	private String serverIP = "13.124.194.183";
-//	private int serverPort = 59647;
-	private String serverIP = "127.0.0.1";
-	private int serverPort = 9999;
+	private String serverIP = "13.124.194.183";
+	private int serverPort = 59647;
+//	private String serverIP = "127.0.0.1";
+//	private int serverPort = 9999;
 
 	private Socket socket;
 	private InputStream is;
@@ -174,7 +174,7 @@ public class Client {
 			System.out.println("row:" + row + "col:" + col + "value:" + value);
 		} else if (protocol.equals("StartGame")) {
 			fp.showAnswer();
-		} else if (protocol.equals("Chatting")) {
+		} else if (protocol.equals("ClickButton")) {
 
 			if (!(data.equals(player.getNickname()))) // 서버에서 받은 아이디랑 내 아이디랑 다름
 			{
@@ -237,6 +237,22 @@ public class Client {
 			player.setPlayGameNum(0);
 			player.setStatus(null);
 			gf.changePanel("rematching");
+		}
+		
+		/////////////////////////////////////////////////////// 게임2
+		/////////////////////////////////////////////////////// 게임2
+		
+		else if (protocol.equals("ShowGame2")) { // server의 joinwaitroom 프로토콜에서 보냄
+			player.setPlayGameNum(2);
+
+			if (data.equals("CreateGame")) // 최초 접속자->게임 만듦
+			{
+				player.setStatus(Boolean.TRUE); // 초기값이 true면 게임 생성도 하고 먼저 게임을 시작함
+			} else if (data.equals("GetGame")) // 두 번째 접속자->서버에서 게임 받아옴
+			{
+				player.setStatus(Boolean.FALSE);
+			}
+			// -menupanel.java->sendMessageToServer("JoinWaitRoom1")줄 실행완료
 		}
 	}
 
