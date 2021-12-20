@@ -1,15 +1,16 @@
 package gui.panel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import data.Player;
 import gui.frame.GameFrame;
+import gui.component.RoundedButton;
 
 /**
  * 게임이 끝나고 보여질 화면이다.
@@ -37,7 +38,7 @@ public class RematchingPanel extends JPanel{
 		finishlabel.setFont(new Font("굴림", Font.PLAIN, 28));
 		add(finishlabel);
 		
-		JButton btn_rematch = new JButton("재매칭");
+		RoundedButton btn_rematch = new RoundedButton("재매칭");
 		btn_rematch.setBounds(200, 400, 100, 100);
 		btn_rematch.addActionListener((e)->{
 			gf.getClient().getPlayer().setSearchingGameNum(1);
@@ -46,7 +47,7 @@ public class RematchingPanel extends JPanel{
 		});
 		add(btn_rematch);
 		
-		JButton btn_exit = new JButton("나가기");
+		RoundedButton btn_exit = new RoundedButton("나가기");
 		btn_exit.setBounds(500, 400, 100, 100);
 		btn_exit.addActionListener((e)->{
 			gf.changePanel("menu");
@@ -72,6 +73,26 @@ public class RematchingPanel extends JPanel{
 	 */
 	public void setLabelInfo(int score, String result) {
 		score_label.setText("점수 : "+score+"점");
+		if(score>0) {
+			score_label.setForeground(Color.GREEN);
+		}
+		else if(score==0) {
+			score_label.setForeground(Color.GRAY);
+		}
+		else {
+			score_label.setForeground(Color.RED);
+		}
+		score_label.setFont(new Font("굴림", Font.PLAIN, 36));
 		result_label.setText(result);
+		if(result == "승리") {
+			result_label.setForeground(Color.GREEN);
+		}
+		else if(result == "패배") {
+			result_label.setForeground(Color.RED);
+		}
+		else {
+			result_label.setForeground(Color.GRAY);
+		}
+		result_label.setFont(new Font("굴림", Font.PLAIN, 36));
 	}
 }
