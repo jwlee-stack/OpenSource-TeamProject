@@ -66,7 +66,7 @@ public class Server {
 	 * @param port - 포트 번호
 	 * @return 정상적으로 열리면 true를 반환
 	 */
-	public boolean openServer(int port) {
+	private boolean openServer(int port) {
 		System.out.println("포트번호 " + port + "로 여는중...");
 		try {
 			serverSocket = new ServerSocket(port);
@@ -81,7 +81,7 @@ public class Server {
 	 * 서버로 접속을 요청하는 클라이언트를 받아들이는 과정을 대신해줄 스레드를 생성 및 실행시킨다. 접속한 클라이언트의 소켓은 새로 만든
 	 * ClientInfo객체 안의 socket멤버 필드에 저장해두며 해당 ClientInfo객체를 clientVector에 추가하게 된다.
 	 */
-	public void acceptClient() {
+	private void acceptClient() {
 		new Thread(() -> {
 			while (true) {
 				try {
@@ -103,7 +103,7 @@ public class Server {
 	/**
 	 * 서버를 받는 메소드.
 	 */
-	public void closeServer() {
+	private void closeServer() {
 		try {
 			serverSocket.close();
 			clientVector.clear();
@@ -150,7 +150,7 @@ public class Server {
 		/**
 		 * 클라이언트의 소캣을 통해 스트림을 생성해 연결하는 과정이다.
 		 */
-		public void connect() {
+		private void connect() {
 			try {
 				is = socket.getInputStream();
 				dis = new DataInputStream(is);
@@ -167,7 +167,7 @@ public class Server {
 		/**
 		 * 클라이언트로부터 메세지를 받는 역할을 맡은 스레드를 실행시킨다.
 		 */
-		public void runThreadToGetMessage() {
+		private void runThreadToGetMessage() {
 			threadGettingMsg = new Thread(() -> {
 				while (true) {
 					try {

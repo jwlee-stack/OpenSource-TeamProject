@@ -96,7 +96,7 @@ public class Client {
 	/**
 	 * 서버로부터 메세지를 받는 역할을 행하는 스레드를 실행시킨다. 서버와의 연결이 끊기면, 연결된 소켓 및 스트림을 끊는다.
 	 */
-	public void runThreadToGetMessage() {
+	private void runThreadToGetMessage() {
 		threadGettingMsg = new Thread(() -> {
 			while (true) {
 				try {
