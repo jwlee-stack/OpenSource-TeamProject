@@ -25,7 +25,7 @@ public class Player {
 	private String temp_result; // 현재 게임의 승패를 저장해둔 변수. Client의 gameover 프로토콜에서 결정됨
 
 	public Player() {
-		this.status = null;-
+		this.status = null;
 	}
 
 	public Player(String id, String nickname, int[] score) {
