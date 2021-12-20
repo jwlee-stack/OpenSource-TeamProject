@@ -9,13 +9,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
-//import server.Server.ClientInfo;
-//import server.Server.Result;
-//import server.Server.RoomInfo;
 
 /**
  * 클라이언트와 소켓 통신을 하기 위한 클래스이다.

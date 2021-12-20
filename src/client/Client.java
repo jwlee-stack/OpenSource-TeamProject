@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 import data.Player;
 import gui.frame.GameFrame;
-import gui.panel.RematchingPanel;
 import gui.panel.minigame.FirstMinigamePanel;
 
 /**
@@ -32,6 +31,9 @@ public class Client {
 
 	// 서버로 연결됐다면 true값을 가짐
 	private boolean isConnected;
+	
+	private String serverIP = "13.124.194.183";
+	private int serverPort = 59647;
 
 	private Socket socket;
 	private InputStream is;
@@ -262,5 +264,13 @@ public class Client {
 
 	public void setgameframe(GameFrame GF) {
 		this.gf = GF;
+	}
+	
+	public String getServerIP() {
+		return serverIP;
+	}
+	
+	public int getServerPort() {
+		return serverPort;
 	}
 }
