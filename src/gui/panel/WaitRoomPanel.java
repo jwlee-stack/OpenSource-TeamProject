@@ -3,13 +3,13 @@ package gui.panel;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import data.Player;
 
 import gui.frame.GameFrame;
+import gui.component.RoundedButton;
 
 /**
  * 상대방을 찾는 중일 때 보여줄 패널. 상대방을 찾게 되면 미니게임 화면으로 이동하게 된다.
@@ -84,7 +84,7 @@ public class WaitRoomPanel extends JPanel{
 		lbLoading.setBounds(157, 286, 485, 60);
 		add(lbLoading);
 		
-		JButton btnExit = new JButton("뒤로가기");
+		RoundedButton btnExit = new RoundedButton("뒤로가기");
 		btnExit.setBounds(355, 535, 97, 23);
 		btnExit.addActionListener((e)->{
 			gf.getClient().sendMessageToServer("ExitWaitRoom"+player.getSearchingGameNum()+"/ ");
