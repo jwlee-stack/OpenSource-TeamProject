@@ -359,6 +359,15 @@ public class Server {
 			} else if (protocol.equals("ExitWaitRoom2")) {
 				waitRoom2.remove(this);
 			}
+			else if (protocol.equals("LetStone")) {
+				String row=data;
+				String col=st.nextToken();
+				AnotherClient().sendMessageToClient("LetStone/"+row+"/"+col);
+			}
+			else if (protocol.equals("GameOver2")) {
+				String winner=data;
+				myroom.broadcast("GameOver2/"+winner);
+			}
 		}
 
 		private ClientInfo AnotherClient() {

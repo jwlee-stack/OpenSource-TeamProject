@@ -43,7 +43,7 @@ public class FirstMinigamePanel extends JPanel {
 		this.gf = gf;
 		this.client = gf.getClient();
 		this.player = gf.getClient().getPlayer();
-		this.getClient().setPanel(this);
+		this.client.setPanel(this);
 		
 		setSize(800, 600);
 		
@@ -97,14 +97,14 @@ public class FirstMinigamePanel extends JPanel {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				getClient().sendMessageToServer("CheckGame/null");
+				client.sendMessageToServer("CheckGame/null");
 
 				if (check == true)
 					break;
 			}
 
-			getClient().sendMessageToServer("SetGame/null");
-			getClient().sendMessageToServer("StartGame/null");
+			client.sendMessageToServer("SetGame/null");
+			client.sendMessageToServer("StartGame/null");
 		}
 	}
 
@@ -171,15 +171,15 @@ public class FirstMinigamePanel extends JPanel {
 					{
 						imgnum = CheckImgNum(getsu, i, j); // 몇 번 버튼 클릭됐는지
 						msg = Integer.toString(imgnum); // int to string
-						getClient().sendMessageToServer("ButtonClicked/" + msg); // 서버에 전송
+						client.sendMessageToServer("ButtonClicked/" + msg); // 서버에 전송
 
 						if (answer[i][j] != answer[firstRow][firstCol]) // 버튼 이벤트인데 그림이 불일치일 때
 						{
-							getClient().sendMessageToServer("ChangePlayer/null");
+							client.sendMessageToServer("ChangePlayer/null");
 						}
 					}
 					if (checkEnd == 8) {
-						getClient().sendMessageToServer(
+						client.sendMessageToServer(
 								"GameOver/" + player.getNickname() + "/" + Integer.toString(score));
 					}
 				}
@@ -213,7 +213,7 @@ public class FirstMinigamePanel extends JPanel {
 				int col = (int) (Math.random() * getsu);
 				if (answer[row][col] == '0') {
 					answer[row][col] = alpha;
-					getClient().sendMessageToServer("MakeGame/" + IntToStr(getsu) + "/" + IntToStr(row) + "/"
+					client.sendMessageToServer("MakeGame/" + IntToStr(getsu) + "/" + IntToStr(row) + "/"
 							+ IntToStr(col) + "/" + IntToStr(alpha));
 					i++;
 					ok = true;
@@ -263,9 +263,9 @@ public class FirstMinigamePanel extends JPanel {
 		return Integer.parseInt(str);
 	}
 
-	public Client getClient() {
-		return client;
-	}
+	//public Client getClient() {
+		//return client;
+	//}
 	
 	public int getScore() {
 		return score;

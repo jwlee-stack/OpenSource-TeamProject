@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import data.Player;
 import gui.frame.GameFrame;
 import gui.panel.minigame.FirstMinigamePanel;
+import gui.panel.minigame.SecondMinigamePanel;
 
 /**
  * 서버로부터 데이터를 주고 받을 수 있는 클라이언트의 정보가 포함된 클래스이다. 해당 클래스로부터 서버로의 입출력 스트림을 통해 메세지를
@@ -27,12 +28,13 @@ import gui.panel.minigame.FirstMinigamePanel;
 public class Client {
 	private Player player;
 	private FirstMinigamePanel fp;
+	private SecondMinigamePanel sp;
 	private GameFrame gf;
 	
-	private String serverIP = "13.124.194.183";
-	private int serverPort = 59647;
-//	private String serverIP = "127.0.0.1";
-//	private int serverPort = 9999;
+//	private String serverIP = "13.124.194.183";
+//	private int serverPort = 59647;
+	private String serverIP = "127.0.0.1";
+	private int serverPort = 9999;
 
 	private Socket socket;
 	private InputStream is;
@@ -45,12 +47,16 @@ public class Client {
 	public Client(GameFrame gf) {
 		this.player = new Player();
 		this.fp = null;
+		this.sp = null;
 		this.gf = gf;
 	}
 
 	public void setPanel(FirstMinigamePanel fp) {
 		this.fp = fp;
-		//System.out.println(fp);
+
+	}
+	public void setPanel(SecondMinigamePanel sp) {
+		this.sp = sp;		
 	}
 
 	/**
@@ -242,8 +248,7 @@ public class Client {
 		/////////////////////////////////////////////////////// 게임2
 		
 		else if (protocol.equals("ShowGame2")) { // server의 joinwaitroom 프로토콜에서 보냄
-			player.setPlayGameNum(2);
-
+			
 			if (data.equals("CreateGame")) // 최초 접속자->게임 만듦
 			{
 				player.setStatus(Boolean.TRUE); // 초기값이 true면 게임 생성도 하고 먼저 게임을 시작함
@@ -251,7 +256,22 @@ public class Client {
 			{
 				player.setStatus(Boolean.FALSE);
 			}
+			
+			player.setPlayGameNum(2);
 			// -menupanel.java->sendMessageToServer("JoinWaitRoom1")줄 실행완료
+		}
+		else if (protocol.equals("LetStone")) {
+			String row=data;
+			String col=st.nextToken();
+			System.out.println("됨??");
+			sp.Rival_PaintStone(row,col);
+		}
+		else if (protocol.equals("GameOver2")) {
+			String winner=data;
+			JOptionPane.showMessageDialog(null, winner, "게임 끝", JOptionPane.PLAIN_MESSAGE);
+			player.setPlayGameNum(0);
+			player.setStatus(null);
+			gf.changePanel("rematching");
 		}
 	}
 
