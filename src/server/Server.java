@@ -367,6 +367,10 @@ public class Server {
 			else if (protocol.equals("GameOver2")) {
 				String winner=data;
 				myroom.broadcast("GameOver2/"+winner);
+				roomVector.remove(myroom);
+				AnotherClient().myroom = null;
+				myroom = null;
+				
 			}
 		}
 

@@ -135,6 +135,111 @@ public class SecondMinigamePanel extends JPanel{
 				}
 			}
 		}
+		
+		//세로 방향으로 5개 찾기
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map.length;j++) {
+				switch(map[j][i]) { //변경점
+				case 1:
+					count_black = 0;
+					count_white++;
+					break;
+				case 2:
+					count_black++;
+					count_white = 0;
+					break;
+				default:
+					count_black = 0;
+					count_white = 0;
+				}
+				if(count_white == 5 || count_black == 5) {
+					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
+					client.sendMessageToServer("GameOver2/"+endStr);
+					//JOptionPane.showMessageDialog(null, endStr, "게임 끝", JOptionPane.PLAIN_MESSAGE);
+					//gf.changePanel("menu");
+					return;
+				}
+			}
+		}
+		
+		//좌상향 대각선 방향으로 5개 찾기
+		int num=0;
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map.length;j++) {
+
+				while(i+num<map.length&&j+num<map.length)
+				{
+					if(map[i+num][j+num]==1)
+					{
+						count_black = 0;
+						count_white++;
+						if(count_white==5)
+							break;
+					}
+					else if(map[i+num][j+num]==2)
+					{
+						count_white = 0;
+						count_black++;
+						if(count_black==5)
+							break;
+					}
+					else
+					{
+						count_black=0;
+						count_white=0;
+						break;
+					}
+					num++;
+				}
+							
+				num=0;
+				if(count_white == 5 || count_black == 5) {
+					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
+					client.sendMessageToServer("GameOver2/"+endStr);
+					return;
+				}
+			}
+		}
+		
+		//우상향 대각선 방향으로 5개 찾기
+		num=0;
+		for(int i=0;i<map.length;i++) {
+			for(int j=0;j<map.length;j++) {
+
+				while(i+num<map.length&&j-num>-1)
+				{
+					if(map[i+num][j-num]==1)
+					{
+						count_black = 0;
+						count_white++;
+						if(count_white==5)
+							break;
+					}
+					else if(map[i+num][j-num]==2)
+					{
+						count_white = 0;
+						count_black++;
+						if(count_black==5)
+							break;
+					}
+					else
+					{
+						count_black=0;
+						count_white=0;
+						break;
+					}
+					num++;
+				}
+							
+				num=0;
+				if(count_white == 5 || count_black == 5) {
+					String endStr = (count_white == 5) ? "흰돌승리" : "검은돌승리";
+					client.sendMessageToServer("GameOver2/"+endStr);
+					return;
+				}
+			}
+		}
+		
 	}
 	public void Rival_PaintStone(String row1,String col1)
 	{

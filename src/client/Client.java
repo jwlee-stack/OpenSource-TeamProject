@@ -263,7 +263,6 @@ public class Client {
 		else if (protocol.equals("LetStone")) {
 			String row=data;
 			String col=st.nextToken();
-			System.out.println("됨??");
 			sp.Rival_PaintStone(row,col);
 		}
 		else if (protocol.equals("GameOver2")) {
