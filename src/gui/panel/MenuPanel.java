@@ -1,5 +1,6 @@
 package gui.panel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.SystemColor;
@@ -8,6 +9,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -16,6 +18,7 @@ import data.Player;
 import data.handler.Database;
 import data.handler.Database.PlayerScore;
 import gui.frame.GameFrame;
+import gui.component.RoundedButton;
 
 /**
  * 메뉴 Panel. 해당 화면에서 랭크 확인 및 게임 시작을 할 수 있음
@@ -33,11 +36,12 @@ public class MenuPanel extends JPanel {
 	 * text_Nickname : 랭킹 유저들의 닉네임([0] - 나의 닉네임) text_Score : 랭킹 유저들의 점수([0] - 나의
 	 * 점수) btn : label[9]를 컨트롤할수 있는 버튼
 	 */
-	private JPanel[] panel = new JPanel[2];
-	private JLabel[] label = new JLabel[10];
+	private JPanel[] panel = new JPanel[10];
+	private JTextField[] label = new JTextField[10];
 	private JTextField[] text_Nickname = new JTextField[9];
 	private JTextField[] text_Score = new JTextField[9];
-	private JButton[] btn = new JButton[4];
+	private RoundedButton[] btn = new RoundedButton[4];
+	private JLabel control= new JLabel();
 	private String[] btntext = { "Score1", "Score2", "Score3", "총합" };
 	
 	private PlayerScore[] ps;
@@ -62,7 +66,7 @@ public class MenuPanel extends JPanel {
 		add(lbGame1);
 		btnGame1.setBounds(141, 176, 137, 137);
 		btnGame1.addActionListener((e) -> {
-			player.setSearchingGameNum(1);
+			gf.getClient().getPlayer().setSearchingGameNum(1);
 			gf.getClient().sendMessageToServer("JoinWaitRoom1/" + player.getNickname()); // 클라이언트의 상태 설정 (c1=true,
 																							// c2=false), playgamenum 1로
 																							// 설정
@@ -73,7 +77,14 @@ public class MenuPanel extends JPanel {
 		});
 		add(btnGame1);
 
-		JButton btnGame2 = new JButton("미구현");
+		
+		URL url1 = getClass().getClassLoader().getResource("omok.PNG");
+		ImageIcon image1= new ImageIcon(url1);
+
+		Image img1 = image1.getImage();
+		Image changeimg1 = img1.getScaledInstance(137, 137, Image.SCALE_SMOOTH);
+		ImageIcon changeIcon1 = new ImageIcon(changeimg1);
+		JButton btnGame2 = new JButton(changeIcon1);
 		JLabel lbGame2 = new JLabel("<오목>");
 		lbGame2.setFont(new Font("한컴 윤체 B", Font.PLAIN, 15));
 		lbGame2.setBounds(102, 451, 200, 60);
@@ -93,9 +104,7 @@ public class MenuPanel extends JPanel {
 		add(lbGame3);
 		btnGame3.setBounds(227, 335, 137, 137);
 		btnGame3.addActionListener((e) -> {
-			gf.getClient().getPlayer().setSearchingGameNum(3);
-			gf.getClient().sendMessageToServer("JoinWaitRoom3/" + player.getNickname());
-			gf.changePanel("waitroom");
+			JOptionPane.showMessageDialog(null, "추후 업데이트 될 예정입니다.", "기대해주세요!", JOptionPane.ERROR_MESSAGE);
 		});
 		add(btnGame3);
 
@@ -107,7 +116,7 @@ public class MenuPanel extends JPanel {
 
 		init();
 		score();
-		updateRank(1); // 메뉴 화면에 들어오면 맨 처음에 보여질 점수판
+		updateRank(1);
 	}
 	
 	/**
@@ -159,22 +168,20 @@ public class MenuPanel extends JPanel {
 		}
 	}
 	
-	/**
-	 * 점수판 관련 패널, 버튼, 레이블, 텍스트 초기화
-	 */
 	private void init() {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 10; i++) {
 			panel[i] = new JPanel();
 			add(panel[i]);
 			panel[i].setLayout(null);
 		}
 		for (int i = 0; i < 4; i++) {
-			btn[i] = new JButton(btntext[i]);
+			btn[i] = new RoundedButton(btntext[i]);
 			btn[i].setVisible(true);
-			panel[0].add(btn[i]);
+			panel[9].add(btn[i]);
 		}
 		for (int i = 0; i < 10; i++) {
-			label[i] = new JLabel();
+			label[i] = new JTextField();
+			label[i].setEditable(false);
 			label[i].setVisible(true);
 		}
 		for (int i = 0; i < 9; i++) {
@@ -182,6 +189,8 @@ public class MenuPanel extends JPanel {
 			text_Score[i] = new JTextField();
 			text_Nickname[i].setVisible(true);
 			text_Score[i].setVisible(true);
+			text_Nickname[i].setEditable(false);
+			text_Score[i].setEditable(false);
 		}
 	}
 
@@ -189,21 +198,23 @@ public class MenuPanel extends JPanel {
 	 * 점수판 컨트롤러(버튼을 누르면 해당 게임만의 랭킹스코어를 볼수있다)
 	 */
 	private void score() {
-		panel[0].setBounds(410, 170, 370, 90);
-		panel[0].add(label[9]);
-
-		panel[1].setBounds(410, 260, 370, 270);
+		panel[9].setBounds(410, 170, 370, 90);
+		panel[9].add(control);
+		panel[9].setBackground(new Color(255, 153, 80));
+		
 		for (int i = 0; i <= 8; i++) {
-			panel[1].add(label[i]);
-			panel[1].add(text_Nickname[i]);
-			panel[1].add(text_Score[i]);
+			panel[i].setBounds(410, 260 + 30*i, 370, 30);
+			panel[i].add(label[i]);
+			panel[i].add(text_Nickname[i]);
+			panel[i].add(text_Score[i]);
 		}
 
-		label[9].setBounds(0, 0, 370, 50);
-		label[9].setFont(new Font("굴림", Font.PLAIN, 24));
-		label[9].setHorizontalAlignment(SwingConstants.CENTER);
-		label[9].setText(btntext[0]);
-
+		control.setBounds(0, 0, 370, 50);
+		control.setFont(new Font("굴림", Font.PLAIN, 24));
+		control.setHorizontalAlignment(SwingConstants.CENTER);
+		control.setText(btntext[0]);
+		control.setBackground(new Color(255, 153, 80));
+		
 		btn[0].setBounds(3, 53, 86, 33);
 		btn[1].setBounds(93, 53, 90, 33);
 		btn[2].setBounds(185, 53, 89, 33);
@@ -212,22 +223,22 @@ public class MenuPanel extends JPanel {
 			btn[i].setFont(new Font("굴림", Font.PLAIN, 14));
 		}
 		btn[0].addActionListener((e) -> {
-			label[9].setText(btntext[0]);
+			control.setText(btntext[0]);
 			updateMyScore(1);
 			updateRank(1);
 		});
 		btn[1].addActionListener((e) -> {
-			label[9].setText(btntext[1]);
+			control.setText(btntext[1]);
 			updateMyScore(2);
 			updateRank(2);
 		});
 		btn[2].addActionListener((e) -> {
-			label[9].setText(btntext[2]);
+			control.setText(btntext[2]);
 			updateMyScore(3);
 			updateRank(3);
 		});
 		btn[3].addActionListener((e) -> {
-			label[9].setText(btntext[3]);
+			control.setText(btntext[3]);
 			updateMyScore(4);
 			updateRank(4);
 		});
@@ -236,7 +247,12 @@ public class MenuPanel extends JPanel {
 		 * 점수판(나와 상대유저들의 랭크 및 스코어) label[0]은 따로처리
 		 */
 		for (int i = 0; i < 9; i++) {
-			label[i].setBounds(0, 30 * i, 110, 30);
+			if(i>=4) {
+			label[i].setBounds(0, 0, 110, 30);
+			}
+			else {
+				label[i].setBounds(1, 2, 109, 26);
+			}
 		}
 		for (int i = 0; i < 9; i++) {
 			label[i].setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -249,15 +265,23 @@ public class MenuPanel extends JPanel {
 		}
 
 		for (int i = 0; i < 9; i++) {
-			text_Nickname[i].setBounds(110, 30 * i, 130, 30);
-			text_Score[i].setBounds(240, 30 * i, 130, 30);
+			if(i>=4) {
+			text_Nickname[i].setBounds(110, 0, 130, 30);
+			text_Score[i].setBounds(240, 0, 130, 30);
+			}
+			else {
+				text_Nickname[i].setBounds(110, 2, 130, 26);
+				text_Score[i].setBounds(240, 2, 129, 26);
+			}
 			text_Nickname[i].setHorizontalAlignment(SwingConstants.CENTER);
 			text_Score[i].setHorizontalAlignment(SwingConstants.CENTER);
 			text_Nickname[i].setFont(new Font("Dialog", Font.PLAIN, 16));
 			text_Score[i].setFont(new Font("Dialog", Font.PLAIN, 16));
-			text_Nickname[i].setEditable(false);
-			text_Score[i].setEditable(false);
 		}
-
+		
+		panel[1].setBackground(Color.YELLOW);
+		panel[2].setBackground(Color.GRAY);
+		panel[3].setBackground(new Color(200, 0, 0));
+		
 	}
 }

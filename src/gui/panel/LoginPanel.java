@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import client.Client;
 import data.Player;
 import data.handler.Database;
+import gui.component.RoundedButton;
 import gui.frame.GameFrame;
 
 /**
@@ -65,7 +66,7 @@ public class LoginPanel extends JPanel {
 		passwordField.setBounds(240, 260, 320, 30);
 		add(passwordField);
 
-		btnLogin = new JButton("로그인");
+		btnLogin = new RoundedButton("로그인");
 		btnLogin.setBounds(240, 350, 320, 40);
 		btnLogin.addActionListener((e) -> {
 			String id = idField.getText();
@@ -86,7 +87,7 @@ public class LoginPanel extends JPanel {
 		});
 		add(btnLogin);
 
-		btnSignUp = new JButton("회원 가입");
+		btnSignUp = new RoundedButton("회원 가입");
 		btnSignUp.setBounds(240, 400, 320, 40);
 		btnSignUp.addActionListener((e)->{
 			gf.changePanel("signup");

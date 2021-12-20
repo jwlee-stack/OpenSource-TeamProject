@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import data.Player;
-
+import gui.component.RoundedButton;
 import gui.frame.GameFrame;
 
 /**
@@ -85,7 +85,7 @@ public class WaitRoomPanel extends JPanel{
 		lbLoading.setBounds(157, 286, 485, 60);
 		add(lbLoading);
 		
-		JButton btnExit = new JButton("뒤로가기");
+		JButton btnExit = new RoundedButton("뒤로가기");
 		btnExit.setBounds(355, 535, 97, 23);
 		btnExit.addActionListener((e)->{
 			gf.getClient().sendMessageToServer("ExitWaitRoom"+player.getSearchingGameNum()+"/ ");

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import data.handler.Database;
+import gui.component.RoundedButton;
 import gui.frame.GameFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -71,14 +72,11 @@ public class SignupPanel extends JPanel{
 		add(IDField);
 		IDField.setColumns(10);
 		
-		JButton btnIDCheck = new JButton("ID 중복 체크");
+		JButton btnIDCheck = new RoundedButton("ID 중복 체크");
 		btnIDCheck.setBounds(570, 150, 150, 30);
 		btnIDCheck.addActionListener((e)->{
 			if(checkDupID()) {
 				JOptionPane.showMessageDialog(getParent(), "사용할 수 있는 ID", "ID 중복 체크", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				JOptionPane.showMessageDialog(getParent(), "사용할 수 없는 ID", "ID 중복 체크", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		add(btnIDCheck);
@@ -88,14 +86,11 @@ public class SignupPanel extends JPanel{
 		NicknameField.setBounds(300, 200, 260, 30);
 		add(NicknameField);
 		
-		JButton btnNickname = new JButton("닉네임 중복 체크");
+		JButton btnNickname = new RoundedButton("닉네임 중복 체크");
 		btnNickname.setBounds(570, 200, 150, 30);
 		btnNickname.addActionListener((e)->{
 			if(checkDupNickname()) {
 				JOptionPane.showMessageDialog(getParent(), "사용할 수 있는 닉네임", "닉네임 중복 체크", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-				JOptionPane.showMessageDialog(getParent(), "사용할 수 없는 닉네임", "닉네임 중복 체크", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		add(btnNickname);
@@ -108,7 +103,7 @@ public class SignupPanel extends JPanel{
 		PasswordCheckField.setBounds(300, 300, 260, 30);
 		add(PasswordCheckField);
 		
-		JButton btnSignup = new JButton("회원가입 하기");
+		JButton btnSignup = new RoundedButton("회원가입 하기");
 		btnSignup.setBounds(240, 400, 320, 80);
 		add(btnSignup);
 		btnSignup.addActionListener((e)->{
@@ -122,7 +117,7 @@ public class SignupPanel extends JPanel{
 			}
 		});
 		
-		JButton btnExit = new JButton("뒤로가기");
+		JButton btnExit = new RoundedButton("뒤로가기");
 		btnExit.setBounds(355, 535, 97, 23);
 		btnExit.addActionListener((e)->{
 			gf.changePanel("login");
@@ -135,13 +130,18 @@ public class SignupPanel extends JPanel{
 	 * @return
 	 */
 	private boolean checkDupNickname() {
+		//길이 확인
 		String nickname = NicknameField.getText();
 		if(nickname.length() < 3 || nickname.length() >= 10) {
 			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 10자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
+		//중복 확인
 		boolean result = db.isThereID(nickname);
+		if(result){
+			JOptionPane.showMessageDialog(getParent(), "사용할 수 없는 닉네임", "닉네임 중복 체크", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		return !result;
 	}
@@ -151,11 +151,17 @@ public class SignupPanel extends JPanel{
 	 * @return
 	 */
 	private boolean checkDupID() {
+		//길이 확인
 		String id = IDField.getText();
-		boolean result = db.isThereID(id);
-		
 		if(id.length() < 5 || id.length() >= 20) {
 			JOptionPane.showMessageDialog(getParent(), "ID의 길이는 5자 이상, 20자 미만으로만 설정할 수 있습니다.", "ID 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		//중복 확인
+		boolean result = db.isThereID(id);
+		if(result) {
+			JOptionPane.showMessageDialog(getParent(), "사용할 수 없는 ID", "ID 중복 체크", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		

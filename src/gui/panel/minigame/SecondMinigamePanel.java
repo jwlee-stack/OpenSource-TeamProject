@@ -52,18 +52,18 @@ public class SecondMinigamePanel extends JPanel{
 		if(player.getStatus()==Boolean.TRUE)
 		{
 			next_black=true;
+			gf.setTitle("내 차례");
 		}
 		else
 		{
 			next_black=false;
+			gf.setTitle("상대방 차례");
 		}
 		
 		setBackground(new Color(206,167,61));
 		MyMouseListener ml = new MyMouseListener();
 		addMouseListener(ml);
 		addMouseMotionListener(ml);
-		
-		
 	}
 	
 	//해당 Panel을 다시 그려줄 메소드
