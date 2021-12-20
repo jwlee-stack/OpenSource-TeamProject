@@ -7,8 +7,6 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import client.Client;
@@ -27,35 +25,32 @@ public class FirstMinigamePanel extends JPanel {
 	private Client client;
 	private Player player;
 
-	int getsu = 4;
-	JButton[][] btn = new JButton[getsu][getsu];
-	int[][] answer = new int[getsu][getsu];
-	JLabel[] imglb = new JLabel[8];
+	//private int getsu = new Random().nextInt(3)+3; //3*3 ~ 5*5
+	private int getsu = 4;
+	private JButton[][] btn = new JButton[getsu][getsu];
+	private int[][] answer = new int[getsu][getsu];
+	//private JLabel[] imglb = new JLabel[8];
 
-	JButton firstClick = null;
-	int firstRow = 0, firstCol = 0;
+	private JButton firstClick = null;
+	private int firstRow = 0, firstCol = 0;
 	private int score = 0;
 	private int checkEnd = 0;
-	// private String my_room;
 
-	public Boolean check = false;
+	private Boolean check = false;
 
 	public FirstMinigamePanel(GameFrame gf) {
 		this.client = gf.getClient();
 		this.player = gf.getClient().getPlayer();
-		// my_room=player.getRoomName();
-
 		this.getClient().setPanel(this);
-
+		
 		setSize(800, 600);
-		// add(new JLabel("미니게임1 - 같은 그림 찾기"));
-
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		
+		for (int i = 0; i < getsu; i++) {
+			for (int j = 0; j < getsu; j++) {
 				btn[i][j] = new JButton();
 			}
 		}
-
+		
 		addLayout();
 	}
 
@@ -85,6 +80,11 @@ public class FirstMinigamePanel extends JPanel {
 		{
 
 			while (true) {
+				try {
+					Thread.sleep(200); //0.2초 간격으로 보내기
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				getClient().sendMessageToServer("CheckGame/null");
 
 				if (check == true)
@@ -105,16 +105,13 @@ public class FirstMinigamePanel extends JPanel {
 	private int CheckImgNum(int getsu, int row, int col) {
 		int imgNum = 0;
 		for (int i = 0; i < getsu; i++) {
-
 			for (int j = 0; j < getsu; j++) {
 				if (i == row && j == col)
 					return imgNum;
 				else
 					imgNum++;
 			}
-
 		}
-
 		return imgNum;
 	}
 
@@ -124,7 +121,6 @@ public class FirstMinigamePanel extends JPanel {
 		for (int i = 0; i < getsu; i++) {
 			for (int j = 0; j < getsu; j++) {
 				if (b == btn[i][j]) {
-
 					if (firstClick == null) { // 첫번째 선택시
 						firstClick = b;
 						firstRow = i;
@@ -136,7 +132,6 @@ public class FirstMinigamePanel extends JPanel {
 						{
 							firstClick = null;
 						}
-
 					} else { // 두번째 선택시
 						if (i == firstRow && j == firstCol) { // 첫번째로 선택한 이미지임
 							continue;
@@ -146,7 +141,6 @@ public class FirstMinigamePanel extends JPanel {
 							continue;
 						}
 						if (answer[i][j] == answer[firstRow][firstCol]) { // 그림 일치
-
 							firstClick.setBackground(Color.gray);
 							b.setBackground(Color.gray);
 							URL url = getClass().getClassLoader()
@@ -156,15 +150,10 @@ public class FirstMinigamePanel extends JPanel {
 							if (e != null)
 								score += 10;
 							checkEnd += 1;
-
 						} else { // 그림 불일치
-
 							firstClick.setIcon(null);
-
 						}
-
 						firstClick = null;
-
 					}
 					if (e != null) // 버튼 눌림 이벤트 발생했을 때
 					{
@@ -182,10 +171,8 @@ public class FirstMinigamePanel extends JPanel {
 								"GameOver/" + player.getNickname() + "/" + Integer.toString(score));
 					}
 				}
-
 			}
 		}
-
 	}
 
 	void initChar() {
@@ -204,9 +191,7 @@ public class FirstMinigamePanel extends JPanel {
 							continue DASI;
 						}
 					}
-
 				} // end of 기존 알파벳
-
 			}
 
 			// 임의의 위치에 지정
@@ -240,16 +225,14 @@ public class FirstMinigamePanel extends JPanel {
 		try {
 			System.out.println("정상실행됨!");
 			Thread.sleep(2000);
-		} catch (Exception ex) {
-		}
+		} 
+		catch (Exception ex) {}
 
 		for (int i = 0; i < getsu; i++) {
 			for (int j = 0; j < getsu; j++) {
 				btn[i][j].setIcon(null);
 			}
-
 		} // end of 2초후에 지우기
-
 	}
 
 	public void modifyAnswer(String row1, String col1, String value1) {
@@ -274,6 +257,10 @@ public class FirstMinigamePanel extends JPanel {
 	
 	public int getScore() {
 		return score;
+	}
+	
+	public void setCheck(Boolean check) {
+		this.check = check;
 	}
 
 }

@@ -28,12 +28,11 @@ public class Client {
 	private Player player;
 	private FirstMinigamePanel fp;
 	private GameFrame gf;
-
-	// 서버로 연결됐다면 true값을 가짐
-	private boolean isConnected;
 	
-	private String serverIP = "13.124.194.183";
-	private int serverPort = 59647;
+//	private String serverIP = "13.124.194.183";
+//	private int serverPort = 59647;
+	private String serverIP = "127.0.0.1";
+	private int serverPort = 9999;
 
 	private Socket socket;
 	private InputStream is;
@@ -47,7 +46,6 @@ public class Client {
 		this.player = new Player();
 		this.fp = null;
 		this.gf = gf;
-		// connectToServer("127.0.0.1", 9999);
 	}
 
 	public void setPanel(FirstMinigamePanel fp) {
@@ -72,8 +70,6 @@ public class Client {
 			dos = new DataOutputStream(os);
 
 			System.out.println(ip + ":" + port + "주소로 연결 완료");
-			isConnected = true;
-
 		} catch (UnknownHostException e) {
 			// e.printStackTrace();
 			System.out.println("서버 접속 실패");
@@ -165,11 +161,9 @@ public class Client {
 			player.setPlayGameNum(0);
 			player.setStatus(null);
 			gf.changePanel("menu");
-		} else if (protocol.equals("SendRoomName")) {
-			player.setRoomName(data);
 		} else if (protocol.equals("CheckGame")) {
 			if (data.equals("true")) {
-				fp.check = true;
+				fp.setCheck(true);
 			}
 		} else if (protocol.equals("SetGame")) {
 			String row = data;
@@ -223,14 +217,16 @@ public class Client {
 				gf.changePanel("rematching");
 				return;
 			}
-			if (player.getNickname().equals(winner)) {
+			if (player.getNickname().equals(winner)) { //이기면 얻은 점수만큼 추가됨
 				player.setTempScore(Integer.parseInt(highscore));
 				player.setTempResult("승리");
+				player.updateScore(1, Integer.parseInt(highscore));
 				JOptionPane.showMessageDialog(null, "내 점수: " + highscore + "\n상대방 점수" + lowscore, "you win",
 						JOptionPane.INFORMATION_MESSAGE);
-			} else {
+			} else { //지면 점수가 20점 까임
 				player.setTempScore(Integer.parseInt(lowscore));
 				player.setTempResult("패배");
+				player.updateScore(1, -20);
 				JOptionPane.showMessageDialog(null, "내 점수: " + lowscore + "\n상대방 점수" + highscore, "you lose",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -254,22 +250,29 @@ public class Client {
 	}
 
 	/**
-	 * 해당 클라이언트의 Player 정보를 얻는다.
-	 * 
+	 * 해당 클라이언트의 Player 정보를 얻는다. 
 	 * @return
 	 */
 	public Player getPlayer() {
 		return this.player;
 	}
 
-	public void setgameframe(GameFrame GF) {
-		this.gf = GF;
+	public void setgameframe(GameFrame gf) {
+		this.gf = gf;
 	}
 	
+	/**
+	 * 서버 IP를 얻어온다.
+	 * @return
+	 */
 	public String getServerIP() {
 		return serverIP;
 	}
 	
+	/**
+	 * 서버 port 번호를 얻어온다.
+	 * @return
+	 */
 	public int getServerPort() {
 		return serverPort;
 	}

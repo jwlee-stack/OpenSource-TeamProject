@@ -1,11 +1,6 @@
 package data;
 
-import java.io.IOException;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
-import gui.frame.GameFrame;
 
 public class GameInfo {
 	private int row;

@@ -41,7 +41,7 @@ public class Database {
 	}
 	
 	/**
-	 * 객체를 얻어오는 메소드
+	 * Database 객체를 얻어오는 메소드
 	 * @return
 	 */
 	public static Database getInstance() {
@@ -133,7 +133,12 @@ public class Database {
 		return new Player(user_id, user_nickname, user_score);
 	}
 	
-	
+	/**
+	 * getUsersScoreTop8 메소드에서 쓰일 클래스(구조체).
+	 * 닉네임과 점수를 동시에 보낼 수 있도록 만들어 졌다.
+	 * @author phdljr
+	 *
+	 */
 	public class PlayerScore{
 		public String nickname;
 		public int score;
@@ -255,5 +260,23 @@ public class Database {
 		
 		//DB에 값이 존재하면 result에 값이 채워짐.
 		return !result.isEmpty();
+	}
+	
+	public void updateScore(Player player, int type, int score) {
+		String id = player.getId();
+		int updateScore = score + player.getScore()[type-1];
+		
+		try {
+			Statement st = con.createStatement();
+			int rs = st.executeUpdate("update user set user_score_"+type+" = "+updateScore+" where user_id = '"+id+"'");
+			if(rs == 0) { // 실패했을 때
+				System.out.println("점수 업데이트 실패");
+			}
+			else {
+				System.out.println("점수 업데이트 성공");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

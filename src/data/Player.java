@@ -2,6 +2,8 @@ package data;
 
 import java.util.Arrays;
 
+import data.handler.Database;
+
 /**
  * 플레이어의 상태를 저장해둔 클래스이다. 닉네임, 플레이어가 속한 방 이름, 각 미니게임의 점수, 현재 플레이중인 게임 종류, 어떠한
  * 게임에서 상대방을 찾는지에 대한 정보가 담겨있다.<br/>
@@ -14,8 +16,8 @@ import java.util.Arrays;
 public class Player {
 	private String id = "";
 	private String nickname = "";
-	private String roomName = ""; // 방에 없으면 빈 문자열을 가짐. 방 이름은 랜덤 문자열은 10자리를 가짐
-	private int[] score;
+	//private String roomName = ""; // 방에 없으면 빈 문자열을 가짐. 방 이름은 랜덤 문자열은 10자리를 가짐
+	private int[] score = new int[3];
 	private Boolean status; // 내 차례? 상대 차례?
 	private int playGameNum; // 1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
 	private int searchingGameNum; // 1: 같은 그림 찾기, 2: 오목, 3: 두더지 잡기, 0: 메뉴화면(기본값)
@@ -74,13 +76,13 @@ public class Player {
 		this.searchingGameNum = searchingGameNum;
 	}
 
-	public String getRoomName() {
-		return roomName;
-	}
-
-	public void setRoomName(String roomName) {
-		this.roomName = roomName;
-	}
+//	public String getRoomName() {
+//		return roomName;
+//	}
+//
+//	public void setRoomName(String roomName) {
+//		this.roomName = roomName;
+//	}
 
 	public Boolean getStatus() {
 		return status;
@@ -104,6 +106,22 @@ public class Player {
 
 	public void setTempResult(String temp_result) {
 		this.temp_result = temp_result;
+	}
+	
+	/**
+	 * 플레이어의 점수를 업데이트 시킨다. 데이터베이스로도 업데이트된다.
+	 * @param type 게임유형 1, 2, 3
+	 * @param updateScore 추가될 점수. 음수가 될 수도 있음. 단, 전체 점수는 0이 최소임.
+	 */
+	public void updateScore(int type, int updateScore) {
+		System.out.println("이전 : " + score[type-1]);
+		score[type-1] += updateScore;
+		if(score[type-1] < 0) {
+			score[type-1] = 0;
+		}
+		System.out.println("이후 : " + score[type-1]);
+		
+		Database.getInstance().updateScore(this, type, score[type-1]);
 	}
 
 	@Override

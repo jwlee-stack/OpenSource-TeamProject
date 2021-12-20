@@ -1,11 +1,5 @@
 package gui.handler;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import data.Player;
@@ -34,7 +28,7 @@ public class PanelHandler {
 		this.panel[2] = new JPanel(); //dummy panel, 미니게임 패널이 들어갈 공간
 		this.panel[3] = new JPanel(); //dummy panel, 웨이팅 패널이 들어갈 공간
 		this.panel[4] = new SignupPanel(gf);
-		this.panel[5] = new JPanel(); //dummy panel, 리메칭 패널이 들어갈 공간
+		this.panel[5] = new RematchingPanel(gf);
 	}
 	
 	/**
@@ -68,10 +62,14 @@ public class PanelHandler {
 		this.panel[3] = new WaitRoomPanel(gf);
 	}
 	
-	public void makeRematchingPanel() {
+	/**
+	 * 리매칭 패널에 사용자의 승패와 점수를 나타내어 주는 메소드이다.
+	 * 화면이 바뀔때마다 호출되도록 설계돼었다.
+	 */
+	public void updateRematchingPanel() {
 		System.out.println("리메치 패널 생성");
 		Player player = gf.getClient().getPlayer();
-		this.panel[5] = new RematchingPanel(gf, player.getTempScore(), player.getTempResult());
+		((RematchingPanel)(panel[5])).setLabelInfo(player.getTempScore(), player.getTempResult());
 	}
 	
 	/**

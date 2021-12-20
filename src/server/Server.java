@@ -35,7 +35,7 @@ public class Server {
 
 	private Vector<Result> resultVector = new Vector<Result>();
 
-	class Result {
+	private class Result {
 		String name;
 		String score;
 
@@ -45,7 +45,7 @@ public class Server {
 		}
 	}
 
-	int getsu;
+	private int getsu;
 
 	/**
 	 * port 번호를 사용해 서버를 만들고 실행시킨다.
@@ -242,31 +242,8 @@ public class Server {
 			if (protocol.equals("Login")) {
 				this.nickname = data;
 			} else if (protocol.equals("JoinWaitRoom1")) {
-				// waitRoom1.add() 요청을 한 클라리언트가 해당 벡터에 추가됨
 				waitRoom1.add(this);
-
-//				if(waitRoom1.size() == 1)
-//				{	
-//					for(int i=0;i<clientVector.size();i++)
-//					{
-//						if(this.getNickname().equals(clientVector.elementAt(i).getNickname()))
-//						{
-//							c1 = clientVector.elementAt(i);
-//							roomName = makeRandString();
-//						}
-//					}
-//				}
-
 				if (waitRoom1.size() == 2) {
-					// waitRoom1에 들어있는 클라이언트들에게 메세지를 보냄
-//					for(int i=0;i<clientVector.size();i++)
-//					{
-//						if(this.getNickname().equals(clientVector.elementAt(i).getNickname()))
-//						{
-//							c2 = clientVector.elementAt(i);
-//
-//						}
-//					}
 					ClientInfo c1 = waitRoom1.elementAt(0);
 					ClientInfo c2 = waitRoom1.elementAt(1);
 
@@ -277,8 +254,6 @@ public class Server {
 
 					waitRoom1.remove(c1);
 					waitRoom1.remove(c2);
-
-					//myroom.broadcast("SendRoomName/" + myroom.getRoomName());
 
 					c1.sendMessageToClient("ShowGame1/CreateGame"); // c1의 status=true 설정
 					c2.sendMessageToClient("ShowGame1/GetGame"); // c2의 status=false 설정
@@ -361,9 +336,7 @@ public class Server {
 
 							break;
 						}
-
 					}
-
 				}
 			}
 		}
@@ -371,13 +344,12 @@ public class Server {
 		private ClientInfo AnotherClient() {
 			ClientInfo another_c = null;
 			for (int i = 0; i < clientVector.size(); i++) {
-				if (this.myroom.equals(clientVector.elementAt(i).myroom)) // 클라이언트들의 방 이름이 일치
+				if (this.myroom == clientVector.elementAt(i).myroom) // 클라이언트들의 방 일치
 				{
 					if (!(this.getNickname().equals(clientVector.elementAt(i).getNickname()))) // 방에 있는 클라이언트 중 내가
 																								// 아님(상대방)
 					{
 						another_c = clientVector.elementAt(i); // 상대방 클라이언트
-
 					}
 				}
 			}
@@ -392,28 +364,6 @@ public class Server {
 		public String getNickname() {
 			return this.nickname;
 		}
-
-		/**
-		 * 게임방의 이름을 랜덤으로 생성해주는 메소드이다. 10자리이다.
-		 * 
-		 * @return
-		 */
-//		private String makeRandString()
-//		{
-//			int leftLimit = 48; // numeral '0'
-//			int rightLimit = 122; // letter 'z'
-//			int targetStringLength = 10;
-//			Random random = new Random();
-//
-//			String generatedString = random.ints(leftLimit,rightLimit + 1)
-//			  .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-//			  .limit(targetStringLength)
-//			  .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-//			  .toString();
-//
-//			System.out.println("ID:	"+generatedString);
-//			return generatedString;
-//		}
 	}
 
 	/**
@@ -424,7 +374,6 @@ public class Server {
 	 *
 	 */
 	private class RoomInfo {
-		//private String roomName;
 		private int gameType; // 1:같은그림찾기, 2:오목, 3:두더지잡기
 		private ClientInfo c1;
 		private ClientInfo c2;
@@ -439,12 +388,8 @@ public class Server {
 			c1.sendMessageToClient(msg);
 			c2.sendMessageToClient(msg);
 		}
-
-//		public String getRoomName() {
-//			return this.roomName;
-//		}
 	}
-
+	
 	// 테스트용
 	public static void main(String[] args) {
 		new Server(9999);

@@ -5,11 +5,8 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 import client.Client;
-import data.Player;
 import gui.handler.PanelHandler;
 import gui.panel.MenuPanel;
-import gui.panel.RematchingPanel;
-import gui.panel.minigame.FirstMinigamePanel;
 
 /**
  * 게임 창 클래스이다. 해당 클래스를 통해 사용자의 화면(패널)을 전환시킬 수 있다.
@@ -69,6 +66,7 @@ public class GameFrame extends JFrame{
 		switch(panel) {
 			case "menu":
 				((MenuPanel)(ph.getPanel(1))).updateMyScore(1); //내 점수 가져와서 출력. 실행 순서때문에 여기서 실행되도록 설계
+				break;
 			case "game1":
 				remove(ph.getPanel(2));
 				ph.makeGamePanel(1);
@@ -90,9 +88,8 @@ public class GameFrame extends JFrame{
 				add(ph.getPanel(3), "waitroom");
 				break;
 			case "rematching":
-				remove(ph.getPanel(5));
-				ph.makeRematchingPanel();
-				add(ph.getPanel(5), "rematching");
+				ph.updateRematchingPanel();
+				break;
 			default:
 				break;
 		}

@@ -1,8 +1,5 @@
 package gui.panel;
 
-import java.awt.EventQueue;
-
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 
@@ -22,8 +19,11 @@ import gui.frame.GameFrame;
 public class RematchingPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
+	private JLabel score_label;
+	private JLabel result_label;
+	
 	//score : 점수 , result : 승패
-	public RematchingPanel(GameFrame gf, int score, String result) {
+	public RematchingPanel(GameFrame gf) {
 		setBackground(SystemColor.info);
 		setLayout(null);
 		
@@ -51,16 +51,19 @@ public class RematchingPanel extends JPanel{
 		});
 		add(btn_exit);
 		
-		JLabel label = new JLabel();
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(300, 170, 200, 80);
-		label.setText(result);
-		add(label);
+		result_label = new JLabel();
+		result_label.setHorizontalAlignment(SwingConstants.CENTER);
+		result_label.setBounds(300, 170, 200, 80);
+		add(result_label);
 		
-		JLabel score_label = new JLabel();
+		score_label = new JLabel();
 		score_label.setHorizontalAlignment(SwingConstants.CENTER);
 		score_label.setBounds(300, 270, 200, 80);
-		score_label.setText("점수 : "+score+"점");
 		add(score_label);
+	}
+	
+	public void setLabelInfo(int score, String result) {
+		score_label.setText("점수 : "+score+"점");
+		result_label.setText(result);
 	}
 }

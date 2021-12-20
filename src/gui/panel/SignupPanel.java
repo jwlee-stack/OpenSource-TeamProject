@@ -1,9 +1,7 @@
 package gui.panel;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -11,11 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import client.Client;
 import data.handler.Database;
 import gui.frame.GameFrame;
 import javax.swing.JPasswordField;
-import javax.swing.JEditorPane;
 import javax.swing.JTextField;
 
 
@@ -116,8 +112,6 @@ public class SignupPanel extends JPanel{
 		btnSignup.setBounds(240, 400, 320, 80);
 		add(btnSignup);
 		btnSignup.addActionListener((e)->{
-			//System.out.println(checkDupID());
-			//System.out.println(checkEqualPW());
 			if(checkDupID() && checkDupNickname() && checkEqualPW()) {
 				//회원가입이 정상적으로 이루어진다면
 				if(signup()) {
@@ -127,6 +121,13 @@ public class SignupPanel extends JPanel{
 				}
 			}
 		});
+		
+		JButton btnExit = new JButton("뒤로가기");
+		btnExit.setBounds(355, 535, 97, 23);
+		btnExit.addActionListener((e)->{
+			gf.changePanel("login");
+		});
+		add(btnExit);
 	}
 	
 	/**

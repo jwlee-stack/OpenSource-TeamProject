@@ -1,12 +1,10 @@
 package gui.panel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.SystemColor;
 import java.net.URL;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -146,6 +144,9 @@ public class LoginPanel extends JPanel {
 		return state;
 	}
 	
+	/**
+	 * 해당 패널에 배경 칠하는 용도
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Dimension d=getSize();
