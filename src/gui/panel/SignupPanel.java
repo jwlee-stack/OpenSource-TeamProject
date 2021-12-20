@@ -3,7 +3,6 @@ package gui.panel;
 import java.awt.Font;
 import java.awt.SystemColor;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,6 +12,7 @@ import data.handler.Database;
 import gui.frame.GameFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import gui.component.RoundedButton;
 
 
 /**
@@ -71,7 +71,7 @@ public class SignupPanel extends JPanel{
 		add(IDField);
 		IDField.setColumns(10);
 		
-		JButton btnIDCheck = new JButton("ID 중복 체크");
+		RoundedButton btnIDCheck = new RoundedButton("ID 중복 체크");
 		btnIDCheck.setBounds(570, 150, 150, 30);
 		btnIDCheck.addActionListener((e)->{
 			if(checkDupID()) {
@@ -88,7 +88,7 @@ public class SignupPanel extends JPanel{
 		NicknameField.setBounds(300, 200, 260, 30);
 		add(NicknameField);
 		
-		JButton btnNickname = new JButton("닉네임 중복 체크");
+		RoundedButton btnNickname = new RoundedButton("닉네임 중복 체크");
 		btnNickname.setBounds(570, 200, 150, 30);
 		btnNickname.addActionListener((e)->{
 			if(checkDupNickname()) {
@@ -108,7 +108,7 @@ public class SignupPanel extends JPanel{
 		PasswordCheckField.setBounds(300, 300, 260, 30);
 		add(PasswordCheckField);
 		
-		JButton btnSignup = new JButton("회원가입 하기");
+		RoundedButton btnSignup = new RoundedButton("회원가입 하기");
 		btnSignup.setBounds(240, 400, 320, 80);
 		add(btnSignup);
 		btnSignup.addActionListener((e)->{
@@ -122,7 +122,7 @@ public class SignupPanel extends JPanel{
 			}
 		});
 		
-		JButton btnExit = new JButton("뒤로가기");
+		RoundedButton btnExit = new RoundedButton("뒤로가기");
 		btnExit.setBounds(355, 535, 97, 23);
 		btnExit.addActionListener((e)->{
 			gf.changePanel("login");
@@ -216,3 +216,4 @@ public class SignupPanel extends JPanel{
 		PasswordCheckField.setText("");
 	}
 }
+
