@@ -168,6 +168,12 @@ public class MenuPanel extends JPanel {
 		}
 	}
 	
+	public void setBackgounrdMyRow(int i) {
+		label[i].setBackground(new Color(224, 255, 255));
+		text_Nickname[i].setBackground(new Color(224, 255, 255));
+		text_Score[i].setBackground(new Color(224, 255, 255));
+	}
+	
 	private void init() {
 		for (int i = 0; i < 10; i++) {
 			panel[i] = new JPanel();
