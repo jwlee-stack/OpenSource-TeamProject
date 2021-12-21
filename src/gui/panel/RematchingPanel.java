@@ -65,7 +65,7 @@ public class RematchingPanel extends JPanel{
 		
 		score_label = new JLabel();
 		score_label.setHorizontalAlignment(SwingConstants.CENTER);
-		score_label.setBounds(220, 270, 350, 80);
+		score_label.setBounds(200, 270, 400, 80);
 		add(score_label);
 	}
 	

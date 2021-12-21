@@ -149,10 +149,9 @@ public class Client {
 
 		String protocol = st.nextToken();
 		String data = st.nextToken();
-
+		
 		if (protocol.equals("ShowGame1")) { // server의 joinwaitroom 프로토콜에서 보냄
 			player.setPlayGameNum(1);
-
 			if (data.equals("CreateGame")) // 최초 접속자->게임 만듦
 			{
 				player.setStatus(Boolean.TRUE); // 초기값이 true면 게임 생성도 하고 먼저 게임을 시작함
