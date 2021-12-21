@@ -197,7 +197,6 @@ public class FirstMinigamePanel extends JPanel {
 				for (int r = 0; r < getsu; r++) {
 					for (int c = 0; c < getsu; c++) {
 						if (answer[r][c] == alpha) {
-
 							continue DASI;
 						}
 					}
