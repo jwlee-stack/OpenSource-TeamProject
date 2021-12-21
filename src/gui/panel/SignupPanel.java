@@ -2,6 +2,7 @@ package gui.panel;
 
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -75,7 +76,7 @@ public class SignupPanel extends JPanel{
 		JButton btnIDCheck = new RoundedButton("ID 중복 체크");
 		btnIDCheck.setBounds(570, 150, 150, 30);
 		btnIDCheck.addActionListener((e)->{
-			if(checkDupID()) {
+			if(checkID()) {
 				JOptionPane.showMessageDialog(getParent(), "사용할 수 있는 ID", "ID 중복 체크", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -89,7 +90,7 @@ public class SignupPanel extends JPanel{
 		JButton btnNickname = new RoundedButton("닉네임 중복 체크");
 		btnNickname.setBounds(570, 200, 150, 30);
 		btnNickname.addActionListener((e)->{
-			if(checkDupNickname()) {
+			if(checkNickname()) {
 				JOptionPane.showMessageDialog(getParent(), "사용할 수 있는 닉네임", "닉네임 중복 체크", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -107,7 +108,7 @@ public class SignupPanel extends JPanel{
 		btnSignup.setBounds(240, 400, 320, 80);
 		add(btnSignup);
 		btnSignup.addActionListener((e)->{
-			if(checkDupID() && checkDupNickname() && checkEqualPW()) {
+			if(checkID() && checkNickname() && checkEqualPW()) {
 				//회원가입이 정상적으로 이루어진다면
 				if(signup()) {
 					JOptionPane.showMessageDialog(getParent(), "회원 가입이 정상적으로 등록되었습니다.", "회원 가입 성공", JOptionPane.INFORMATION_MESSAGE);
@@ -126,14 +127,20 @@ public class SignupPanel extends JPanel{
 	}
 	
 	/**
-	 * nickname 중복과 길이를 체크한다. 중복이 아니라면 true를 반환한다.
-	 * @return
+	 * nickname 중복과 길이, 공백과 특수 문자를 체크한다. 중복이 아니라면 true를 반환한다.
+	 * @return 중복이 아니라면 true
 	 */
-	private boolean checkDupNickname() {
+	private boolean checkNickname() {
 		//길이 확인
 		String nickname = NicknameField.getText();
 		if(nickname.length() < 3 || nickname.length() >= 10) {
 			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 10자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		String pattern = "^[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$";
+		if(!Pattern.matches(pattern, nickname)){
+			JOptionPane.showMessageDialog(getParent(), "공백 또는 특수문자는 사용할 수 없습니다.", "닉네임 특수 문자 존재", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
@@ -147,14 +154,21 @@ public class SignupPanel extends JPanel{
 	}
 	
 	/**
-	 * id 중복과 최소 길이를 체크한다. 중복이 아니라면 true를 반환한다.
-	 * @return
+	 * id 중복과 최소 길이, 공백과 특수 문자를 체크한다. 중복이 아니라면 true를 반환한다.
+	 * @return 이상없으면 true
 	 */
-	private boolean checkDupID() {
+	private boolean checkID() {
 		//길이 확인
 		String id = IDField.getText();
 		if(id.length() < 5 || id.length() >= 20) {
 			JOptionPane.showMessageDialog(getParent(), "ID의 길이는 5자 이상, 20자 미만으로만 설정할 수 있습니다.", "ID 길이 오류", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		//공백 및 특수문자 확인
+		String pattern = "^[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$";
+		if(!Pattern.matches(pattern, id)){
+			JOptionPane.showMessageDialog(getParent(), "공백 또는 특수문자는 사용할 수 없습니다.", "ID 특수 문자 존재", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
@@ -175,7 +189,15 @@ public class SignupPanel extends JPanel{
 		String pw = new String(PasswordField.getPassword());
 		String pwc = new String(PasswordCheckField.getPassword());
 		
-		return pw.equals(pwc);
+		boolean result = pw.equals(pwc);
+		
+		//일치하는지 확인
+		if(!result) {
+			JOptionPane.showMessageDialog(getParent(), "비밀번호가 일치하지 않습니다. 다시 입력해 주시길 바랍니다.", "비밀번호 불일치", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -187,25 +209,8 @@ public class SignupPanel extends JPanel{
 	 */
 	private boolean signup() {
 		String id = IDField.getText();
-		//id 최소 5자 이상, 20자 미만
-		if(id.length() < 5 || id.length() >= 20) {
-			JOptionPane.showMessageDialog(getParent(), "ID의 길이는 5자 이상, 20자 미만으로만 설정할 수 있습니다.", "ID 길이 오류", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		
 		String nickname = NicknameField.getText();
-		//nickname 최소 3자 이상, 10자 미만
-		if(nickname.length() < 3 || nickname.length() >= 10) {
-			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 10자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		
 		String pw = new String(PasswordField.getPassword());
-		//password 최소 8자 이상, 30자 미만
-		if(pw.length() < 8 || pw.length() >= 30) {
-			JOptionPane.showMessageDialog(getParent(), "비밀번호의 길이는 8자 이상, 30자 미만으로만 설정할 수 있습니다.", "비밀번호 길이 오류", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
 		
 		db.signup(id, nickname, pw);
 		return true;
