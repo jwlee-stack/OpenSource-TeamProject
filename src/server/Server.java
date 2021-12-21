@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringTokenizer;
@@ -72,6 +73,8 @@ public class Server {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) { // 사용중인 port번호일 때
 			e.printStackTrace();
+			System.out.println("오류 : 이미 사용중인 포트 번호");
+			return false;
 		}
 
 		return (serverSocket != null);
@@ -92,7 +95,7 @@ public class Server {
 					clientVector.add(ci);
 
 					System.out.println("클라이언트" + socket.getInetAddress().toString() + "의 접속 요청 수신");
-				} catch (IOException e) { // 서버가 종료될 시
+				} catch (IOException e) { // 오류 일어나면 서버 종료
 					// e.printStackTrace();
 					closeServer();
 				}

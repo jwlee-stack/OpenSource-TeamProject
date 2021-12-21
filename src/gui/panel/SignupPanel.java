@@ -133,8 +133,8 @@ public class SignupPanel extends JPanel{
 	private boolean checkNickname() {
 		//길이 확인
 		String nickname = NicknameField.getText();
-		if(nickname.length() < 3 || nickname.length() >= 10) {
-			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 10자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
+		if(nickname.length() < 3 || nickname.length() >= 9) {
+			JOptionPane.showMessageDialog(getParent(), "닉네임의 길이는 3자 이상, 9자 미만으로만 설정할 수 있습니다.", "닉네임 길이 오류", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		

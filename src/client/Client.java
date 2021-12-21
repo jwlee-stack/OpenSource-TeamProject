@@ -78,10 +78,10 @@ public class Client {
 			System.out.println(ip + ":" + port + "주소로 연결 완료");
 		} catch (UnknownHostException e) {
 			// e.printStackTrace();
-			System.out.println("서버 접속 실패");
+			JOptionPane.showMessageDialog(null, "알 수 없는 서버 주소", "오류", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (IOException e) {
-			System.out.println("서버 접속 실패");
+			JOptionPane.showMessageDialog(null, "스트림 연결 실패", "오류", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
@@ -105,7 +105,6 @@ public class Client {
 				} catch (IOException e) {
 					disconnect();
 					System.exit(0);
-					break;
 				}
 			}
 		});
@@ -124,7 +123,8 @@ public class Client {
 
 			JOptionPane.showMessageDialog(null, "서버와의 연결이 끊겼습니다.", "연결 끊김", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "스트림 close 오류", "오류", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 	}
 
@@ -293,7 +293,7 @@ public class Client {
 		try {
 			dos.writeUTF(msg);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "서버로 메세지 전달 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

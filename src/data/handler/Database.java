@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+import javax.swing.JOptionPane;
+
 import data.Player;
 
 /**
@@ -51,26 +53,6 @@ public class Database {
 		return dh;
 	}
 	
-//	//TODO 테스트
-//	public String getScore() {
-//		String result = "asd";
-//		try {
-//			Statement st = con.createStatement();
-//			ResultSet rs = st.executeQuery("select * from user where user_id = '"+id+"' and user_pw = '"+pw+"'");
-//			while(rs.next()) {
-//				result += rs.getString("id") + 
-//						rs.getString("user_id") + 
-//						rs.getString("user_pw") + 
-//						rs.getString("user_score_1") + 
-//						rs.getString("user_score_2") +
-//						rs.getString("user_score_3");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
-	
 	/**
 	 * 주어진 id와 password로 로그인을 시도한다.
 	 * 로그인에 성공하면 true를 반환한다.
@@ -94,7 +76,7 @@ public class Database {
 			//System.out.println(user_id);
 			//System.out.println(user_pw);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "로그인 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if(user_id.equals(id) && user_pw.equals(pw)) {
@@ -127,7 +109,7 @@ public class Database {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "플레이어 정보 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return new Player(user_id, user_nickname, user_score);
@@ -186,7 +168,7 @@ public class Database {
 				ps[i++] = new PlayerScore(nickname, score);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "랭크 데이터 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 		//System.out.println("ps 생성 및 반환");
 		return ps;
@@ -212,7 +194,7 @@ public class Database {
 			pstm.executeUpdate();
 			System.out.println("update 완료");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "회원 가입 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -232,7 +214,7 @@ public class Database {
 				result += rs.getString("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ID 중복 체크 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		//DB에 값이 존재하면 result에 값이 채워짐.
@@ -255,7 +237,7 @@ public class Database {
 				result += rs.getString("id");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "닉네임 중복 체크 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		//DB에 값이 존재하면 result에 값이 채워짐.
@@ -283,7 +265,7 @@ public class Database {
 				System.out.println("점수 업데이트 성공");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "점수 업데이트 쿼리 오류", "오류", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

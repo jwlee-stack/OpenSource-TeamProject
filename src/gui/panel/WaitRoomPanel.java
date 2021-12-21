@@ -5,6 +5,7 @@ import java.awt.SystemColor;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import data.Player;
@@ -54,14 +55,19 @@ public class WaitRoomPanel extends JPanel{
 					}
 					lbLoading.setText(lbLoading.getText() + ".");
 					
-					if(player.getPlayGameNum() != 0) { //플레이어가 게임을 가짐(서버의 joinwaitroom1 프로토콜에서 waitroom1.size()==2일 때, player.playgamenum 설정)
+					if(player.getPlayGameNum() != 0) { //플레이어가 게임을 가짐(서버의 joinwaitroom 프로토콜에서 waitroom.size()==2일 때, player.playgamenum 설정)
 						isSearch = false;
 						player.setSearchingGameNum(0);
-						gf.changePanel("game"+player.getPlayGameNum()); //게임1 화면으로 이동 (firstminigamepanel의 생성자 실행)
+						gf.changePanel("game"+player.getPlayGameNum()); //게임 화면으로 이동 (minigamepanel의 생성자 실행)
 						System.out.println("game"+player.getPlayGameNum());
 					}
-				} catch (InterruptedException e) {
-					//e.printStackTrace();
+				} catch (InterruptedException e) { // 예외 발생 시, 메뉴 화면으로 이동
+					isSearch = false;
+					gf.getClient().sendMessageToServer("ExitWaitRoom"+player.getSearchingGameNum()+"/ ");
+					player.setSearchingGameNum(0);
+					gf.changePanel("menu");
+					JOptionPane.showMessageDialog(null, "대기 화면 로딩 오류", "오류", JOptionPane.ERROR_MESSAGE);
+					break;
 				}
 			}
 		});
