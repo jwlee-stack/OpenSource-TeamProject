@@ -31,10 +31,10 @@ public class Client {
 	private SecondMinigamePanel sp;
 	private GameFrame gf;
 	
-//	private String serverIP = "13.124.194.183";
-//	private int serverPort = 59647;
-	private String serverIP = "127.0.0.1";
-	private int serverPort = 9999;
+	private String serverIP = "13.124.194.183";
+	private int serverPort = 59647;
+//	private String serverIP = "127.0.0.1";
+//	private int serverPort = 9999;
 
 	private Socket socket;
 	private InputStream is;

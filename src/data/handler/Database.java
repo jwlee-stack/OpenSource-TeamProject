@@ -22,9 +22,7 @@ import data.Player;
 public class Database {
 	
 	private static Database dh;
-	//private String ip = "13.124.202.64"; //계속 바뀜
 	private String ip ="13.124.194.183";
-	//private String port = "50277"; //계속 바뀜
 	private String port = "58175";
 	private String db = "userdb";
 	private String id = "root";

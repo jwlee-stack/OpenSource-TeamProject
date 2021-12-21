@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringTokenizer;
@@ -32,7 +31,7 @@ public class Server {
 	// 게임방에 들어가기 위한 대기룸. 1: 틀린그림찾기, 2: 오목, 3: 두더지잡기
 	private Vector<ClientInfo> waitRoom1 = new Vector<ClientInfo>();
 	private Vector<ClientInfo> waitRoom2 = new Vector<ClientInfo>();
-	private Vector<ClientInfo> waitRoom3 = new Vector<ClientInfo>();
+	//private Vector<ClientInfo> waitRoom3 = new Vector<ClientInfo>();
 
 	private Vector<Result> resultVector = new Vector<Result>();
 
@@ -160,7 +159,6 @@ public class Server {
 				os = socket.getOutputStream();
 				dos = new DataOutputStream(os);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -228,6 +226,8 @@ public class Server {
 		 * @apiNote - Login/nickname : 클라이언트가 서버로 접속했다는 메세지. 클라이언트의 닉네임을 받아온다. <br/>
 		 *          - JoinWaitRoom1/ : 클라이언트가 대기방1로 이동했다는 메세지. waitRoom에 해당 클라이언트의
 		 *          UserInfo객체를 추가한다.<br/>
+		 *          - ExitWaitRoom1/ : 클라이언트가 대기방1에서 메뉴화면으로 이동했다는 메세지. waitRoom에 해당
+		 *          클라이언트의 UserInfo객체를 삭제한다.<br/>
 		 *          - ExitWaitRoom1/ : 클라이언트가 대기방1에서 메뉴화면으로 이동했다는 메세지. waitRoom에 해당
 		 *          클라이언트의 UserInfo객체를 삭제한다.<br/>
 		 *          계속 추가될 예정
@@ -421,7 +421,10 @@ public class Server {
 		}
 	}
 
-	// 테스트용
+	/**
+	 * 9999번 포트로 서버를 실행시킨다.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		new Server(9999);
 	}
