@@ -219,7 +219,7 @@ public class Client {
 				lowscore = scoreA;
 				JOptionPane.showMessageDialog(null, "내 점수: " + highscore + "\n상대방 점수" + lowscore, "Draw",
 						JOptionPane.INFORMATION_MESSAGE);
-				player.setTempScore(Integer.parseInt(highscore));
+				player.setTempScore(0);
 				player.setTempResult("무승부");
 				player.setPlayGameNum(0);
 				player.setStatus(null);
