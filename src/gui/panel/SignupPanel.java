@@ -183,11 +183,16 @@ public class SignupPanel extends JPanel{
 	}
 	
 	/**
-	 * 비밀번호를 똑같이 입력했는지 확인한다. 알맞게 입력했다면 true를 반환한다.
+	 * 비밀번호를 똑같이 입력했는지, 길이 제한을 만족하는지 확인한다. 알맞게 입력했다면 true를 반환한다.
 	 */
 	private boolean checkEqualPW() {
 		String pw = new String(PasswordField.getPassword());
 		String pwc = new String(PasswordCheckField.getPassword());
+		
+		if(pw.length() < 8 || pw.length() > 100) {
+			JOptionPane.showMessageDialog(getParent(), "비밀번호는 8자 이상, 100자 미만으로만 설정할 수 있습니다.", "비밀번호 길이 제한", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		
 		boolean result = pw.equals(pwc);
 		
