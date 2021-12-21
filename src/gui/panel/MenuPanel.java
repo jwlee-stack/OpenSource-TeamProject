@@ -193,6 +193,12 @@ public class MenuPanel extends JPanel {
 		text_Score[i].setBackground(color);
 	}
 	
+	public void setBackgounrdMyRow(int i) {
+		label[i].setBackground(new Color(224, 255, 255));
+		text_Nickname[i].setBackground(new Color(224, 255, 255));
+		text_Score[i].setBackground(new Color(224, 255, 255));
+	}
+	
 	private void init() {
 		for (int i = 0; i < 10; i++) {
 			panel[i] = new JPanel();
@@ -308,5 +314,8 @@ public class MenuPanel extends JPanel {
 		panel[2].setBackground(Color.GRAY);
 		panel[3].setBackground(new Color(200, 0, 0));
 		
+		label[0].setBackground(new Color(224, 255, 255));
+		text_Nickname[0].setBackground(new Color(224, 255, 255));
+		text_Score[0].setBackground(new Color(224, 255, 255));
 	}
 }
