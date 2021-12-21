@@ -53,7 +53,7 @@ public class MenuPanel extends JPanel {
 
 		Player player = gf.getClient().getPlayer();
 
-		URL url = getClass().getClassLoader().getResource("sameimggame.PNG");
+		URL url = getClass().getClassLoader().getResource("sameimggame.png");
 		ImageIcon image = new ImageIcon(url);
 
 		Image img = image.getImage();
@@ -78,7 +78,7 @@ public class MenuPanel extends JPanel {
 		add(btnGame1);
 
 		
-		URL url1 = getClass().getClassLoader().getResource("omok.PNG");
+		URL url1 = getClass().getClassLoader().getResource("omok.png");
 		ImageIcon image1= new ImageIcon(url1);
 
 		Image img1 = image1.getImage();

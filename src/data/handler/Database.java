@@ -29,7 +29,7 @@ public class Database {
 	private static final String DATABASE = "userdb";
 	private static final String ID = "root";
 	private static final String PW = "mysql1234";
-	private static final String URL = "jdbc:mysql://"+IP+":"+PORT+"/"+DATABASE;
+	private static final String URL = "jdbc:mysql://"+IP+":"+PORT+"/"+DATABASE+"?serverTimezone=UTC";
 	
 	private static Connection con;
 	
