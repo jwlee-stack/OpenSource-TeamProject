@@ -22,20 +22,25 @@ import data.Player;
 public class Database {
 	
 	private static Database dh;
-	private String ip ="13.124.194.183";
-	private String port = "58175";
-	private String db = "userdb";
-	private String id = "root";
-	private String pw = "mysql1234";
+	
+	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+	private static final String IP = "13.124.194.183";
+	private static final String PORT = "58175";
+	private static final String DATABASE = "userdb";
+	private static final String ID = "root";
+	private static final String PW = "mysql1234";
+	private static final String URL = "jdbc:mysql://"+IP+":"+PORT+"/"+DATABASE;
 	
 	private static Connection con;
 	
 	private Database() {
     	try {
-    		//Class.forName("con.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://"+ip+":"+port+"/"+db, id, pw);
+    		Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL, ID, PW);
 			System.out.println("데이터베이스 연결 성공");
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
