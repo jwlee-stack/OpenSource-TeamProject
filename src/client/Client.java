@@ -221,7 +221,6 @@ public class Client {
 						JOptionPane.INFORMATION_MESSAGE);
 				player.setTempScore(0);
 				player.setTempResult("무승부");
-				player.setPlayGameNum(0);
 				player.setStatus(null);
 				gf.changePanel("rematching");
 				return;
