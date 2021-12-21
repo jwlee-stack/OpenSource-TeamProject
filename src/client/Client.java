@@ -265,6 +265,7 @@ public class Client {
 			sp.Rival_PaintStone(row,col);
 		}
 		else if (protocol.equals("GameOver2")) {
+			gf.setTitle("꾸러미 동산");
 			String winner=data;
 			String winnerNickname = st.nextToken();
 			if(player.getNickname().equals(winnerNickname)) { //내가 이겼을 때 +100점
