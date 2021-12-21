@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringTokenizer;
@@ -235,7 +237,8 @@ public class Server {
 		 * @param msg - 메세지
 		 */
 		public void inMessageFromClient(String msg) {
-			System.out.println("클라이언트로부터 메세지 : " + msg);
+			String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+			System.out.println(time + " 클라이언트로부터 메세지 : " + msg);
 
 			StringTokenizer st = new StringTokenizer(msg, "/");
 
