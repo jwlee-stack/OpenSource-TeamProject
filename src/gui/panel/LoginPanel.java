@@ -76,6 +76,7 @@ public class LoginPanel extends JPanel {
 			if(login(id, pw)) {
 				if(connectToServer()) {
 					gf.changePanel("menu");
+					((MenuPanel)(gf.getPh().getPanel(1))).updateMyScore(1).updateRank(1);
 				}
 				//TODO 테스트
 				System.out.println(gf.getClient().getPlayer());

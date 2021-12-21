@@ -267,14 +267,14 @@ public class Database {
 	 * 
 	 * @param player 아이디 가져오는 용도
 	 * @param type 1,2,3
-	 * @param score 기존의 점수에 수정될 양
 	 */
-	public void updateScore(Player player, int type, int score) {
+	public void updateScore(Player player, int type) {
 		String id = player.getId();
-		int updateScore = score + player.getScore()[type-1];
+		int updateScore = player.getScore()[type-1];
 		
 		try {
 			Statement st = con.createStatement();
+			System.out.println("추가될 점수 : "+updateScore);
 			int rs = st.executeUpdate("update user set user_score_"+type+" = "+updateScore+" where user_id = '"+id+"'");
 			if(rs == 0) { // 실패했을 때
 				System.out.println("점수 업데이트 실패");

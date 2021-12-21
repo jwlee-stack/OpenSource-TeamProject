@@ -64,9 +64,6 @@ public class GameFrame extends JFrame{
 	 */
 	public void changePanel(String panel) {
 		switch(panel) {
-			case "menu":
-				((MenuPanel)(ph.getPanel(1))).updateMyScore(1); //내 점수 가져와서 출력. 실행 순서때문에 여기서 실행되도록 설계
-				break;
 			case "game1":
 				remove(ph.getPanel(2));
 				ph.makeGamePanel(1);
@@ -103,6 +100,10 @@ public class GameFrame extends JFrame{
 		}
 		
 		cl.show(this.getContentPane(), panel);
+	}
+	
+	public PanelHandler getPh() {
+		return ph;
 	}
 	
 	/**

@@ -112,7 +112,7 @@ public class Player {
 		}
 		System.out.println("이후 : " + score[type-1]);
 		
-		Database.getInstance().updateScore(this, type, score[type-1]);
+		Database.getInstance().updateScore(this, type);
 	}
 
 	@Override

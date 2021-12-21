@@ -124,7 +124,7 @@ public class MenuPanel extends JPanel {
 	 * type:1,2,3 미니게임 / 4 총합
 	 * @param type
 	 */
-	public void updateMyScore(int type) {
+	public MenuPanel updateMyScore(int type) {
 		Player player = gf.getClient().getPlayer();
 		int score = 0;
 		
@@ -139,6 +139,8 @@ public class MenuPanel extends JPanel {
 		
 		text_Nickname[0].setText(player.getNickname());
 		text_Score[0].setText(Integer.toString(score));
+		
+		return this;
 	}
 
 	/**
@@ -166,6 +168,29 @@ public class MenuPanel extends JPanel {
 			text_Nickname[i].setText(ps[i-1].nickname);
 			text_Score[i].setText(Integer.toString(ps[i-1].score));
 		}
+		
+		if(text_Nickname[0].getText().isEmpty()) {
+			System.out.println("색칠 안함");
+			return;
+		}
+		
+		//랭킹판에 내 닉네임이 있으면 같은 색으로 색칠
+		for(int i=1;i<9;i++) {
+			if(text_Nickname[i].getText().equals(text_Nickname[0].getText())) {
+				System.out.println("색칠함");
+				setBackgounrdRankRow(0, new Color(224, 255, 255));
+				setBackgounrdRankRow(i, new Color(224, 255, 255));
+			}
+			else {
+				setBackgounrdRankRow(i, new Color(238, 238, 238));
+			}
+		}
+	}
+	
+	public void setBackgounrdRankRow(int i, Color color) {
+		label[i].setBackground(color);
+		text_Nickname[i].setBackground(color);
+		text_Score[i].setBackground(color);
 	}
 	
 	private void init() {
