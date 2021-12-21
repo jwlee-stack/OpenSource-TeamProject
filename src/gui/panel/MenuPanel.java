@@ -289,5 +289,8 @@ public class MenuPanel extends JPanel {
 		panel[2].setBackground(Color.GRAY);
 		panel[3].setBackground(new Color(200, 0, 0));
 		
+		label[0].setBackground(new Color(224, 255, 255));
+		text_Nickname[0].setBackground(new Color(224, 255, 255));
+		text_Score[0].setBackground(new Color(224, 255, 255));
 	}
 }
