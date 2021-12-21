@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 
 import client.Client;
 import gui.handler.PanelHandler;
-import gui.panel.MenuPanel;
 
 /**
  * 게임 창 클래스이다. 해당 클래스를 통해 사용자의 화면(패널)을 전환시킬 수 있다.
@@ -64,6 +63,9 @@ public class GameFrame extends JFrame{
 	 */
 	public void changePanel(String panel) {
 		switch(panel) {
+			case "menu":
+				ph.setRankType(); //게임1 점수를 랭킹판에 띄워줌
+				break;
 			case "game1":
 				remove(ph.getPanel(2));
 				ph.makeGamePanel(1);

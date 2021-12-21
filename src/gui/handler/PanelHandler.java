@@ -73,6 +73,13 @@ public class PanelHandler {
 	}
 	
 	/**
+	 * 메뉴 화면으로 이동될 때, 게임1의 점수가 보여지도록 설정한다.
+	 */
+	public void setRankType() {
+		((MenuPanel)(panel[1])).updateMyScore(1).updateRank(1);
+	}
+	
+	/**
 	 * 현재 가지고 있는 Panel의 수를 반환한다.
 	 * @return int: 현재 보유한 Panel의 수
 	 */

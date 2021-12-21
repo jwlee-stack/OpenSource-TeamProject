@@ -170,14 +170,17 @@ public class MenuPanel extends JPanel {
 		}
 		
 		if(text_Nickname[0].getText().isEmpty()) {
-			System.out.println("색칠 안함");
+			//System.out.println("색칠 안함");
 			return;
 		}
 		
 		//랭킹판에 내 닉네임이 있으면 같은 색으로 색칠
 		for(int i=1;i<9;i++) {
 			if(text_Nickname[i].getText().equals(text_Nickname[0].getText())) {
-				System.out.println("색칠함");
+				if(text_Nickname[i].getText().isBlank()) {
+					break;
+				}
+				//System.out.println("색칠함");
 				setBackgounrdRankRow(0, new Color(224, 255, 255));
 				setBackgounrdRankRow(i, new Color(224, 255, 255));
 			}
@@ -191,12 +194,6 @@ public class MenuPanel extends JPanel {
 		label[i].setBackground(color);
 		text_Nickname[i].setBackground(color);
 		text_Score[i].setBackground(color);
-	}
-	
-	public void setBackgounrdMyRow(int i) {
-		label[i].setBackground(new Color(224, 255, 255));
-		text_Nickname[i].setBackground(new Color(224, 255, 255));
-		text_Score[i].setBackground(new Color(224, 255, 255));
 	}
 	
 	private void init() {
